@@ -1,0 +1,49 @@
+export const homeBasics = {
+  id: 'home-basics',
+  titleSv: 'Hemma: grunder',
+  titleZh: '家庭基础',
+  pinyin: 'jiātíng jīchǔ',
+  descriptionSv: 'Ord och korta fraser för familj, barn och vardag hemma.',
+  order: 1,
+  lessons: [
+    {
+      id: 'family',
+      titleSv: 'Familj',
+      descriptionSv: 'De första familjeorden.',
+      unlocksUiKeys: [],
+      items: [
+        { id: 'home-mom', sv: 'mamma', hanzi: '妈妈', pinyin: 'māma', notesSv: 'Vanligt familjeord.' },
+        { id: 'home-dad', sv: 'pappa', hanzi: '爸爸', pinyin: 'bàba' },
+        { id: 'home-child', sv: 'barn', hanzi: '孩子', pinyin: 'háizi' },
+        { id: 'home-wife', sv: 'fru / frun', hanzi: '老婆', pinyin: 'lǎopo', notesSv: 'Vardagligt ord för fru/hustru.' },
+        { id: 'home-family', sv: 'familj', hanzi: '家人', pinyin: 'jiārén' },
+      ],
+    },
+    {
+      id: 'daily-commands',
+      titleSv: 'Korta vardagsfraser',
+      descriptionSv: 'Sånt man ofta säger hemma till barn.',
+      unlocksUiKeys: [],
+      items: [
+        { id: 'home-come-here', sv: 'kom hit', hanzi: '过来', pinyin: 'guòlái' },
+        { id: 'home-wait', sv: 'vänta lite', hanzi: '等一下', pinyin: 'děng yíxià' },
+        { id: 'home-hurry', sv: 'skynda dig', hanzi: '快点', pinyin: 'kuài diǎn' },
+        { id: 'home-stop', sv: 'sluta / stopp', hanzi: '停', pinyin: 'tíng' },
+        { id: 'home-sit', sv: 'sitt ner', hanzi: '坐下', pinyin: 'zuò xià' },
+      ],
+    },
+    {
+      id: 'eat-drink-sleep',
+      titleSv: 'Äta, dricka, sova',
+      descriptionSv: 'Mycket vanliga ord hemma.',
+      unlocksUiKeys: [],
+      items: [
+        { id: 'home-eat', sv: 'äta mat', hanzi: '吃饭', pinyin: 'chīfàn' },
+        { id: 'home-drink-water', sv: 'dricka vatten', hanzi: '喝水', pinyin: 'hē shuǐ' },
+        { id: 'home-sleep', sv: 'sova', hanzi: '睡觉', pinyin: 'shuìjiào' },
+        { id: 'home-water', sv: 'vatten', hanzi: '水', pinyin: 'shuǐ' },
+        { id: 'home-milk', sv: 'mjölk', hanzi: '牛奶', pinyin: 'niúnǎi' },
+      ],
+    },
+  ],
+};

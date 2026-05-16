@@ -1,0 +1,62 @@
+export const appUiBasics = {
+  id: 'app-ui-basics',
+  titleSv: 'App UI: grunder',
+  titleZh: '应用界面基础',
+  pinyin: 'yìngyòng jièmiàn jīchǔ',
+  descriptionSv: 'Börja här. Du lär dig de ord som appen själv använder, och gränssnittet blir gradvis kinesiskt.',
+  order: 0,
+  lessons: [
+    {
+      id: 'navigation',
+      titleSv: 'Navigation',
+      descriptionSv: 'Start, hem, tillbaka och inställningar.',
+      unlocksUiKeys: ['app.title', 'nav.home', 'action.start', 'action.back', 'settings.title'],
+      items: [
+        { id: 'ui-start', sv: 'starta / börja', hanzi: '开始', pinyin: 'kāishǐ', uiKey: 'action.start', notesSv: 'Vanligt för Start eller Börja.' },
+        { id: 'ui-home', sv: 'hem / startsida', hanzi: '首页', pinyin: 'shǒuyè', uiKey: 'nav.home', notesSv: 'Betyder ungefär förstasida/startsida.' },
+        { id: 'ui-back', sv: 'tillbaka', hanzi: '返回', pinyin: 'fǎnhuí', uiKey: 'action.back', notesSv: 'Vanlig knapp för att gå tillbaka.' },
+        { id: 'ui-settings', sv: 'inställningar', hanzi: '设置', pinyin: 'shèzhì', uiKey: 'settings.title', notesSv: 'Mycket vanlig menytext i appar.' },
+      ],
+    },
+    {
+      id: 'learning-actions',
+      titleSv: 'Lära och repetera',
+      descriptionSv: 'Ord för själva lärandet.',
+      unlocksUiKeys: ['action.continue', 'action.review', 'action.learn', 'action.practice', 'lesson.title', 'term.word'],
+      items: [
+        { id: 'ui-continue', sv: 'fortsätt', hanzi: '继续', pinyin: 'jìxù', uiKey: 'action.continue' },
+        { id: 'ui-review', sv: 'repetera', hanzi: '复习', pinyin: 'fùxí', uiKey: 'action.review' },
+        { id: 'ui-learn', sv: 'lära sig / studera', hanzi: '学习', pinyin: 'xuéxí', uiKey: 'action.learn' },
+        { id: 'ui-practice', sv: 'öva', hanzi: '练习', pinyin: 'liànxí', uiKey: 'action.practice' },
+        { id: 'ui-lesson', sv: 'lektion / kurs', hanzi: '课程', pinyin: 'kèchéng', uiKey: 'lesson.title' },
+        { id: 'ui-word', sv: 'ord', hanzi: '词', pinyin: 'cí', uiKey: 'term.word' },
+      ],
+    },
+    {
+      id: 'answers-feedback',
+      titleSv: 'Svar och feedback',
+      descriptionSv: 'Rätt, fel, svar och nästa.',
+      unlocksUiKeys: ['term.answer', 'action.next', 'action.showAnswer', 'feedback.correct', 'feedback.wrong', 'feedback.easy', 'feedback.hard'],
+      items: [
+        { id: 'ui-answer', sv: 'svar', hanzi: '答案', pinyin: 'dá’àn', uiKey: 'term.answer' },
+        { id: 'ui-next', sv: 'nästa', hanzi: '下一个', pinyin: 'xià yí ge', uiKey: 'action.next' },
+        { id: 'ui-show-answer', sv: 'visa svar', hanzi: '显示答案', pinyin: 'xiǎnshì dá’àn', uiKey: 'action.showAnswer' },
+        { id: 'ui-correct', sv: 'rätt', hanzi: '对', pinyin: 'duì', uiKey: 'feedback.correct' },
+        { id: 'ui-wrong', sv: 'fel', hanzi: '错', pinyin: 'cuò', uiKey: 'feedback.wrong' },
+      ],
+    },
+    {
+      id: 'data-progress',
+      titleSv: 'Progress och data',
+      descriptionSv: 'Ord för dagens repetition, språk och backup.',
+      unlocksUiKeys: ['nav.progress', 'status.today', 'status.due', 'status.language', 'action.export', 'action.import', 'action.reset', 'action.save', 'action.cancel'],
+      items: [
+        { id: 'ui-progress', sv: 'progress / framsteg', hanzi: '进度', pinyin: 'jìndù', uiKey: 'nav.progress' },
+        { id: 'ui-today', sv: 'idag', hanzi: '今天', pinyin: 'jīntiān', uiKey: 'status.today' },
+        { id: 'ui-language', sv: 'språk', hanzi: '语言', pinyin: 'yǔyán', uiKey: 'status.language' },
+        { id: 'ui-save', sv: 'spara', hanzi: '保存', pinyin: 'bǎocún', uiKey: 'action.save' },
+        { id: 'ui-cancel', sv: 'avbryt', hanzi: '取消', pinyin: 'qǔxiāo', uiKey: 'action.cancel' },
+      ],
+    },
+  ],
+};
