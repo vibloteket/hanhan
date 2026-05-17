@@ -41,10 +41,10 @@ export function ProgressScreen({ progress, go }) {
       <h1><${UiText} progress=${progress} id="nav.progress" /></h1>
       <p class="muted">Alla ord och fraser som du har låst upp genom lektioner.</p>
 
-      <section class="stats-grid">
-        <div class="stat-card"><strong>${learnedItems.length}</strong><span>lärda kort</span></div>
-        <div class="stat-card"><strong>${dueCount}</strong><span>dags att repetera</span></div>
-        <div class="stat-card"><strong>${strongCount}</strong><span>starka kort</span></div>
+      <section class="summary-grid" aria-label="Sammanfattning">
+        <div class="summary-card"><strong>${learnedItems.length}</strong><span>lärda kort</span></div>
+        <div class="summary-card"><strong>${dueCount}</strong><span>dags att repetera</span></div>
+        <div class="summary-card"><strong>${strongCount}</strong><span>starka kort</span></div>
       </section>
 
       ${learnedItems.length ? html`
