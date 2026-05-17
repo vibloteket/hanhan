@@ -26,7 +26,7 @@ export function App() {
   else if (route.screen === 'review') screen = html`<${ReviewScreen} progress=${progress} setProgress=${setProgress} go=${go} />`;
   else if (route.screen === 'progress') screen = html`<${ProgressScreen} progress=${progress} go=${go} />`;
   else if (route.screen === 'settings') screen = html`<${SettingsScreen} progress=${progress} setProgress=${setProgress} go=${go} />`;
-  else screen = html`<${HomeScreen} progress=${progress} go=${go} />`;
+  else screen = html`<${HomeScreen} progress=${progress} setProgress=${setProgress} go=${go} />`;
 
   const focusMode = route.screen === 'lesson' || route.screen === 'review';
 

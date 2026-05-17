@@ -47,6 +47,7 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 .ongoing-session { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
 .ongoing-session h2 { margin: 0 0 4px; }
 .ongoing-session p { margin: 0; color: var(--muted); }
+.session-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .stat-card strong { display: block; font-size: 1.8rem; }
 .stat-card span { color: var(--muted); font-size: .92rem; }
 
@@ -66,7 +67,6 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 .focus-top-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
 .focus-spacer { flex: 1; }
 .danger-link { color: var(--red-dark); }
-.lesson-cancel { padding-top: 0; margin-top: -8px; }
 .progress-bar { height: 10px; border-radius: 999px; background: #eadfce; overflow: hidden; margin: 12px 0 18px; }
 .progress-bar span { display: block; height: 100%; background: linear-gradient(90deg, var(--red), var(--gold)); }
 .exercise-card { display: grid; gap: 16px; border: 1px solid var(--line); border-radius: 28px; padding: 22px; background: var(--panel); box-shadow: var(--shadow); }
@@ -128,6 +128,7 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
   .lesson-row .button { grid-column: 1 / -1; }
   .choice-grid, .answer-form { grid-template-columns: 1fr; }
   .ongoing-session { align-items: stretch; flex-direction: column; }
+  .session-actions { align-items: stretch; flex-direction: column; }
   .top-row { align-items: flex-start; }
   .top-actions { gap: 6px; }
   .learned-card { grid-template-columns: 1fr; }

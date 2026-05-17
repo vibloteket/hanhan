@@ -87,15 +87,6 @@ export function LessonScreen({ progress, setProgress, route, go }) {
     go('home');
   }
 
-  function cancelLesson() {
-    if (!confirm('Avbryta den här lektionen? Din pågående session tas bort, men tidigare klara lektioner påverkas inte.')) return;
-    setProgress((currentProgress) => ({
-      ...currentProgress,
-      activeSession: matchingSession(currentProgress, route) ? null : currentProgress.activeSession,
-    }));
-    go('pack', { packId: route.packId });
-  }
-
   const correctCount = answers.filter((answer) => answer.correct).length;
 
   return html`
@@ -107,7 +98,6 @@ export function LessonScreen({ progress, setProgress, route, go }) {
         <span class="pill">${Math.min(index + 1, steps.length)}/${steps.length}</span>
       </div>
       <h1>${lesson.titleSv}</h1>
-      <button class="link-button danger-link lesson-cancel" onClick=${cancelLesson}>Avbryt lektion</button>
       <div class="progress-bar"><span style=${`width: ${Math.min(100, (index / Math.max(1, steps.length)) * 100)}%`}></span></div>
 
       ${finished ? html`
