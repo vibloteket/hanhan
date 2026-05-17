@@ -1,5 +1,5 @@
 export const uiTerms = [
-  { key: 'app.title', sv: 'MandarinMode', en: 'MandarinMode', zh: '中文模式', pinyin: 'zhōngwén móshì' },
+  { key: 'app.title', sv: 'Mandarin Mode', en: 'Mandarin Mode', zh: '中文模式', pinyin: 'zhōngwén móshì' },
   { key: 'nav.home', sv: 'Hem', en: 'Home', zh: '首页', pinyin: 'shǒuyè' },
   { key: 'nav.packs', sv: 'Paket', en: 'Packs', zh: '学习包', pinyin: 'xuéxí bāo' },
   { key: 'nav.progress', sv: 'Progress', en: 'Progress', zh: '进度', pinyin: 'jìndù' },
