@@ -1,5 +1,5 @@
-export const STORAGE_KEY = 'learnChinese.progress.v1';
-export const BACKUP_APP_ID = 'learn-chinese-static-spa';
+export const STORAGE_KEY = 'mandarinMode.progress.v1';
+export const BACKUP_APP_ID = 'mandarinmode-static-spa';
 
 export function createDefaultProgress() {
   return {
