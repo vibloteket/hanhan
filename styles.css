@@ -98,11 +98,25 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 .ui-text { white-space: nowrap; }
 
 @media (max-width: 680px) {
-  .app-shell { padding-inline: 12px; }
-  .app-header { align-items: flex-start; }
+  .app-shell { padding-inline: 12px; padding-bottom: 92px; }
+  .app-header { align-items: center; justify-content: center; }
   .brand span:last-child { display: none; }
-  nav { width: 100%; justify-content: flex-end; flex-wrap: wrap; }
-  nav button { padding: 8px 9px; font-size: .92rem; }
+  nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    width: 100%;
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line);
+    background: color-mix(in srgb, var(--panel) 94%, transparent);
+    backdrop-filter: blur(14px);
+  }
+  nav button { min-width: 0; padding: 8px 6px; border-radius: 14px; font-size: .84rem; overflow: hidden; text-overflow: ellipsis; }
   .stats-grid { grid-template-columns: 1fr; }
   .lesson-row { grid-template-columns: auto 1fr; }
   .lesson-row .button { grid-column: 1 / -1; }
