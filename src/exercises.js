@@ -22,8 +22,6 @@ export function lessonSteps(lesson) {
     steps.push({ kind: 'intro', item });
     steps.push({ kind: 'mc-zh-sv', item });
     steps.push({ kind: 'mc-sv-zh', item });
-    steps.push({ kind: 'type-pinyin', item });
-    steps.push({ kind: 'type-hanzi', item });
   }
   return steps;
 }

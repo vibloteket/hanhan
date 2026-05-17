@@ -101,7 +101,7 @@ export function LessonScreen({ progress, setProgress, route, go }) {
       ${finished ? html`
         <section class="exercise-card complete-card">
           <h2>Lektion klar</h2>
-          <p>${correctCount}/${answers.length} övningar rätt. Orden läggs nu in i repetition.</p>
+          <p>${correctCount}/${answers.length} övningar rätt. Orden läggs nu in i repetition, där skrivfrågor kommer gradvis senare.</p>
           ${lesson.unlocksUiKeys?.length ? html`<p>Du låste upp ${lesson.unlocksUiKeys.length} UI-termer.</p>` : null}
           <${Button} progress=${progress} labelKey="lesson.complete" onClick=${completeLesson} />
         </section>
