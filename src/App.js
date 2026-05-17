@@ -7,6 +7,7 @@ import { LessonScreen } from './screens/LessonScreen.js';
 import { ReviewScreen } from './screens/ReviewScreen.js';
 import { SettingsScreen } from './screens/SettingsScreen.js';
 import { ProgressScreen } from './screens/ProgressScreen.js';
+import { LessonsScreen } from './screens/LessonsScreen.js';
 import { UiText } from './components/UiText.js';
 
 export function App() {
@@ -25,6 +26,7 @@ export function App() {
   else if (route.screen === 'lesson') screen = html`<${LessonScreen} progress=${progress} setProgress=${setProgress} route=${route} go=${go} />`;
   else if (route.screen === 'review') screen = html`<${ReviewScreen} progress=${progress} setProgress=${setProgress} go=${go} />`;
   else if (route.screen === 'progress') screen = html`<${ProgressScreen} progress=${progress} go=${go} />`;
+  else if (route.screen === 'lessons') screen = html`<${LessonsScreen} progress=${progress} go=${go} />`;
   else if (route.screen === 'settings') screen = html`<${SettingsScreen} progress=${progress} setProgress=${setProgress} go=${go} />`;
   else screen = html`<${HomeScreen} progress=${progress} setProgress=${setProgress} go=${go} />`;
 
@@ -38,12 +40,6 @@ export function App() {
             <span class="brand-mark">中</span>
             <span><${UiText} progress=${progress} id="app.title" /></span>
           </button>
-          <nav>
-            <button onClick=${() => go('home')}><${UiText} progress=${progress} id="nav.home" /></button>
-            <button onClick=${() => go('review')}><${UiText} progress=${progress} id="action.review" /></button>
-            <button onClick=${() => go('progress')}><${UiText} progress=${progress} id="nav.progress" /></button>
-            <button onClick=${() => go('settings')}><${UiText} progress=${progress} id="settings.title" /></button>
-          </nav>
         </header>
       `}
       <main>${screen}</main>

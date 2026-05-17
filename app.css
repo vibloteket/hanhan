@@ -24,9 +24,6 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .brand { display: flex; align-items: center; gap: 8px; border: 0; background: transparent; color: var(--ink); font-weight: 800; text-align: left; }
 .brand-mark { display: grid; place-items: center; width: 36px; height: 36px; border: 0; border-radius: 12px; background: var(--red); color: white; font-size: 1.25rem; box-shadow: var(--shadow); }
 .brand-mark.mini { flex: 0 0 auto; width: 38px; height: 38px; }
-nav { display: flex; gap: 6px; }
-nav button { border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 9px 11px; color: var(--ink); }
-
 .screen { margin-top: 18px; }
 .hero { display: grid; grid-template-columns: 1fr; gap: 18px; padding: 26px; border: 1px solid var(--line); border-radius: 28px; background: linear-gradient(135deg, #fffdf8, #fff3dd); box-shadow: var(--shadow); }
 .hero h1 { margin: 0 0 8px; font-size: clamp(2rem, 8vw, 4.3rem); line-height: .95; letter-spacing: -.06em; word-break: normal; overflow-wrap: normal; }
@@ -43,7 +40,10 @@ nav button { border: 1px solid var(--line); background: var(--panel); border-rad
 .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
 .stat-card, .panel { border: 1px solid var(--line); border-radius: 20px; padding: 16px; background: var(--panel); }
 button.stat-card { text-align: left; color: inherit; cursor: pointer; }
-.stat-card.clickable:hover { border-color: #d8b98d; transform: translateY(-1px); }
+.stat-card.clickable:hover, .home-settings-link:hover { border-color: #d8b98d; transform: translateY(-1px); }
+.home-settings-link { display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; transition: transform .15s ease, border-color .15s ease; }
+.home-settings-link h2 { margin: 0 0 4px; }
+.home-settings-link p { margin: 0; }
 .ongoing-session { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
 .ongoing-session h2 { margin: 0 0 4px; }
 .ongoing-session p { margin: 0; color: var(--muted); }
@@ -59,6 +59,7 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 .pack-card p, .lesson-row p { margin: 0; }
 .lesson-row { grid-template-columns: auto 1fr auto; }
 .lesson-row.done { background: #f7fff5; }
+.lesson-row-actions { display: flex; align-items: center; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
 .lesson-number { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 12px; background: #f7e5c3; font-weight: 800; }
 .pill { display: inline-flex; align-items: center; border-radius: 999px; padding: 6px 10px; background: #f4e8d8; color: #6f4d23; font-weight: 750; }
 
@@ -102,30 +103,15 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 .ui-text { white-space: nowrap; }
 
 @media (max-width: 900px) {
-  .app-shell { padding-inline: 12px; padding-bottom: 92px; }
+  .app-shell { padding-inline: 12px; padding-bottom: 40px; }
   .app-shell.focus-mode { padding-bottom: 40px; }
-  .app-header { position: static; align-items: center; justify-content: center; padding: 12px 0 4px; background: transparent; backdrop-filter: none; }
+  .app-header { position: static; align-items: center; justify-content: flex-start; padding: 12px 0 4px; background: transparent; backdrop-filter: none; }
   .brand span:last-child { display: none; }
-  nav {
-    position: fixed !important;
-    left: 0;
-    right: 0;
-    top: auto !important;
-    bottom: 0;
-    z-index: 10;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
-    width: 100%;
-    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
-    border-top: 1px solid var(--line);
-    background: color-mix(in srgb, var(--panel) 94%, transparent);
-    backdrop-filter: blur(14px);
-  }
-  nav button { min-width: 0; padding: 8px 6px; border-radius: 14px; font-size: .84rem; overflow: hidden; text-overflow: ellipsis; }
   .stats-grid { grid-template-columns: 1fr; }
   .lesson-row { grid-template-columns: auto 1fr; }
   .lesson-row .button { grid-column: 1 / -1; }
+  .lesson-row-actions { grid-column: 1 / -1; align-items: stretch; flex-direction: column; }
+  .home-settings-link { align-items: flex-start; flex-direction: column; }
   .choice-grid, .answer-form { grid-template-columns: 1fr; }
   .ongoing-session { align-items: stretch; flex-direction: column; }
   .session-actions { align-items: stretch; flex-direction: column; }

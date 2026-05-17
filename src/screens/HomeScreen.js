@@ -58,15 +58,19 @@ export function HomeScreen({ progress, setProgress, go }) {
     ` : null}
 
     <section class="stats-grid">
-      <div class="stat-card"><strong>${dueCount}</strong><span>kort att repetera</span></div>
-      <div class="stat-card"><strong>${completedCount}</strong><span>klara lektioner</span></div>
+      <button class="stat-card clickable" onClick=${() => go('review')}>
+        <strong>${dueCount}</strong><span>kort att repetera</span>
+      </button>
+      <button class="stat-card clickable" onClick=${() => go('lessons')}>
+        <strong>${completedCount}</strong><span>klara lektioner</span>
+      </button>
       <button class="stat-card clickable" onClick=${() => go('progress')}>
         <strong>${Object.keys(progress.cards).length}</strong><span>inlärda kort</span>
       </button>
     </section>
 
     <section class="screen">
-      <h2><${UiText} progress=${progress} id="nav.packs" /></h2>
+      <h2>Lektioner</h2>
       <div class="pack-list">
         ${packs.map((pack) => {
           const completed = pack.lessons.filter((lesson) => progress.completedLessons.includes(`${pack.id}/${lesson.id}`)).length;
@@ -81,6 +85,14 @@ export function HomeScreen({ progress, setProgress, go }) {
           `;
         })}
       </div>
+    </section>
+
+    <section class="screen panel home-settings-link" onClick=${() => go('settings')}>
+      <div>
+        <h2><${UiText} progress=${progress} id="settings.title" /></h2>
+        <p>Språk, backup, import/export och nollställning.</p>
+      </div>
+      <span class="pill">Öppna</span>
     </section>
   `;
 }

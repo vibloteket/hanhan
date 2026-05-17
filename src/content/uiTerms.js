@@ -2,7 +2,7 @@ export const uiTerms = [
   { key: 'app.title', sv: 'Mandarin Mode', en: 'Mandarin Mode', zh: '中文模式', pinyin: 'zhōngwén móshì' },
   { key: 'nav.home', sv: 'Hem', en: 'Home', zh: '首页', pinyin: 'shǒuyè' },
   { key: 'nav.packs', sv: 'Paket', en: 'Packs', zh: '学习包', pinyin: 'xuéxí bāo' },
-  { key: 'nav.progress', sv: 'Progress', en: 'Progress', zh: '进度', pinyin: 'jìndù' },
+  { key: 'nav.progress', sv: 'Ordlista', en: 'Word list', zh: '词表', pinyin: 'cíbiǎo' },
   { key: 'settings.title', sv: 'Inställningar', en: 'Settings', zh: '设置', pinyin: 'shèzhì' },
 
   { key: 'action.start', sv: 'Starta', en: 'Start', zh: '开始', pinyin: 'kāishǐ' },
