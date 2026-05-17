@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
+  <title id="title">Mandarin Mode icon concepts</title>
+  <desc id="desc">Six SVG icon proposals for Mandarin Mode.</desc>
+  <defs>
+    <linearGradient id="redGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f05a43"/>
+      <stop offset="1" stop-color="#b91f1a"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe3a3"/>
+      <stop offset="1" stop-color="#f0b429"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#3a180f" flood-opacity="0.18"/>
+    </filter>
+    <style>
+      .bg { fill: #f7f3ea; }
+      .label { font: 700 26px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #24160f; }
+      .sub { font: 400 17px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #75675c; }
+      .hanzi { font: 900 150px 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; fill: white; dominant-baseline: central; text-anchor: middle; }
+      .hanzi-dark { fill: #b91f1a; }
+      .small-hanzi { font: 900 94px 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; dominant-baseline: central; text-anchor: middle; }
+      .card { fill: #fffdf8; stroke: #e7dccb; stroke-width: 2; }
+      .red { fill: url(#redGrad); }
+      .gold { fill: url(#goldGrad); }
+      .cream { fill: #fff8e8; }
+      .ink { fill: #24160f; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="820"/>
+
+  <!-- Option 1 -->
+  <g transform="translate(70 70)">
+    <rect class="card" width="300" height="300" rx="36"/>
+    <g transform="translate(50 35)" filter="url(#shadow)">
+      <rect class="red" width="200" height="200" rx="48"/>
+      <text class="hanzi" x="100" y="106">中</text>
+    </g>
+    <text class="label" x="150" y="350" text-anchor="middle">1. Ren 中</text>
+    <text class="sub" x="150" y="378" text-anchor="middle">Tydligast i liten storlek</text>
+  </g>
+
+  <!-- Option 2 -->
+  <g transform="translate(450 70)">
+    <rect class="card" width="300" height="300" rx="36"/>
+    <g transform="translate(50 35)" filter="url(#shadow)">
+      <rect class="red" width="200" height="200" rx="48"/>
+      <text class="hanzi" x="100" y="88">中</text>
+      <rect x="57" y="145" width="86" height="24" rx="12" fill="#fff8e8" opacity="0.95"/>
+      <circle cx="126" cy="157" r="18" fill="#f0b429" stroke="white" stroke-width="5"/>
+    </g>
+    <text class="label" x="150" y="350" text-anchor="middle">2. 中 + mode</text>
+    <text class="sub" x="150" y="378" text-anchor="middle">Visar växling/immersion</text>
+  </g>
+
+  <!-- Option 3 -->
+  <g transform="translate(830 70)">
+    <rect class="card" width="300" height="300" rx="36"/>
+    <g transform="translate(50 35)" filter="url(#shadow)">
+      <rect class="red" width="200" height="200" rx="48"/>
+      <path d="M47 142 V78 Q47 56 69 56 H131 Q153 56 153 78 V142 H130 V84 Q130 76 122 76 H78 Q70 76 70 84 V142 Z" fill="#fff8e8"/>
+      <rect x="87" y="92" width="26" height="64" rx="8" fill="#f0b429"/>
+      <text class="small-hanzi" x="100" y="117" fill="#b91f1a" opacity="0.22">中</text>
+    </g>
+    <text class="label" x="150" y="350" text-anchor="middle">3. Port / M</text>
+    <text class="sub" x="150" y="378" text-anchor="middle">Mer brandad, mindre generisk</text>
+  </g>
+
+  <!-- Option 4 -->
+  <g transform="translate(70 455)">
+    <rect class="card" width="300" height="300" rx="36"/>
+    <g transform="translate(50 35)" filter="url(#shadow)">
+      <rect class="red" width="200" height="200" rx="48"/>
+      <rect x="48" y="42" width="112" height="130" rx="20" class="cream" transform="rotate(-7 104 107)"/>
+      <text class="small-hanzi hanzi-dark" x="103" y="107" transform="rotate(-7 104 107)">中</text>
+      <circle cx="152" cy="158" r="20" class="gold" stroke="white" stroke-width="6"/>
+      <path d="M143 158 l7 7 l14 -18" fill="none" stroke="#7a3b00" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text class="label" x="150" y="350" text-anchor="middle">4. Flashcard</text>
+    <text class="sub" x="150" y="378" text-anchor="middle">Tydligare learning/SRS</text>
+  </g>
+
+  <!-- Option 5 -->
+  <g transform="translate(450 455)">
+    <rect class="card" width="300" height="300" rx="36"/>
+    <g transform="translate(50 35)" filter="url(#shadow)">
+      <rect class="red" width="200" height="200" rx="48"/>
+      <path d="M52 61 H148 Q166 61 166 79 V128 Q166 146 148 146 H108 L80 171 V146 H52 Q34 146 34 128 V79 Q34 61 52 61 Z" class="cream"/>
+      <text class="small-hanzi hanzi-dark" x="100" y="106">中</text>
+    </g>
+    <text class="label" x="150" y="350" text-anchor="middle">5. Pratbubbla</text>
+    <text class="sub" x="150" y="378" text-anchor="middle">Språk och vardagsfraser</text>
+  </g>
+
+  <!-- Option 6 -->
+  <g transform="translate(830 455)">
+    <rect class="card" width="300" height="300" rx="36"/>
+    <g transform="translate(50 35)" filter="url(#shadow)">
+      <rect fill="#24160f" width="200" height="200" rx="48"/>
+      <circle cx="100" cy="100" r="72" fill="url(#redGrad)"/>
+      <text class="hanzi" x="100" y="102">中</text>
+      <path d="M45 48 C78 32 121 31 154 49" fill="none" stroke="#f0b429" stroke-width="12" stroke-linecap="round" opacity="0.95"/>
+      <path d="M47 151 C80 169 120 169 153 151" fill="none" stroke="#fff8e8" stroke-width="10" stroke-linecap="round" opacity="0.85"/>
+    </g>
+    <text class="label" x="150" y="350" text-anchor="middle">6. Premium badge</text>
+    <text class="sub" x="150" y="378" text-anchor="middle">Mer app-store/polished</text>
+  </g>
+</svg>
