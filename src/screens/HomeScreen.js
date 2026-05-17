@@ -12,6 +12,7 @@ export function HomeScreen({ progress, go }) {
     ? { packId: progress.activeSession.packId, lessonId: progress.activeSession.lessonId }
     : findNextLesson(progress);
   const dueCount = dueCards(progress, allItems).length;
+  const shouldReviewNext = !activeLesson && dueCount > 0;
   const completedCount = progress.completedLessons.length;
 
   return html`
@@ -21,10 +22,20 @@ export function HomeScreen({ progress, go }) {
         <p>Byggt för svensk → mandarin, med gradvis kinesiskt gränssnitt.</p>
       </div>
       <div class="hero-actions">
-        ${next ? html`
-          <${Button} progress=${progress} labelKey=${activeLesson || completedCount ? 'action.continue' : 'action.start'} onClick=${() => go('lesson', next)} />
-        ` : html`<${Button} progress=${progress} labelKey="action.review" onClick=${() => go('review')} />`}
-        <${Button} progress=${progress} labelKey="action.review" kind="secondary" onClick=${() => go('review')} />
+        ${activeLesson ? html`
+          <${Button} progress=${progress} labelKey="action.continue" onClick=${() => go('lesson', next)} />
+          <${Button} progress=${progress} labelKey="action.review" kind="secondary" onClick=${() => go('review')} />
+        ` : shouldReviewNext ? html`
+          <${Button} progress=${progress} labelKey="action.review" onClick=${() => go('review')} />
+          ${next ? html`
+            <${Button} progress=${progress} kind="secondary" onClick=${() => go('lesson', next)}>Nästa lektion</${Button}>
+          ` : null}
+        ` : next ? html`
+          <${Button} progress=${progress} labelKey=${completedCount ? 'action.continue' : 'action.start'} onClick=${() => go('lesson', next)} />
+          <${Button} progress=${progress} labelKey="action.review" kind="secondary" onClick=${() => go('review')} />
+        ` : html`
+          <${Button} progress=${progress} labelKey="action.review" onClick=${() => go('review')} />
+        `}
       </div>
     </section>
 
