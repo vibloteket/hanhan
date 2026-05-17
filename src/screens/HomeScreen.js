@@ -52,7 +52,9 @@ export function HomeScreen({ progress, go }) {
     <section class="stats-grid">
       <div class="stat-card"><strong>${dueCount}</strong><span>kort att repetera</span></div>
       <div class="stat-card"><strong>${completedCount}</strong><span>klara lektioner</span></div>
-      <div class="stat-card"><strong>${Object.keys(progress.cards).length}</strong><span>inlärda kort</span></div>
+      <button class="stat-card clickable" onClick=${() => go('progress')}>
+        <strong>${Object.keys(progress.cards).length}</strong><span>inlärda kort</span>
+      </button>
     </section>
 
     <section class="screen">
