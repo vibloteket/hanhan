@@ -28,20 +28,24 @@ export function App() {
   else if (route.screen === 'settings') screen = html`<${SettingsScreen} progress=${progress} setProgress=${setProgress} go=${go} />`;
   else screen = html`<${HomeScreen} progress=${progress} go=${go} />`;
 
+  const focusMode = route.screen === 'lesson' || route.screen === 'review';
+
   return html`
-    <div class="app-shell">
-      <header class="app-header">
-        <button class="brand" onClick=${() => go('home')}>
-          <span class="brand-mark">中</span>
-          <span><${UiText} progress=${progress} id="app.title" /></span>
-        </button>
-        <nav>
-          <button onClick=${() => go('home')}><${UiText} progress=${progress} id="nav.home" /></button>
-          <button onClick=${() => go('review')}><${UiText} progress=${progress} id="action.review" /></button>
-          <button onClick=${() => go('progress')}><${UiText} progress=${progress} id="nav.progress" /></button>
-          <button onClick=${() => go('settings')}><${UiText} progress=${progress} id="settings.title" /></button>
-        </nav>
-      </header>
+    <div class=${`app-shell ${focusMode ? 'focus-mode' : ''}`}>
+      ${focusMode ? null : html`
+        <header class="app-header">
+          <button class="brand" onClick=${() => go('home')}>
+            <span class="brand-mark">中</span>
+            <span><${UiText} progress=${progress} id="app.title" /></span>
+          </button>
+          <nav>
+            <button onClick=${() => go('home')}><${UiText} progress=${progress} id="nav.home" /></button>
+            <button onClick=${() => go('review')}><${UiText} progress=${progress} id="action.review" /></button>
+            <button onClick=${() => go('progress')}><${UiText} progress=${progress} id="nav.progress" /></button>
+            <button onClick=${() => go('settings')}><${UiText} progress=${progress} id="settings.title" /></button>
+          </nav>
+        </header>
+      `}
       <main>${screen}</main>
     </div>
   `;

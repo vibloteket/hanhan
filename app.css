@@ -22,7 +22,8 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .app-shell { max-width: 920px; min-height: 100vh; margin: 0 auto; padding: 0 16px 40px; }
 .app-header { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(14px); }
 .brand { display: flex; align-items: center; gap: 8px; border: 0; background: transparent; color: var(--ink); font-weight: 800; text-align: left; }
-.brand-mark { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 12px; background: var(--red); color: white; font-size: 1.25rem; box-shadow: var(--shadow); }
+.brand-mark { display: grid; place-items: center; width: 36px; height: 36px; border: 0; border-radius: 12px; background: var(--red); color: white; font-size: 1.25rem; box-shadow: var(--shadow); }
+.brand-mark.mini { flex: 0 0 auto; width: 38px; height: 38px; }
 nav { display: flex; gap: 6px; }
 nav button { border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 9px 11px; color: var(--ink); }
 
@@ -62,7 +63,10 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 
 .top-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
 .top-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.focus-top-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.focus-spacer { flex: 1; }
 .danger-link { color: var(--red-dark); }
+.lesson-cancel { padding-top: 0; margin-top: -8px; }
 .progress-bar { height: 10px; border-radius: 999px; background: #eadfce; overflow: hidden; margin: 12px 0 18px; }
 .progress-bar span { display: block; height: 100%; background: linear-gradient(90deg, var(--red), var(--gold)); }
 .exercise-card { display: grid; gap: 16px; border: 1px solid var(--line); border-radius: 28px; padding: 22px; background: var(--panel); box-shadow: var(--shadow); }
@@ -99,6 +103,7 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 
 @media (max-width: 900px) {
   .app-shell { padding-inline: 12px; padding-bottom: 92px; }
+  .app-shell.focus-mode { padding-bottom: 40px; }
   .app-header { position: static; align-items: center; justify-content: center; padding: 12px 0 4px; background: transparent; backdrop-filter: none; }
   .brand span:last-child { display: none; }
   nav {

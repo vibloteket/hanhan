@@ -100,14 +100,14 @@ export function LessonScreen({ progress, setProgress, route, go }) {
 
   return html`
     <section class="screen lesson-screen">
-      <div class="top-row">
-        <div class="top-actions">
-          <${Button} progress=${progress} labelKey="action.back" kind="ghost" onClick=${() => go('pack', { packId: route.packId })} />
-          <button class="link-button danger-link" onClick=${cancelLesson}>Avbryt lektion</button>
-        </div>
+      <div class="focus-top-row">
+        <button class="brand-mark mini" onClick=${() => go('home')} aria-label="Hem">中</button>
+        <${Button} progress=${progress} labelKey="action.back" kind="ghost" onClick=${() => go('pack', { packId: route.packId })} />
+        <span class="focus-spacer"></span>
         <span class="pill">${Math.min(index + 1, steps.length)}/${steps.length}</span>
       </div>
       <h1>${lesson.titleSv}</h1>
+      <button class="link-button danger-link lesson-cancel" onClick=${cancelLesson}>Avbryt lektion</button>
       <div class="progress-bar"><span style=${`width: ${Math.min(100, (index / Math.max(1, steps.length)) * 100)}%`}></span></div>
 
       ${finished ? html`
