@@ -49,11 +49,13 @@ export function ProgressScreen({ progress, go }) {
 
       ${learnedItems.length ? html`
         <div class="learned-list">
-          ${learnedItems.map(({ item, card, status }) => html`
+          ${learnedItems.map(({ item, card, status }) => {
+            const hanziLength = Array.from(item.hanzi).length;
+            return html`
             <article class="learned-card" key=${item.id}>
               <div class="learned-main">
-                <div class="hanzi learned-hanzi">${item.hanzi}</div>
-                <div>
+                <div class=${`hanzi learned-hanzi ${hanziLength >= 4 ? 'phrase' : hanziLength >= 3 ? 'long' : ''}`}>${item.hanzi}</div>
+                <div class="learned-copy">
                   <strong>${item.sv}</strong>
                   <div class="pinyin small">${item.pinyin}</div>
                   <div class="muted small">${packById[item.packId]?.titleSv || item.packId} · ${item.lessonTitleSv}</div>
@@ -65,7 +67,7 @@ export function ProgressScreen({ progress, go }) {
                 <span class="muted small">Rätt i rad: ${card.correctStreak || 0}</span>
               </div>
             </article>
-          `)}
+          `})}
         </div>
       ` : html`
         <section class="panel empty-state">

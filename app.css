@@ -96,8 +96,11 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 .small { font-size: .9rem; }
 .learned-list { display: grid; gap: 10px; margin-top: 16px; }
 .learned-card { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; border: 1px solid var(--line); border-radius: 20px; padding: 14px; background: var(--panel); }
-.learned-main { display: flex; align-items: center; gap: 12px; min-width: 0; }
-.learned-hanzi { display: grid; place-items: center; min-width: 56px; height: 56px; border-radius: 18px; background: #fff3dd; color: var(--red-dark); font-size: 1.9rem; font-weight: 900; }
+.learned-main { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 14px; min-width: 0; }
+.learned-copy { min-width: 0; overflow-wrap: anywhere; }
+.learned-hanzi { display: grid; place-items: center; min-width: 68px; max-width: min(42vw, 180px); min-height: 64px; padding: 8px 12px; border-radius: 18px; background: #fff3dd; color: var(--red-dark); font-size: 1.85rem; font-weight: 900; line-height: 1.02; text-align: center; white-space: normal; word-break: normal; overflow-wrap: anywhere; }
+.learned-hanzi.long { font-size: 1.62rem; }
+.learned-hanzi.phrase { font-size: 1.42rem; max-width: min(42vw, 152px); }
 .learned-meta { display: grid; justify-items: end; gap: 4px; text-align: right; }
 .status-chip { display: inline-flex; border-radius: 999px; padding: 5px 9px; font-size: .82rem; font-weight: 800; background: #f4e8d8; color: #6f4d23; }
 .status-chip.due { background: #fff0ee; color: var(--red-dark); }
@@ -123,6 +126,8 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
   .top-row { align-items: flex-start; }
   .top-actions { gap: 6px; }
   .learned-card { grid-template-columns: 1fr; }
+  .learned-main { align-items: start; gap: 12px; }
+  .learned-hanzi { max-width: 38vw; }
   .learned-meta { justify-items: start; text-align: left; }
   .hero h1 { font-size: clamp(1.8rem, 11vw, 3.1rem); letter-spacing: -.04em; }
   .hero { padding: 20px; border-radius: 22px; }
