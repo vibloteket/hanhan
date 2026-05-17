@@ -99,12 +99,13 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 
 @media (max-width: 680px) {
   .app-shell { padding-inline: 12px; padding-bottom: 92px; }
-  .app-header { align-items: center; justify-content: center; }
+  .app-header { position: static; align-items: center; justify-content: center; padding: 12px 0 4px; background: transparent; backdrop-filter: none; }
   .brand span:last-child { display: none; }
   nav {
-    position: fixed;
+    position: fixed !important;
     left: 0;
     right: 0;
+    top: auto !important;
     bottom: 0;
     z-index: 10;
     display: grid;
