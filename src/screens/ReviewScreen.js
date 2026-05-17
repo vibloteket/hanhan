@@ -48,7 +48,7 @@ export function ReviewScreen({ progress, setProgress, go }) {
       ` : current ? html`
         <${ExerciseCard}
           progress=${progress}
-          step=${{ kind: reviewKindFor(current.card), item: current.item }}
+          step=${{ kind: reviewKindFor(current.card, progress), item: current.item }}
           onAnswer=${answer}
         />
       ` : html`

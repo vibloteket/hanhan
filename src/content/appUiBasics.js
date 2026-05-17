@@ -9,8 +9,10 @@ export const appUiBasics = {
     {
       id: 'first-characters',
       titleSv: 'Första tecken',
-      descriptionSv: 'En mjuk start med korta en-teckenord innan längre knapptexter.',
+      descriptionSv: 'En mjuk start med korta en-teckenord och första pinyin-skrivningen innan längre knapptexter.',
       unlocksUiKeys: ['term.word', 'feedback.correct', 'feedback.wrong'],
+      unlocksExerciseTypes: ['type-pinyin'],
+      practiceModes: ['type-pinyin'],
       items: [
         { id: 'ui-chinese', sv: 'kinesiska / Kina', hanzi: '中', pinyin: 'zhōng', notesSv: 'Syns i appikonen. I ord som 中文 betyder det kinesiska språket.' },
         { id: 'ui-word', sv: 'ord', hanzi: '词', pinyin: 'cí', uiKey: 'term.word' },

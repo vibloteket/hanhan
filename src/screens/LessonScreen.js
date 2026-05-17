@@ -77,6 +77,7 @@ export function LessonScreen({ progress, setProgress, route, go }) {
           ? withCards.completedLessons
           : [...withCards.completedLessons, key],
         unlockedUiKeys: Array.from(new Set([...withCards.unlockedUiKeys, ...(lesson.unlocksUiKeys || [])])),
+        unlockedExerciseTypes: Array.from(new Set([...(withCards.unlockedExerciseTypes || []), ...(lesson.unlocksExerciseTypes || [])])),
         stats: {
           ...withCards.stats,
           lessonCompletions: (withCards.stats.lessonCompletions || 0) + 1,

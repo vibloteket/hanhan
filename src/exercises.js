@@ -18,18 +18,25 @@ export function pickChoices(item, field, count = 4) {
 
 export function lessonSteps(lesson) {
   const steps = [];
+  const practiceModes = lesson.practiceModes || [];
   for (const item of lesson.items) {
     steps.push({ kind: 'intro', item });
     steps.push({ kind: 'mc-zh-sv', item });
     steps.push({ kind: 'mc-sv-zh', item });
+    if (practiceModes.includes('type-pinyin')) steps.push({ kind: 'type-pinyin', item });
+    if (practiceModes.includes('type-hanzi')) steps.push({ kind: 'type-hanzi', item });
   }
   return steps;
 }
 
-export function reviewKindFor(card) {
+export function reviewKindFor(card, progress) {
   const streak = card?.correctStreak || 0;
   const seen = card?.seenCount || 0;
-  if (streak >= 3) return 'type-hanzi';
-  if (streak >= 1 || seen >= 2) return 'type-pinyin';
+  const unlocked = progress?.unlockedExerciseTypes || [];
+  const canTypePinyin = unlocked.includes('type-pinyin');
+  const canTypeHanzi = unlocked.includes('type-hanzi');
+
+  if (canTypeHanzi && streak >= 3) return 'type-hanzi';
+  if (canTypePinyin && (streak >= 1 || seen >= 2)) return 'type-pinyin';
   return seen % 2 === 0 ? 'mc-zh-sv' : 'mc-sv-zh';
 }
