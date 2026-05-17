@@ -87,12 +87,24 @@ export function LessonScreen({ progress, setProgress, route, go }) {
     go('home');
   }
 
+  function cancelLesson() {
+    if (!confirm('Avbryta den här lektionen? Din pågående session tas bort, men tidigare klara lektioner påverkas inte.')) return;
+    setProgress((currentProgress) => ({
+      ...currentProgress,
+      activeSession: matchingSession(currentProgress, route) ? null : currentProgress.activeSession,
+    }));
+    go('pack', { packId: route.packId });
+  }
+
   const correctCount = answers.filter((answer) => answer.correct).length;
 
   return html`
     <section class="screen lesson-screen">
       <div class="top-row">
-        <${Button} progress=${progress} labelKey="action.back" kind="ghost" onClick=${() => go('pack', { packId: route.packId })} />
+        <div class="top-actions">
+          <${Button} progress=${progress} labelKey="action.back" kind="ghost" onClick=${() => go('pack', { packId: route.packId })} />
+          <button class="link-button danger-link" onClick=${cancelLesson}>Avbryt lektion</button>
+        </div>
         <span class="pill">${Math.min(index + 1, steps.length)}/${steps.length}</span>
       </div>
       <h1>${lesson.titleSv}</h1>

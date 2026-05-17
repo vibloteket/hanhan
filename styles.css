@@ -61,6 +61,8 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 .pill { display: inline-flex; align-items: center; border-radius: 999px; padding: 6px 10px; background: #f4e8d8; color: #6f4d23; font-weight: 750; }
 
 .top-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.top-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.danger-link { color: var(--red-dark); }
 .progress-bar { height: 10px; border-radius: 999px; background: #eadfce; overflow: hidden; margin: 12px 0 18px; }
 .progress-bar span { display: block; height: 100%; background: linear-gradient(90deg, var(--red), var(--gold)); }
 .exercise-card { display: grid; gap: 16px; border: 1px solid var(--line); border-radius: 28px; padding: 22px; background: var(--panel); box-shadow: var(--shadow); }
@@ -106,6 +108,8 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
   .lesson-row .button { grid-column: 1 / -1; }
   .choice-grid, .answer-form { grid-template-columns: 1fr; }
   .ongoing-session { align-items: stretch; flex-direction: column; }
+  .top-row { align-items: flex-start; }
+  .top-actions { gap: 6px; }
   .learned-card { grid-template-columns: 1fr; }
   .learned-meta { justify-items: start; text-align: left; }
   .hero h1 { font-size: clamp(1.8rem, 11vw, 3.1rem); letter-spacing: -.04em; }
