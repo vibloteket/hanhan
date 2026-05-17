@@ -14,6 +14,7 @@ export function PackScreen({ progress, route, go }) {
       <div class="lesson-list">
         ${pack.lessons.map((lesson, index) => {
           const done = progress.completedLessons.includes(lessonKey(pack.id, lesson.id));
+          const active = progress.activeSession?.type === 'lesson' && progress.activeSession.packId === pack.id && progress.activeSession.lessonId === lesson.id;
           return html`
             <article class=${`lesson-row ${done ? 'done' : ''}`} key=${lesson.id}>
               <div class="lesson-number">${index + 1}</div>
@@ -22,7 +23,7 @@ export function PackScreen({ progress, route, go }) {
                 <p>${lesson.descriptionSv}</p>
               </div>
               <button class="button secondary" onClick=${() => go('lesson', { packId: pack.id, lessonId: lesson.id })}>
-                ${done ? 'Öva igen' : 'Starta'}
+                ${active ? 'Fortsätt' : done ? 'Öva igen' : 'Starta'}
               </button>
             </article>
           `;

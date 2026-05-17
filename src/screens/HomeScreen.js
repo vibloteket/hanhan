@@ -1,11 +1,16 @@
 import { html } from '../html.js';
-import { packs, findNextLesson, allItems } from '../content/packs.js';
+import { packs, findNextLesson, allItems, getLesson } from '../content/packs.js';
 import { dueCards } from '../srs.js';
 import { Button } from '../components/Button.js';
 import { UiText } from '../components/UiText.js';
 
 export function HomeScreen({ progress, go }) {
-  const next = findNextLesson(progress);
+  const activeLesson = progress.activeSession?.type === 'lesson'
+    ? getLesson(progress.activeSession.packId, progress.activeSession.lessonId)
+    : null;
+  const next = activeLesson
+    ? { packId: progress.activeSession.packId, lessonId: progress.activeSession.lessonId }
+    : findNextLesson(progress);
   const dueCount = dueCards(progress, allItems).length;
   const completedCount = progress.completedLessons.length;
 
@@ -17,11 +22,21 @@ export function HomeScreen({ progress, go }) {
       </div>
       <div class="hero-actions">
         ${next ? html`
-          <${Button} progress=${progress} labelKey=${completedCount ? 'action.continue' : 'action.start'} onClick=${() => go('lesson', next)} />
+          <${Button} progress=${progress} labelKey=${activeLesson || completedCount ? 'action.continue' : 'action.start'} onClick=${() => go('lesson', next)} />
         ` : html`<${Button} progress=${progress} labelKey="action.review" onClick=${() => go('review')} />`}
         <${Button} progress=${progress} labelKey="action.review" kind="secondary" onClick=${() => go('review')} />
       </div>
     </section>
+
+    ${activeLesson ? html`
+      <section class="screen panel ongoing-session">
+        <div>
+          <h2>Pågående session</h2>
+          <p>Du är mitt i lektionen <strong>${activeLesson.titleSv}</strong>. Steg ${progress.activeSession.index + 1}.</p>
+        </div>
+        <${Button} progress=${progress} labelKey="action.continue" onClick=${() => go('lesson', next)} />
+      </section>
+    ` : null}
 
     <section class="stats-grid">
       <div class="stat-card"><strong>${dueCount}</strong><span>kort att repetera</span></div>

@@ -7,6 +7,7 @@ export function createDefaultProgress() {
     completedLessons: [],
     unlockedUiKeys: [],
     cards: {},
+    activeSession: null,
     stats: {
       startedAt: new Date().toISOString(),
       lessonCompletions: 0,
@@ -29,6 +30,7 @@ export function normalizeProgress(input) {
     completedLessons: Array.isArray(input.completedLessons) ? input.completedLessons : [],
     unlockedUiKeys: Array.isArray(input.unlockedUiKeys) ? input.unlockedUiKeys : [],
     cards: input.cards && typeof input.cards === 'object' ? input.cards : {},
+    activeSession: input.activeSession && typeof input.activeSession === 'object' ? input.activeSession : null,
     stats: { ...defaults.stats, ...(input.stats || {}) },
     settings: { ...defaults.settings, ...(input.settings || {}) },
   };

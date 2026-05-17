@@ -40,6 +40,9 @@ nav button { border: 1px solid var(--line); background: var(--panel); border-rad
 
 .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
 .stat-card, .panel { border: 1px solid var(--line); border-radius: 20px; padding: 16px; background: var(--panel); }
+.ongoing-session { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.ongoing-session h2 { margin: 0 0 4px; }
+.ongoing-session p { margin: 0; color: var(--muted); }
 .stat-card strong { display: block; font-size: 1.8rem; }
 .stat-card span { color: var(--muted); font-size: .92rem; }
 
@@ -86,5 +89,6 @@ nav button { border: 1px solid var(--line); background: var(--panel); border-rad
   .lesson-row { grid-template-columns: auto 1fr; }
   .lesson-row .button { grid-column: 1 / -1; }
   .choice-grid, .answer-form { grid-template-columns: 1fr; }
+  .ongoing-session { align-items: stretch; flex-direction: column; }
   .hero { padding: 20px; border-radius: 22px; }
 }

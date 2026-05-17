@@ -1,25 +1,69 @@
 import { html } from '../html.js';
-import { useMemo, useState } from 'preact/hooks';
+import { useEffect, useMemo, useState } from 'preact/hooks';
 import { getLesson, lessonKey } from '../content/packs.js';
 import { lessonSteps } from '../exercises.js';
 import { ensureCards } from '../srs.js';
 import { Button } from '../components/Button.js';
 import { ExerciseCard } from '../components/ExerciseCard.js';
 
+function matchingSession(progress, route) {
+  const session = progress.activeSession;
+  return session?.type === 'lesson' && session.packId === route.packId && session.lessonId === route.lessonId
+    ? session
+    : null;
+}
+
 export function LessonScreen({ progress, setProgress, route, go }) {
   const lesson = getLesson(route.packId, route.lessonId);
-  const [index, setIndex] = useState(0);
-  const [answers, setAnswers] = useState([]);
+  const savedSession = matchingSession(progress, route);
+  const [index, setIndex] = useState(() => savedSession?.index || 0);
+  const [answers, setAnswers] = useState(() => savedSession?.answers || []);
   const steps = useMemo(() => lesson ? lessonSteps(lesson) : [], [lesson]);
+
+  useEffect(() => {
+    if (!lesson) return;
+    setProgress((currentProgress) => {
+      const currentSession = matchingSession(currentProgress, route);
+      if (currentSession) return currentProgress;
+      return {
+        ...currentProgress,
+        activeSession: {
+          type: 'lesson',
+          packId: route.packId,
+          lessonId: route.lessonId,
+          index: 0,
+          answers: [],
+          updatedAt: new Date().toISOString(),
+        },
+      };
+    });
+  }, [lesson, route.packId, route.lessonId, setProgress]);
 
   if (!lesson) return html`<section class="screen"><p>Lektionen hittades inte.</p></section>`;
 
   const current = steps[index];
   const finished = index >= steps.length;
 
+  function saveSession(nextIndex, nextAnswers) {
+    setProgress((currentProgress) => ({
+      ...currentProgress,
+      activeSession: {
+        type: 'lesson',
+        packId: route.packId,
+        lessonId: route.lessonId,
+        index: nextIndex,
+        answers: nextAnswers,
+        updatedAt: new Date().toISOString(),
+      },
+    }));
+  }
+
   function advance(result = null) {
-    if (result) setAnswers((previous) => [...previous, result]);
-    setIndex((value) => value + 1);
+    const nextIndex = index + 1;
+    const nextAnswers = result ? [...answers, result] : answers;
+    setAnswers(nextAnswers);
+    setIndex(nextIndex);
+    saveSession(nextIndex, nextAnswers);
   }
 
   function completeLesson() {
@@ -28,6 +72,7 @@ export function LessonScreen({ progress, setProgress, route, go }) {
       const withCards = ensureCards(currentProgress, lesson.items);
       return {
         ...withCards,
+        activeSession: null,
         completedLessons: withCards.completedLessons.includes(key)
           ? withCards.completedLessons
           : [...withCards.completedLessons, key],
