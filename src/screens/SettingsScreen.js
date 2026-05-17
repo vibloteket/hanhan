@@ -38,9 +38,9 @@ export function SettingsScreen({ progress, setProgress, go }) {
   }
 
   function resetProgress() {
-    if (confirm('Nollställa all progress på den här enheten?')) {
+    if (confirm('Nollställa all inlärningsdata på den här enheten?')) {
       setProgress(createDefaultProgress());
-      setMessage('Progress nollställd.');
+      setMessage('Inlärningsdata nollställd.');
     }
   }
 
@@ -59,7 +59,7 @@ export function SettingsScreen({ progress, setProgress, go }) {
 
       <section class="panel">
         <h2>Data</h2>
-        <p>Progress sparas i den här webbläsaren. Export/import skyddar vid byte av mobil, webbläsare eller host.</p>
+        <p>Din inlärningsdata sparas i den här webbläsaren. Export/import skyddar vid byte av mobil, webbläsare eller host.</p>
         <div class="button-row">
           <${Button} progress=${progress} labelKey="action.export" onClick=${exportBackup} />
           <${Button} progress=${progress} labelKey="action.import" kind="secondary" onClick=${() => fileRef.current?.click()} />
