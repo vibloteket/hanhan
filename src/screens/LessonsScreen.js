@@ -2,6 +2,18 @@ import { html } from '../html.js';
 import { packs, lessonKey } from '../content/packs.js';
 import { Button } from '../components/Button.js';
 
+function formatDateTime(value) {
+  if (!value) return '';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
+  return date.toLocaleString('sv-SE', {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
 export function LessonsScreen({ progress, go }) {
   return html`
     <section class="screen lessons-screen">
@@ -14,12 +26,16 @@ export function LessonsScreen({ progress, go }) {
           const key = lessonKey(pack.id, lesson.id);
           const done = progress.completedLessons.includes(key);
           const active = progress.activeSession?.type === 'lesson' && progress.activeSession.packId === pack.id && progress.activeSession.lessonId === lesson.id;
+          const completedAt = formatDateTime(progress.lessonMeta?.[key]?.completedAt);
+          const startedAt = active ? formatDateTime(progress.activeSession?.startedAt) : '';
           return html`
             <article class=${`lesson-row ${done ? 'done' : ''}`} key=${key}>
               <div class="lesson-number">${index + 1}</div>
               <div>
                 <h3>${lesson.titleSv}</h3>
                 <p>${pack.titleSv} · ${lesson.descriptionSv}</p>
+                ${active && startedAt ? html`<div class="muted small lesson-date">Startad: ${startedAt}</div>` : null}
+                ${done && completedAt ? html`<div class="muted small lesson-date">Klar: ${completedAt}</div>` : null}
               </div>
               <div class="lesson-row-actions">
                 ${active ? html`<span class="status-chip learning">Pågående</span>` : done ? html`<span class="status-chip strong">Klar</span>` : html`<span class="status-chip weak">Ej klar</span>`}

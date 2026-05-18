@@ -25,6 +25,7 @@ export function LessonScreen({ progress, setProgress, route, go }) {
     setProgress((currentProgress) => {
       const currentSession = matchingSession(currentProgress, route);
       if (currentSession) return currentProgress;
+      const now = new Date().toISOString();
       return {
         ...currentProgress,
         activeSession: {
@@ -33,7 +34,8 @@ export function LessonScreen({ progress, setProgress, route, go }) {
           lessonId: route.lessonId,
           index: 0,
           answers: [],
-          updatedAt: new Date().toISOString(),
+          startedAt: now,
+          updatedAt: now,
         },
       };
     });
@@ -45,17 +47,21 @@ export function LessonScreen({ progress, setProgress, route, go }) {
   const finished = index >= steps.length;
 
   function saveSession(nextIndex, nextAnswers) {
-    setProgress((currentProgress) => ({
-      ...currentProgress,
-      activeSession: {
-        type: 'lesson',
-        packId: route.packId,
-        lessonId: route.lessonId,
-        index: nextIndex,
-        answers: nextAnswers,
-        updatedAt: new Date().toISOString(),
-      },
-    }));
+    setProgress((currentProgress) => {
+      const now = new Date().toISOString();
+      return {
+        ...currentProgress,
+        activeSession: {
+          type: 'lesson',
+          packId: route.packId,
+          lessonId: route.lessonId,
+          index: nextIndex,
+          answers: nextAnswers,
+          startedAt: matchingSession(currentProgress, route)?.startedAt || now,
+          updatedAt: now,
+        },
+      };
+    });
   }
 
   function advance(result = null) {
@@ -69,6 +75,8 @@ export function LessonScreen({ progress, setProgress, route, go }) {
   function completeLesson() {
     setProgress((currentProgress) => {
       const key = lessonKey(route.packId, route.lessonId);
+      const now = new Date().toISOString();
+      const session = matchingSession(currentProgress, route);
       const withCards = ensureCards(currentProgress, lesson.items);
       return {
         ...withCards,
@@ -76,6 +84,14 @@ export function LessonScreen({ progress, setProgress, route, go }) {
         completedLessons: withCards.completedLessons.includes(key)
           ? withCards.completedLessons
           : [...withCards.completedLessons, key],
+        lessonMeta: {
+          ...(withCards.lessonMeta || {}),
+          [key]: {
+            ...(withCards.lessonMeta?.[key] || {}),
+            startedAt: session?.startedAt || withCards.lessonMeta?.[key]?.startedAt || now,
+            completedAt: now,
+          },
+        },
         unlockedUiKeys: Array.from(new Set([...withCards.unlockedUiKeys, ...(lesson.unlocksUiKeys || [])])),
         unlockedExerciseTypes: Array.from(new Set([...(withCards.unlockedExerciseTypes || []), ...(lesson.unlocksExerciseTypes || [])])),
         stats: {

@@ -64,6 +64,7 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 .pack-card p, .lesson-row p { margin: 0; }
 .lesson-row { grid-template-columns: auto 1fr auto; }
 .lesson-row.done { background: #f7fff5; }
+.lesson-date { margin-top: 4px; }
 .lesson-row-actions { display: flex; align-items: center; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
 .lesson-number { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 12px; background: #f7e5c3; font-weight: 800; }
 .pill { display: inline-flex; align-items: center; border-radius: 999px; padding: 6px 10px; background: #f4e8d8; color: #6f4d23; font-weight: 750; }

@@ -5,6 +5,7 @@ export function createDefaultProgress() {
   return {
     schemaVersion: 1,
     completedLessons: [],
+    lessonMeta: {},
     unlockedUiKeys: [],
     unlockedExerciseTypes: [],
     cards: {},
@@ -29,6 +30,7 @@ export function normalizeProgress(input) {
     ...defaults,
     ...input,
     completedLessons: Array.isArray(input.completedLessons) ? input.completedLessons : [],
+    lessonMeta: input.lessonMeta && typeof input.lessonMeta === 'object' ? input.lessonMeta : {},
     unlockedUiKeys: Array.isArray(input.unlockedUiKeys) ? input.unlockedUiKeys : [],
     unlockedExerciseTypes: Array.isArray(input.unlockedExerciseTypes) ? input.unlockedExerciseTypes : [],
     cards: input.cards && typeof input.cards === 'object' ? input.cards : {},
