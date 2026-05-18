@@ -1,21 +1,25 @@
 import { html } from '../html.js';
 import { useMemo, useState } from 'preact/hooks';
-import { allItems } from '../content/packs.js';
+import { allItems, itemById } from '../content/packs.js';
 import { dueCards, updateCard } from '../srs.js';
 import { reviewKindFor } from '../exercises.js';
 import { Button } from '../components/Button.js';
 import { ExerciseCard } from '../components/ExerciseCard.js';
 
 export function ReviewScreen({ progress, setProgress, go }) {
-  const queue = useMemo(() => dueCards(progress, allItems), [progress]);
-  const [index, setIndex] = useState(0);
-  const current = queue[index];
+  const initialQueueIds = useMemo(() => dueCards(progress, allItems).map(({ item }) => item.id), []);
+  const [queueIds, setQueueIds] = useState(initialQueueIds);
+  const [answeredCount, setAnsweredCount] = useState(0);
+  const currentItem = itemById[queueIds[0]];
+  const currentCard = currentItem ? progress.cards[currentItem.id] : null;
+  const remainingCount = queueIds.length;
+  const totalCount = answeredCount + remainingCount;
 
   function answer(result) {
-    if (!current) return;
+    if (!currentItem) return;
     setProgress((currentProgress) => {
-      const oldCard = currentProgress.cards[current.item.id];
-      const cards = { ...currentProgress.cards, [current.item.id]: updateCard(oldCard, result) };
+      const oldCard = currentProgress.cards[currentItem.id];
+      const cards = { ...currentProgress.cards, [currentItem.id]: updateCard(oldCard, result) };
       return {
         ...currentProgress,
         cards,
@@ -26,7 +30,11 @@ export function ReviewScreen({ progress, setProgress, go }) {
         },
       };
     });
-    setIndex((value) => value + 1);
+    setQueueIds((currentQueue) => {
+      const [, ...rest] = currentQueue;
+      return result.correct ? rest : [...rest, currentItem.id];
+    });
+    setAnsweredCount((value) => value + 1);
   }
 
   return html`
@@ -35,26 +43,26 @@ export function ReviewScreen({ progress, setProgress, go }) {
         <button class="brand-mark mini" onClick=${() => go('home')} aria-label="Hem"><img src="./assets/icons/icon.svg" alt="" /></button>
         <${Button} progress=${progress} labelKey="action.back" kind="ghost" onClick=${() => go('home')} />
         <span class="focus-spacer"></span>
-        <span class="pill">${Math.min(index + 1, queue.length)}/${queue.length}</span>
+        <span class="pill">${totalCount ? `${Math.min(answeredCount + 1, totalCount)}/${totalCount}` : '0/0'}</span>
       </div>
       <h1>Repetition</h1>
 
-      ${!queue.length ? html`
+      ${!initialQueueIds.length ? html`
         <section class="exercise-card complete-card">
           <h2>Inget att repetera just nu</h2>
           <p>Gör en ny lektion eller kom tillbaka senare.</p>
           <${Button} progress=${progress} labelKey="nav.home" onClick=${() => go('home')} />
         </section>
-      ` : current ? html`
+      ` : currentItem ? html`
         <${ExerciseCard}
           progress=${progress}
-          step=${{ kind: reviewKindFor(current.card, progress), item: current.item }}
+          step=${{ kind: reviewKindFor(currentCard, progress), item: currentItem }}
           onAnswer=${answer}
         />
       ` : html`
         <section class="exercise-card complete-card">
           <h2>Klar för nu</h2>
-          <p>Bra jobbat. Felaktiga svar kommer tillbaka snart.</p>
+          <p>Bra jobbat. Om du missade något fick det komma tillbaka i samma runda.</p>
           <${Button} progress=${progress} labelKey="nav.home" onClick=${() => go('home')} />
         </section>
       `}
