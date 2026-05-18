@@ -1,13 +1,14 @@
 import { html } from '../html.js';
 import { useMemo, useState } from 'preact/hooks';
 import { allItems, itemById } from '../content/packs.js';
-import { dueCards, updateCard } from '../srs.js';
+import { updateCard } from '../srs.js';
 import { reviewKindFor } from '../exercises.js';
+import { answerReviewQueue, createReviewQueue, reviewProgressLabel } from '../reviewQueue.js';
 import { Button } from '../components/Button.js';
 import { ExerciseCard } from '../components/ExerciseCard.js';
 
 export function ReviewScreen({ progress, setProgress, go }) {
-  const initialQueueIds = useMemo(() => dueCards(progress, allItems).map(({ item }) => item.id), []);
+  const initialQueueIds = useMemo(() => createReviewQueue(progress, allItems), []);
   const [queueIds, setQueueIds] = useState(initialQueueIds);
   const [answeredCount, setAnsweredCount] = useState(0);
   const currentItem = itemById[queueIds[0]];
@@ -30,10 +31,7 @@ export function ReviewScreen({ progress, setProgress, go }) {
         },
       };
     });
-    setQueueIds((currentQueue) => {
-      const [, ...rest] = currentQueue;
-      return result.correct ? rest : [...rest, currentItem.id];
-    });
+    setQueueIds((currentQueue) => answerReviewQueue(currentQueue, currentItem.id, result));
     setAnsweredCount((value) => value + 1);
   }
 
@@ -43,7 +41,7 @@ export function ReviewScreen({ progress, setProgress, go }) {
         <button class="brand-mark mini" onClick=${() => go('home')} aria-label="Hem"><img src="./assets/icons/icon.svg" alt="" /></button>
         <${Button} progress=${progress} labelKey="action.back" kind="ghost" onClick=${() => go('home')} />
         <span class="focus-spacer"></span>
-        <span class="pill">${totalCount ? `${Math.min(answeredCount + 1, totalCount)}/${totalCount}` : '0/0'}</span>
+        <span class="pill">${reviewProgressLabel(answeredCount, remainingCount)}</span>
       </div>
       <h1>Repetition</h1>
 
