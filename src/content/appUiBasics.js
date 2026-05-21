@@ -25,6 +25,7 @@ export const appUiBasics = {
       titleSv: 'Navigation',
       descriptionSv: 'Start, hem, tillbaka och inställningar.',
       unlocksUiKeys: ['app.title', 'nav.home', 'action.start', 'action.back', 'settings.title'],
+      practiceModes: ['type-pinyin'],
       items: [
         { id: 'ui-start', sv: 'starta / börja', hanzi: '开始', pinyin: 'kāishǐ', uiKey: 'action.start', notesSv: 'Vanligt för Start eller Börja.' },
         { id: 'ui-home', sv: 'hem / startsida', hanzi: '首页', pinyin: 'shǒuyè', uiKey: 'nav.home', notesSv: 'Betyder ungefär förstasida/startsida.' },
@@ -37,6 +38,7 @@ export const appUiBasics = {
       titleSv: 'Lära och repetera',
       descriptionSv: 'Ord för själva lärandet.',
       unlocksUiKeys: ['action.continue', 'action.review', 'action.learn', 'action.practice', 'lesson.title'],
+      practiceModes: ['type-pinyin'],
       items: [
         { id: 'ui-continue', sv: 'fortsätt', hanzi: '继续', pinyin: 'jìxù', uiKey: 'action.continue' },
         { id: 'ui-review', sv: 'repetera', hanzi: '复习', pinyin: 'fùxí', uiKey: 'action.review' },
@@ -50,6 +52,7 @@ export const appUiBasics = {
       titleSv: 'Svar och feedback',
       descriptionSv: 'Svar, visa svar och nästa.',
       unlocksUiKeys: ['term.answer', 'action.next', 'action.showAnswer', 'feedback.easy', 'feedback.hard'],
+      practiceModes: ['type-pinyin'],
       items: [
         { id: 'ui-answer', sv: 'svar', hanzi: '答案', pinyin: 'dá’àn', uiKey: 'term.answer' },
         { id: 'ui-next', sv: 'nästa', hanzi: '下一个', pinyin: 'xià yí ge', uiKey: 'action.next' },
@@ -61,6 +64,7 @@ export const appUiBasics = {
       titleSv: 'Ordlista och data',
       descriptionSv: 'Ord för dagens repetition, språk och backup.',
       unlocksUiKeys: ['nav.progress', 'status.today', 'status.due', 'status.language', 'action.export', 'action.import', 'action.reset', 'action.save', 'action.cancel'],
+      practiceModes: ['type-pinyin'],
       items: [
         { id: 'ui-progress', sv: 'ordlista / lista med ord', hanzi: '词表', pinyin: 'cíbiǎo', uiKey: 'nav.progress' },
         { id: 'ui-today', sv: 'idag', hanzi: '今天', pinyin: 'jīntiān', uiKey: 'status.today' },

@@ -11,6 +11,7 @@ export const homeBasics = {
       titleSv: 'Familj',
       descriptionSv: 'De första familjeorden.',
       unlocksUiKeys: [],
+      practiceModes: ['type-pinyin'],
       items: [
         { id: 'home-mom', sv: 'mamma', hanzi: '妈妈', pinyin: 'māma', notesSv: 'Vanligt familjeord.' },
         { id: 'home-dad', sv: 'pappa', hanzi: '爸爸', pinyin: 'bàba' },
@@ -24,6 +25,7 @@ export const homeBasics = {
       titleSv: 'Korta vardagsfraser',
       descriptionSv: 'Sånt man ofta säger hemma till barn.',
       unlocksUiKeys: [],
+      practiceModes: ['type-pinyin'],
       items: [
         { id: 'home-come-here', sv: 'kom hit', hanzi: '过来', pinyin: 'guòlái' },
         { id: 'home-wait', sv: 'vänta lite', hanzi: '等一下', pinyin: 'děng yíxià' },
@@ -37,6 +39,7 @@ export const homeBasics = {
       titleSv: 'Äta, dricka, sova',
       descriptionSv: 'Mycket vanliga ord hemma.',
       unlocksUiKeys: [],
+      practiceModes: ['type-pinyin'],
       items: [
         { id: 'home-eat', sv: 'äta mat', hanzi: '吃饭', pinyin: 'chīfàn' },
         { id: 'home-drink-water', sv: 'dricka vatten', hanzi: '喝水', pinyin: 'hē shuǐ' },

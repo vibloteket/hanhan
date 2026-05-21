@@ -18,7 +18,7 @@ export function LessonScreen({ progress, setProgress, route, go }) {
   const savedSession = matchingSession(progress, route);
   const [index, setIndex] = useState(() => savedSession?.index || 0);
   const [answers, setAnswers] = useState(() => savedSession?.answers || []);
-  const steps = useMemo(() => lesson ? lessonSteps(lesson) : [], [lesson]);
+  const steps = useMemo(() => lesson ? lessonSteps(lesson, progress) : [], [lesson, progress]);
 
   useEffect(() => {
     if (!lesson) return;

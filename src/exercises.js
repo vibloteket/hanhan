@@ -16,9 +16,13 @@ export function pickChoices(item, field, count = 4) {
     .map((candidate) => ({ id: candidate.id, label: candidate[field] }));
 }
 
-export function lessonSteps(lesson) {
+export function lessonSteps(lesson, progress = null) {
   const steps = [];
-  const practiceModes = lesson.practiceModes || [];
+  const unlockedExerciseTypes = progress?.unlockedExerciseTypes || [];
+  const introducedHere = lesson.unlocksExerciseTypes || [];
+  const practiceModes = (lesson.practiceModes || []).filter((mode) =>
+    unlockedExerciseTypes.includes(mode) || introducedHere.includes(mode)
+  );
   for (const item of lesson.items) {
     steps.push({ kind: 'intro', item });
     steps.push({ kind: 'mc-zh-sv', item });

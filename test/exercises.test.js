@@ -11,8 +11,16 @@ test('normal lessons are recognition-first by default', () => {
 });
 
 test('lessons can explicitly introduce typing practice', () => {
-  const lesson = { practiceModes: ['type-pinyin'], items: [{ id: 'a' }] };
+  const lesson = { practiceModes: ['type-pinyin'], unlocksExerciseTypes: ['type-pinyin'], items: [{ id: 'a' }] };
   assert.deepEqual(lessonSteps(lesson).map((step) => step.kind), [
+    'intro', 'mc-zh-sv', 'mc-sv-zh', 'type-pinyin',
+  ]);
+});
+
+test('lessons only use already introduced practice modes', () => {
+  const lesson = { practiceModes: ['type-pinyin'], items: [{ id: 'a' }] };
+  assert.deepEqual(lessonSteps(lesson).map((step) => step.kind), ['intro', 'mc-zh-sv', 'mc-sv-zh']);
+  assert.deepEqual(lessonSteps(lesson, { unlockedExerciseTypes: ['type-pinyin'] }).map((step) => step.kind), [
     'intro', 'mc-zh-sv', 'mc-sv-zh', 'type-pinyin',
   ]);
 });
