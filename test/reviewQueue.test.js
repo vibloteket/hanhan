@@ -8,21 +8,38 @@ const itemById = Object.fromEntries(items.map((item) => [item.id, item]));
 test('review queue contains due cards sorted by due time', () => {
   const progress = {
     cards: {
-      a: { dueAt: '2026-01-01T10:00:00.000Z' },
-      b: { dueAt: '2026-01-01T09:00:00.000Z' },
-      c: { dueAt: '2099-01-01T09:00:00.000Z' },
+      a: { dueAt: '2026-01-01T10:00:00.000Z', seenCount: 0 },
+      b: { dueAt: '2026-01-01T09:00:00.000Z', seenCount: 0 },
+      c: { dueAt: '2099-01-01T09:00:00.000Z', seenCount: 0 },
     },
   };
-  assert.deepEqual(createReviewQueue(progress, items), ['b', 'a']);
+  assert.deepEqual(createReviewQueue(progress, items), [
+    { itemId: 'b', kind: 'mc-zh-sv' },
+    { itemId: 'a', kind: 'mc-zh-sv' },
+  ]);
 });
 
-test('correct answers remove card and wrong answers requeue it at the end', () => {
-  assert.deepEqual(answerReviewQueue(['a', 'b'], 'a', { correct: true }), ['b']);
-  assert.deepEqual(answerReviewQueue(['a', 'b'], 'a', { correct: false }), ['b', 'a']);
+test('review queue includes pinyin entries after pinyin has been introduced', () => {
+  const progress = {
+    completedLessons: ['app-ui-basics/first-characters'],
+    cards: {
+      a: { dueAt: '2026-01-01T10:00:00.000Z', seenCount: 0 },
+    },
+  };
+  assert.deepEqual(createReviewQueue(progress, [items[0]]), [
+    { itemId: 'a', kind: 'mc-zh-sv' },
+    { itemId: 'a', kind: 'type-pinyin' },
+  ]);
+});
+
+test('correct answers remove entry and wrong answers requeue that entry at the end', () => {
+  const queue = [{ itemId: 'a', kind: 'type-pinyin' }, { itemId: 'b', kind: 'mc-zh-sv' }];
+  assert.deepEqual(answerReviewQueue(queue, { correct: true }), [{ itemId: 'b', kind: 'mc-zh-sv' }]);
+  assert.deepEqual(answerReviewQueue(queue, { correct: false }), [{ itemId: 'b', kind: 'mc-zh-sv' }, { itemId: 'a', kind: 'type-pinyin' }]);
 });
 
 test('current review item and progress label are deterministic', () => {
-  assert.equal(currentReviewItem(['b', 'a'], itemById).id, 'b');
+  assert.equal(currentReviewItem([{ itemId: 'b', kind: 'mc-zh-sv' }, { itemId: 'a', kind: 'mc-zh-sv' }], itemById).id, 'b');
   assert.equal(currentReviewItem([], itemById), null);
   assert.equal(reviewProgressLabel(0, 3), '1/3');
   assert.equal(reviewProgressLabel(2, 1), '3/3');

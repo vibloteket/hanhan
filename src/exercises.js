@@ -1,4 +1,4 @@
-import { allItems } from './content/packs.js';
+import { allItems, allLessons, lessonKey } from './content/packs.js';
 
 function hash(text) {
   let value = 0;
@@ -33,14 +33,27 @@ export function lessonSteps(lesson, progress = null) {
   return steps;
 }
 
-export function reviewKindFor(card, progress) {
+export function unlockedExerciseTypesFor(progress) {
+  const unlocked = new Set(progress?.unlockedExerciseTypes || []);
+  const completed = new Set(progress?.completedLessons || []);
+  for (const lesson of allLessons) {
+    if (!completed.has(lessonKey(lesson.packId, lesson.id))) continue;
+    for (const type of lesson.unlocksExerciseTypes || []) unlocked.add(type);
+  }
+  return unlocked;
+}
+
+export function reviewKindsFor(card, progress) {
   const streak = card?.correctStreak || 0;
   const seen = card?.seenCount || 0;
-  const unlocked = progress?.unlockedExerciseTypes || [];
-  const canTypePinyin = unlocked.includes('type-pinyin');
-  const canTypeHanzi = unlocked.includes('type-hanzi');
+  const unlocked = unlockedExerciseTypesFor(progress);
+  const kinds = [seen % 2 === 0 ? 'mc-zh-sv' : 'mc-sv-zh'];
 
-  if (canTypeHanzi && streak >= 3) return 'type-hanzi';
-  if (canTypePinyin && (streak >= 1 || seen >= 2)) return 'type-pinyin';
-  return seen % 2 === 0 ? 'mc-zh-sv' : 'mc-sv-zh';
+  if (unlocked.has('type-pinyin')) kinds.push('type-pinyin');
+  if (unlocked.has('type-hanzi') && streak >= 3) kinds.push('type-hanzi');
+  return kinds;
+}
+
+export function reviewKindFor(card, progress) {
+  return reviewKindsFor(card, progress).at(-1);
 }
