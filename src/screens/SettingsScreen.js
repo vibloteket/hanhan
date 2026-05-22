@@ -60,12 +60,12 @@ export function SettingsScreen({ progress, setProgress, go }) {
       <section class="panel">
         <h2>Data</h2>
         <p>Din inlärningsdata sparas i den här webbläsaren. Export/import skyddar vid byte av mobil, webbläsare eller host.</p>
-        <div class="button-row">
+        <div class="settings-actions">
           <${Button} progress=${progress} labelKey="action.export" onClick=${exportBackup} />
           <${Button} progress=${progress} labelKey="action.import" kind="secondary" onClick=${() => fileRef.current?.click()} />
           <input ref=${fileRef} type="file" accept="application/json" hidden onChange=${importBackup} />
+          <${Button} progress=${progress} labelKey="action.reset" kind="danger" onClick=${resetProgress} />
         </div>
-        <${Button} progress=${progress} labelKey="action.reset" kind="danger" onClick=${resetProgress} />
       </section>
 
       ${message ? html`<p class="notice">${message}</p>` : null}

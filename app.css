@@ -95,6 +95,7 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 .complete-card { text-align: center; }
 
 .settings-screen label { display: block; margin: 10px 0; }
+.settings-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .notice { border-radius: 16px; padding: 12px; background: #eaf8ef; color: var(--green); }
 .muted { color: var(--muted); }
 .small { font-size: .9rem; }
@@ -120,6 +121,7 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
   .app-header { position: static; align-items: center; justify-content: flex-start; padding: 12px 0 4px; background: transparent; backdrop-filter: none; }
   .brand span:last-child { display: none; }
   .stats-grid, .summary-grid { grid-template-columns: 1fr; }
+  .settings-actions { align-items: stretch; flex-direction: column; }
   .lesson-row { grid-template-columns: auto 1fr; }
   .lesson-row .button { grid-column: 1 / -1; }
   .lesson-row-actions { grid-column: 1 / -1; align-items: stretch; flex-direction: column; }
