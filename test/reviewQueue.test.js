@@ -1,11 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { answerReviewQueue, createReviewQueue, currentReviewItem, reviewProgressLabel } from '../src/reviewQueue.js';
+import { answerReviewQueue, createReviewQueue, currentReviewItem, reviewProgressLabel, shuffleEntries } from '../src/reviewQueue.js';
 
 const items = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
 const itemById = Object.fromEntries(items.map((item) => [item.id, item]));
+const noShuffle = () => 0.999;
 
-test('review queue contains due cards sorted by due time', () => {
+test('review queue contains due cards sorted by due time before shuffling', () => {
   const progress = {
     cards: {
       a: { dueAt: '2026-01-01T10:00:00.000Z', seenCount: 0 },
@@ -13,10 +14,15 @@ test('review queue contains due cards sorted by due time', () => {
       c: { dueAt: '2099-01-01T09:00:00.000Z', seenCount: 0 },
     },
   };
-  assert.deepEqual(createReviewQueue(progress, items), [
+  assert.deepEqual(createReviewQueue(progress, items, noShuffle), [
     { itemId: 'b', kind: 'mc-zh-sv' },
     { itemId: 'a', kind: 'mc-zh-sv' },
   ]);
+});
+
+test('review queue can shuffle due cards for a less predictable session', () => {
+  const entries = [{ itemId: 'a' }, { itemId: 'b' }, { itemId: 'c' }];
+  assert.deepEqual(shuffleEntries(entries, () => 0), [{ itemId: 'b' }, { itemId: 'c' }, { itemId: 'a' }]);
 });
 
 test('review queue includes pinyin entries after pinyin has been introduced', () => {
@@ -26,9 +32,25 @@ test('review queue includes pinyin entries after pinyin has been introduced', ()
       a: { dueAt: '2026-01-01T10:00:00.000Z', seenCount: 0 },
     },
   };
-  assert.deepEqual(createReviewQueue(progress, [items[0]]), [
+  assert.deepEqual(createReviewQueue(progress, [items[0]], noShuffle), [
     { itemId: 'a', kind: 'mc-zh-sv' },
     { itemId: 'a', kind: 'type-pinyin' },
+  ]);
+});
+
+test('review queue separates first-round prompts from later typing prompts', () => {
+  const progress = {
+    completedLessons: ['app-ui-basics/first-characters'],
+    cards: {
+      a: { dueAt: '2026-01-01T09:00:00.000Z', seenCount: 0 },
+      b: { dueAt: '2026-01-01T10:00:00.000Z', seenCount: 0 },
+    },
+  };
+  assert.deepEqual(createReviewQueue(progress, [items[0], items[1]], noShuffle), [
+    { itemId: 'a', kind: 'mc-zh-sv' },
+    { itemId: 'b', kind: 'mc-zh-sv' },
+    { itemId: 'a', kind: 'type-pinyin' },
+    { itemId: 'b', kind: 'type-pinyin' },
   ]);
 });
 
