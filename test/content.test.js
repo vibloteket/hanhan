@@ -51,3 +51,21 @@ test('lessons unlock only UI terms taught by that lesson', () => {
     }
   }
 });
+
+test('multi-character items build on an earlier learned component', () => {
+  for (const pack of packs) {
+    const seenHanzi = new Set();
+    for (const lesson of pack.lessons) {
+      for (const item of lesson.items) {
+        if (Array.from(item.hanzi).length > 1) {
+          assert.ok(item.components?.length, `${item.id} (${item.hanzi}) needs components`);
+          assert.ok(
+            item.components.some((component) => seenHanzi.has(component.hanzi)),
+            `${item.id} (${item.hanzi}) should reference at least one earlier component`
+          );
+        }
+        seenHanzi.add(item.hanzi);
+      }
+    }
+  }
+});
