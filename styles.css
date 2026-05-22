@@ -82,6 +82,9 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 .hanzi { font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif; word-break: keep-all; overflow-wrap: normal; white-space: nowrap; }
 .hanzi.big { font-size: clamp(4rem, 22vw, 8rem); line-height: 1; font-weight: 900; }
 .pinyin { color: var(--red-dark); font-size: 1.25rem; font-weight: 700; }
+.component-list { display: grid; gap: 8px; padding: 12px; border-radius: 18px; background: #fff8e8; border: 1px solid #ead8bd; }
+.component-part { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 10px; color: var(--muted); }
+.component-hanzi { display: inline-grid; place-items: center; min-width: 38px; min-height: 38px; padding: 4px 8px; border-radius: 12px; background: white; color: var(--red-dark); font-size: 1.35rem; font-weight: 900; }
 .choice-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 .choice { min-height: 58px; padding: 12px; border-radius: 18px; border: 1px solid var(--line); background: #fffaf0; font-weight: 750; }
 .answer-form { display: grid; grid-template-columns: 1fr auto; gap: 10px; }

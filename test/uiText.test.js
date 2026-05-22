@@ -4,7 +4,7 @@ import { isUnlocked, uiLabel, unlockedUiKeysFor } from '../src/uiText.js';
 
 test('UI labels unlock from completed lessons even if stored unlockedUiKeys is stale', () => {
   const progress = {
-    completedLessons: ['app-ui-basics/navigation'],
+    completedLessons: ['app-ui-basics/start-button'],
     unlockedUiKeys: [],
     settings: { uiMode: 'gradual-assisted' },
   };

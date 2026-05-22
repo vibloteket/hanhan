@@ -29,6 +29,16 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
         <div class="pinyin">${item.pinyin}</div>
         <h2>${item.sv}</h2>
         ${item.notesSv ? html`<p>${item.notesSv}</p>` : null}
+        ${item.components?.length ? html`
+          <div class="component-list" aria-label="Beståndsdelar">
+            ${item.components.map((part) => html`
+              <div class="component-part" key=${`${item.id}-${part.hanzi}`}>
+                <span class="hanzi component-hanzi">${part.hanzi}</span>
+                <span><strong>${part.pinyin}</strong> · ${part.sv}</span>
+              </div>
+            `)}
+          </div>
+        ` : null}
         <${Button} progress=${progress} labelKey="action.next" onClick=${next} />
       </section>
     `;
