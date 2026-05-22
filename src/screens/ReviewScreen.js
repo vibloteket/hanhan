@@ -10,6 +10,7 @@ export function ReviewScreen({ progress, setProgress, go }) {
   const initialQueue = useMemo(() => createReviewQueue(progress, allItems), []);
   const [queue, setQueue] = useState(initialQueue);
   const [answeredCount, setAnsweredCount] = useState(0);
+  const [deferredCount, setDeferredCount] = useState(0);
   const currentEntry = queue[0];
   const currentItem = currentEntry ? itemById[currentEntry.itemId] : null;
   const remainingCount = queue.length;
@@ -30,6 +31,9 @@ export function ReviewScreen({ progress, setProgress, go }) {
         },
       };
     });
+    if (!result.correct && (currentEntry.attempts || 0) >= 1) {
+      setDeferredCount((value) => value + 1);
+    }
     setQueue((currentQueue) => answerReviewQueue(currentQueue, result));
     setAnsweredCount((value) => value + 1);
   }
@@ -59,7 +63,7 @@ export function ReviewScreen({ progress, setProgress, go }) {
       ` : html`
         <section class="exercise-card complete-card">
           <h2>Klar för nu</h2>
-          <p>Bra jobbat. Om du missade något fick det komma tillbaka i samma runda.</p>
+          <p>${deferredCount ? `${deferredCount} svåra kort kommer tillbaka senare.` : 'Bra jobbat. Om du missade något fick det komma tillbaka i samma runda.'}</p>
           <${Button} progress=${progress} labelKey="nav.home" onClick=${() => go('home')} />
         </section>
       `}

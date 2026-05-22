@@ -15,8 +15,8 @@ test('review queue contains due cards sorted by due time before shuffling', () =
     },
   };
   assert.deepEqual(createReviewQueue(progress, items, noShuffle), [
-    { itemId: 'b', kind: 'mc-zh-sv' },
-    { itemId: 'a', kind: 'mc-zh-sv' },
+    { itemId: 'b', kind: 'mc-zh-sv', attempts: 0 },
+    { itemId: 'a', kind: 'mc-zh-sv', attempts: 0 },
   ]);
 });
 
@@ -33,8 +33,8 @@ test('review queue includes pinyin entries after pinyin has been introduced', ()
     },
   };
   assert.deepEqual(createReviewQueue(progress, [items[0]], noShuffle), [
-    { itemId: 'a', kind: 'mc-zh-sv' },
-    { itemId: 'a', kind: 'type-pinyin' },
+    { itemId: 'a', kind: 'mc-zh-sv', attempts: 0 },
+    { itemId: 'a', kind: 'type-pinyin', attempts: 0 },
   ]);
 });
 
@@ -47,17 +47,22 @@ test('review queue separates first-round prompts from later typing prompts', () 
     },
   };
   assert.deepEqual(createReviewQueue(progress, [items[0], items[1]], noShuffle), [
-    { itemId: 'a', kind: 'mc-zh-sv' },
-    { itemId: 'b', kind: 'mc-zh-sv' },
-    { itemId: 'a', kind: 'type-pinyin' },
-    { itemId: 'b', kind: 'type-pinyin' },
+    { itemId: 'a', kind: 'mc-zh-sv', attempts: 0 },
+    { itemId: 'b', kind: 'mc-zh-sv', attempts: 0 },
+    { itemId: 'a', kind: 'type-pinyin', attempts: 0 },
+    { itemId: 'b', kind: 'type-pinyin', attempts: 0 },
   ]);
 });
 
-test('correct answers remove entry and wrong answers requeue that entry at the end', () => {
-  const queue = [{ itemId: 'a', kind: 'type-pinyin' }, { itemId: 'b', kind: 'mc-zh-sv' }];
-  assert.deepEqual(answerReviewQueue(queue, { correct: true }), [{ itemId: 'b', kind: 'mc-zh-sv' }]);
-  assert.deepEqual(answerReviewQueue(queue, { correct: false }), [{ itemId: 'b', kind: 'mc-zh-sv' }, { itemId: 'a', kind: 'type-pinyin' }]);
+test('correct answers remove entry and first wrong answer requeues that entry at the end', () => {
+  const queue = [{ itemId: 'a', kind: 'type-pinyin', attempts: 0 }, { itemId: 'b', kind: 'mc-zh-sv', attempts: 0 }];
+  assert.deepEqual(answerReviewQueue(queue, { correct: true }), [{ itemId: 'b', kind: 'mc-zh-sv', attempts: 0 }]);
+  assert.deepEqual(answerReviewQueue(queue, { correct: false }), [{ itemId: 'b', kind: 'mc-zh-sv', attempts: 0 }, { itemId: 'a', kind: 'type-pinyin', attempts: 1 }]);
+});
+
+test('second wrong answer drops entry from the current session', () => {
+  const queue = [{ itemId: 'a', kind: 'type-pinyin', attempts: 1 }, { itemId: 'b', kind: 'mc-zh-sv', attempts: 0 }];
+  assert.deepEqual(answerReviewQueue(queue, { correct: false }), [{ itemId: 'b', kind: 'mc-zh-sv', attempts: 0 }]);
 });
 
 test('current review item and progress label are deterministic', () => {

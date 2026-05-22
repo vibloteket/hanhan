@@ -17,8 +17,8 @@ export function createReviewQueue(progress, items, rng = Math.random) {
 
   for (const { item, card } of due) {
     const [firstKind, ...extraKinds] = reviewKindsFor(card, progress);
-    firstRound.push({ itemId: item.id, kind: firstKind });
-    laterRounds.push(...extraKinds.map((kind) => ({ itemId: item.id, kind })));
+    firstRound.push({ itemId: item.id, kind: firstKind, attempts: 0 });
+    laterRounds.push(...extraKinds.map((kind) => ({ itemId: item.id, kind, attempts: 0 })));
   }
 
   return [...shuffleEntries(firstRound, rng), ...shuffleEntries(laterRounds, rng)];
@@ -29,10 +29,13 @@ export function currentReviewItem(queueEntries, itemById) {
   return itemById[queueEntries[0].itemId] || null;
 }
 
-export function answerReviewQueue(queueEntries, result) {
+export function answerReviewQueue(queueEntries, result, maxRetries = 1) {
   if (!queueEntries.length) return [];
   const [current, ...rest] = queueEntries;
-  return result?.correct ? rest : [...rest, current];
+  if (result?.correct) return rest;
+  const attempts = current.attempts || 0;
+  if (attempts >= maxRetries) return rest;
+  return [...rest, { ...current, attempts: attempts + 1 }];
 }
 
 export function reviewProgressLabel(answeredCount, remainingCount) {
