@@ -1,7 +1,20 @@
+import { allLessons, lessonKey } from './content/packs.js';
 import { uiTermByKey } from './content/uiTerms.js';
 
+export function unlockedUiKeysFor(progress) {
+  const unlocked = new Set(progress?.unlockedUiKeys || []);
+  const completed = new Set(progress?.completedLessons || []);
+
+  for (const lesson of allLessons) {
+    if (!completed.has(lessonKey(lesson.packId, lesson.id))) continue;
+    for (const key of lesson.unlocksUiKeys || []) unlocked.add(key);
+  }
+
+  return unlocked;
+}
+
 export function isUnlocked(progress, key) {
-  return progress.unlockedUiKeys.includes(key);
+  return unlockedUiKeysFor(progress).has(key);
 }
 
 export function uiLabel(progress, key) {

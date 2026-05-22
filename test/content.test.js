@@ -40,3 +40,14 @@ test('UI content references existing UI terms', () => {
     }
   }
 });
+
+test('lessons unlock only UI terms taught by that lesson', () => {
+  for (const pack of packs) {
+    for (const lesson of pack.lessons) {
+      const itemUiKeys = new Set(lesson.items.map((item) => item.uiKey).filter(Boolean));
+      for (const key of lesson.unlocksUiKeys || []) {
+        assert.ok(itemUiKeys.has(key), `${pack.id}/${lesson.id} unlocks ${key} without a matching lesson item`);
+      }
+    }
+  }
+});
