@@ -21,6 +21,13 @@ export const BUILD_COMMIT = '$build_commit';
 export const BUILD_DATE = '$build_date';
 EOF
 
+# Browser module graphs can otherwise keep old JS modules cached even when
+# index.html changes. In the packaged copy, add the asset version to every
+# relative JS import so each deploy has a fresh module URL graph.
+find "$out_dir/src" -name '*.js' -print0 | while IFS= read -r -d '' file; do
+  perl -0pi -e "s/from '((?:\.\.?\/)[^']+\.js)'/from '\$1?v=${asset_version:-unknown}'/g; s/import\('((?:\.\.?\/)[^']+\.js)'\)/import('\$1?v=${asset_version:-unknown}')/g" "$file"
+done
+
 find "$out_dir" -name '.DS_Store' -delete
 
 echo "Packaged Mandarin Mode static files into $out_dir"
