@@ -1,4 +1,5 @@
 import { html } from '../html.js';
+import { useState } from 'preact/hooks';
 import { allItems, packById } from '../content/packs.js';
 import { Button } from '../components/Button.js';
 import { UiText } from '../components/UiText.js';
@@ -22,7 +23,28 @@ function formatDue(card) {
   return due.toLocaleDateString('sv-SE', { month: 'short', day: 'numeric' });
 }
 
+function normalizeSearch(value) {
+  return String(value || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function searchableText({ item, status }) {
+  return normalizeSearch([
+    item.sv,
+    item.hanzi,
+    item.pinyin,
+    packById[item.packId]?.titleSv,
+    item.lessonTitleSv,
+    status.label,
+  ].join(' '));
+}
+
 export function ProgressScreen({ progress, go }) {
+  const [query, setQuery] = useState('');
   const learnedItems = allItems
     .filter((item) => progress.cards[item.id])
     .map((item) => ({ item, card: progress.cards[item.id], status: cardStatus(progress.cards[item.id]) }))
@@ -34,6 +56,10 @@ export function ProgressScreen({ progress, go }) {
 
   const dueCount = learnedItems.filter(({ status }) => status.className === 'due').length;
   const strongCount = learnedItems.filter(({ status }) => status.className === 'strong').length;
+  const normalizedQuery = normalizeSearch(query);
+  const visibleItems = normalizedQuery
+    ? learnedItems.filter((entry) => searchableText(entry).includes(normalizedQuery))
+    : learnedItems;
 
   return html`
     <section class="screen progress-screen">
@@ -48,8 +74,22 @@ export function ProgressScreen({ progress, go }) {
       </section>
 
       ${learnedItems.length ? html`
+        <label class="search-box">
+          <span>Sök i ordlistan</span>
+          <input
+            type="search"
+            value=${query}
+            onInput=${(event) => setQuery(event.currentTarget.value)}
+            placeholder="Sök svenska, 汉字 eller pinyin"
+            autocomplete="off"
+          />
+        </label>
+
+        ${normalizedQuery ? html`<p class="muted small search-count">${visibleItems.length} av ${learnedItems.length} kort matchar.</p>` : null}
+
+        ${visibleItems.length ? html`
         <div class="learned-list">
-          ${learnedItems.map(({ item, card, status }) => {
+          ${visibleItems.map(({ item, card, status }) => {
             const hanziLength = Array.from(item.hanzi).length;
             return html`
             <article class="learned-card" key=${item.id}>
@@ -69,6 +109,12 @@ export function ProgressScreen({ progress, go }) {
             </article>
           `})}
         </div>
+        ` : html`
+          <section class="panel empty-state">
+            <h2>Inga träffar</h2>
+            <p>Testa att söka på svenska, kinesiska tecken eller pinyin.</p>
+          </section>
+        `}
       ` : html`
         <section class="panel empty-state">
           <h2>Inga lärda kort än</h2>

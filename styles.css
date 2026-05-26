@@ -106,6 +106,10 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 .notice { border-radius: 16px; padding: 12px; background: #eaf8ef; color: var(--green); }
 .muted { color: var(--muted); }
 .small { font-size: .9rem; }
+.search-box { display: grid; gap: 7px; margin-top: 16px; color: var(--muted); font-weight: 700; }
+.search-box input { width: 100%; min-height: 46px; border: 1px solid var(--line); border-radius: 16px; padding: 11px 14px; background: white; color: var(--ink); font: inherit; }
+.search-box input:focus { outline: 3px solid rgba(215, 59, 47, .16); border-color: #d8b98d; }
+.search-count { margin: 8px 0 0; }
 .learned-list { display: grid; gap: 10px; margin-top: 16px; }
 .learned-card { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; border: 1px solid var(--line); border-radius: 20px; padding: 14px; background: var(--panel); }
 .learned-main { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 14px; min-width: 0; }
