@@ -76,11 +76,13 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 .danger-link { color: var(--red-dark); }
 .progress-bar { height: 10px; border-radius: 999px; background: #eadfce; overflow: hidden; margin: 12px 0 18px; }
 .progress-bar span { display: block; height: 100%; background: linear-gradient(90deg, var(--red), var(--gold)); }
-.exercise-card { display: grid; gap: 16px; border: 1px solid var(--line); border-radius: 28px; padding: 22px; background: var(--panel); box-shadow: var(--shadow); }
+.exercise-card { display: grid; gap: 16px; min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 28px; padding: 22px; background: var(--panel); box-shadow: var(--shadow); }
 .exercise-card h2 { margin: 0; font-size: clamp(1.35rem, 5vw, 2rem); }
 .eyebrow { color: var(--muted); text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; font-weight: 800; }
 .hanzi { font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif; word-break: keep-all; overflow-wrap: normal; white-space: nowrap; }
-.hanzi.big { font-size: clamp(4rem, 22vw, 8rem); line-height: 1; font-weight: 900; }
+.hanzi.big { max-width: 100%; font-size: clamp(4rem, 22vw, 8rem); line-height: 1; font-weight: 900; text-align: center; }
+.hanzi.big.long { font-size: clamp(3.4rem, 18vw, 7rem); }
+.hanzi.big.phrase { font-size: clamp(2.8rem, 15vw, 5.8rem); white-space: normal; overflow-wrap: anywhere; }
 .pinyin { color: var(--red-dark); font-size: 1.25rem; font-weight: 700; }
 .component-list { display: grid; gap: 8px; padding: 12px; border-radius: 18px; background: #fff8e8; border: 1px solid #ead8bd; }
 .component-part { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 10px; color: var(--muted); }

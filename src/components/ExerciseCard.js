@@ -8,6 +8,8 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
   const [input, setInput] = useState('');
   const [result, setResult] = useState(null);
   const item = step.item;
+  const hanziLength = Array.from(item.hanzi || '').length;
+  const hanziSizeClass = hanziLength >= 4 ? 'phrase' : hanziLength >= 3 ? 'long' : '';
 
   function finish(correct, mode, given = input) {
     setResult({ correct, mode, given });
@@ -25,7 +27,7 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
     return html`
       <section class="exercise-card intro-card">
         <div class="eyebrow">Nytt ord</div>
-        <div class="hanzi big">${item.hanzi}</div>
+        <div class=${`hanzi big ${hanziSizeClass}`}>${item.hanzi}</div>
         <div class="pinyin">${item.pinyin}</div>
         <h2>${item.sv}</h2>
         ${item.notesSv ? html`<p>${item.notesSv}</p>` : null}
