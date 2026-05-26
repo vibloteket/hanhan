@@ -98,6 +98,11 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 
 .settings-screen label { display: block; margin: 10px 0; }
 .settings-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.about-list { display: grid; gap: 8px; margin: 0; }
+.about-list div { display: grid; grid-template-columns: minmax(110px, auto) minmax(0, 1fr); gap: 12px; align-items: baseline; }
+.about-list dt { color: var(--muted); font-weight: 700; }
+.about-list dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.about-list a { color: var(--red-dark); font-weight: 750; }
 .notice { border-radius: 16px; padding: 12px; background: #eaf8ef; color: var(--green); }
 .muted { color: var(--muted); }
 .small { font-size: .9rem; }

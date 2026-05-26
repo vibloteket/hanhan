@@ -3,6 +3,7 @@ import { useRef, useState } from 'preact/hooks';
 import { createDefaultProgress, makeBackup, parseBackup } from '../storage.js';
 import { Button } from '../components/Button.js';
 import { UiText } from '../components/UiText.js';
+import { APP_LICENSE, APP_VERSION, ASSET_VERSION, BUILD_COMMIT, BUILD_DATE, CONTACT_EMAIL } from '../buildInfo.js';
 
 export function SettingsScreen({ progress, setProgress, go }) {
   const fileRef = useRef(null);
@@ -66,6 +67,19 @@ export function SettingsScreen({ progress, setProgress, go }) {
           <input ref=${fileRef} type="file" accept="application/json" hidden onChange=${importBackup} />
           <${Button} progress=${progress} labelKey="action.reset" kind="danger" onClick=${resetProgress} />
         </div>
+      </section>
+
+      <section class="panel about-panel">
+        <h2>Om Mandarin Mode</h2>
+        <dl class="about-list">
+          <div><dt>Version</dt><dd>${APP_VERSION}</dd></div>
+          <div><dt>Build</dt><dd>${BUILD_COMMIT}</dd></div>
+          <div><dt>Byggdatum</dt><dd>${BUILD_DATE}</dd></div>
+          <div><dt>Asset-version</dt><dd>${ASSET_VERSION}</dd></div>
+          <div><dt>Licens</dt><dd><a href="./LICENSE.txt">${APP_LICENSE}</a></dd></div>
+          <div><dt>Kontakt</dt><dd><a href=${`mailto:${CONTACT_EMAIL}`}>${CONTACT_EMAIL}</a></dd></div>
+        </dl>
+        <p class="muted small">Om du inte ser senaste ändringar: kontrollera asset-versionen här och ladda om sidan.</p>
       </section>
 
       ${message ? html`<p class="notice">${message}</p>` : null}
