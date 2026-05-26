@@ -50,7 +50,7 @@ export function SettingsScreen({ progress, setProgress, go }) {
       <${Button} progress=${progress} labelKey="action.back" kind="ghost" onClick=${() => go('home')} />
       <h1><${UiText} progress=${progress} id="settings.title" /></h1>
 
-      <section class="panel">
+      <section class="screen panel">
         <h2><${UiText} progress=${progress} id="status.language" /></h2>
         <label><input type="radio" checked=${progress.settings.uiMode === 'sv'} onChange=${() => setMode('sv')} /> Svenska</label>
         <label><input type="radio" checked=${progress.settings.uiMode === 'gradual-assisted'} onChange=${() => setMode('gradual-assisted')} /> Gradvis kinesiska + svenska</label>
@@ -58,7 +58,7 @@ export function SettingsScreen({ progress, setProgress, go }) {
         <label><input type="radio" checked=${progress.settings.uiMode === 'zh'} onChange=${() => setMode('zh')} /> Kinesiska för upplåsta ord</label>
       </section>
 
-      <section class="panel">
+      <section class="screen panel">
         <h2>Data</h2>
         <p>Din inlärningsdata sparas i den här webbläsaren. Export/import skyddar vid byte av mobil, webbläsare eller host.</p>
         <div class="settings-actions">
@@ -69,7 +69,7 @@ export function SettingsScreen({ progress, setProgress, go }) {
         </div>
       </section>
 
-      <section class="panel about-panel">
+      <section class="screen panel about-panel">
         <h2>Om Mandarin Mode</h2>
         <dl class="about-list">
           <div><dt>Version</dt><dd>${APP_VERSION}</dd></div>
