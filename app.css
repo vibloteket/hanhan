@@ -91,9 +91,13 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
 .choice { min-height: 58px; padding: 12px; border-radius: 18px; border: 1px solid var(--line); background: #fffaf0; font-weight: 750; }
 .answer-form { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
 .answer-form input { min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; background: white; font-size: 1.1rem; }
-.result { border-radius: 18px; padding: 14px; }
+.result { display: grid; gap: 8px; border-radius: 18px; padding: 14px; }
 .result.correct { background: #eaf8ef; color: var(--green); }
 .result.wrong { background: #fff0ee; color: var(--red-dark); }
+.answer-summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 9px; color: var(--ink); }
+.answer-prefix { color: var(--muted); }
+.answer-hanzi { font-size: 1.25rem; font-weight: 900; }
+.answer-pinyin { color: var(--red-dark); font-weight: 800; }
 .complete-card { text-align: center; }
 
 .settings-screen label { display: block; margin: 10px 0; }

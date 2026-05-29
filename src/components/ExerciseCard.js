@@ -98,9 +98,12 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
       ${result ? html`
         <div class=${`result ${result.correct ? 'correct' : 'wrong'}`}>
           <strong>${result.correct ? 'Rätt!' : 'Inte riktigt.'}</strong>
-          ${!result.correct ? html`
-            <div>Rätt svar: <span class="hanzi">${item.hanzi}</span> · ${item.pinyin} · ${item.sv}</div>
-          ` : null}
+          <div class="answer-summary">
+            ${!result.correct ? html`<span class="answer-prefix">Rätt svar:</span>` : null}
+            <span class="hanzi answer-hanzi">${item.hanzi}</span>
+            <span class="answer-pinyin">${item.pinyin}</span>
+            <span>${item.sv}</span>
+          </div>
         </div>
         <${Button} progress=${progress} labelKey="action.next" onClick=${next} />
       ` : null}
