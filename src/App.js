@@ -10,15 +10,37 @@ import { ProgressScreen } from './screens/ProgressScreen.js';
 import { LessonsScreen } from './screens/LessonsScreen.js';
 import { UiText } from './components/UiText.js';
 
+function routeFromHistory() {
+  return history.state?.mandarinModeRoute || { screen: 'home' };
+}
+
 export function App() {
   const [progress, setProgress] = useState(() => loadProgress());
-  const [route, setRoute] = useState({ screen: 'home' });
+  const [route, setRoute] = useState(() => routeFromHistory());
 
   useEffect(() => saveProgress(progress), [progress]);
 
-  function go(screen, params = {}) {
+  useEffect(() => {
+    if (!history.state?.mandarinModeRoute) {
+      history.replaceState({ ...(history.state || {}), mandarinModeRoute: route }, '', location.href);
+    }
+
+    function handlePopState() {
+      setRoute(routeFromHistory());
+      window.scrollTo({ top: 0 });
+    }
+
+    addEventListener('popstate', handlePopState);
+    return () => removeEventListener('popstate', handlePopState);
+  }, []);
+
+  function go(screen, params = {}, options = {}) {
+    const nextRoute = { screen, ...params };
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setRoute({ screen, ...params });
+    setRoute(nextRoute);
+    const nextState = { ...(history.state || {}), mandarinModeRoute: nextRoute };
+    if (options.replace) history.replaceState(nextState, '', location.href);
+    else history.pushState(nextState, '', location.href);
   }
 
   let screen;
