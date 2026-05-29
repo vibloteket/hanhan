@@ -103,8 +103,8 @@ export function ProgressScreen({ progress, go }) {
               </div>
               <div class="learned-meta">
                 <span class=${`status-chip ${status.className}`}>${status.label}</span>
-                <span class="muted small">Nästa: ${formatDue(card)}</span>
-                <span class="muted small">Rätt i rad: ${card.correctStreak || 0}</span>
+                <span class="muted small"><${UiText} progress=${progress} id="action.next" />: ${formatDue(card)}</span>
+                <span class="muted small"><${UiText} progress=${progress} id="feedback.correct" /> i rad: ${card.correctStreak || 0}</span>
               </div>
             </article>
           `})}

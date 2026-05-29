@@ -1,6 +1,7 @@
 import { html } from '../html.js';
 import { useState } from 'preact/hooks';
 import { Button } from './Button.js';
+import { UiText } from './UiText.js';
 import { pickChoices } from '../exercises.js';
 import { isCorrectHanzi, isCorrectPinyin } from '../textUtils.js';
 
@@ -26,7 +27,7 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
   if (step.kind === 'intro') {
     return html`
       <section class="exercise-card intro-card">
-        <div class="eyebrow">Nytt ord</div>
+        <div class="eyebrow"><${UiText} progress=${progress} id="term.word" /></div>
         <div class=${`hanzi big ${hanziSizeClass}`}>${item.hanzi}</div>
         <div class="pinyin">${item.pinyin}</div>
         <h2>${item.sv}</h2>
@@ -91,15 +92,15 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
           <${Button} progress=${progress} labelKey="term.answer" type="submit" disabled=${!input.trim()} />
         </form>
         <button class="link-button" onClick=${() => finish(false, mode, '')}>
-          Visa svar / jag vet inte
+          <${UiText} progress=${progress} id="action.showAnswer" /> / jag vet inte
         </button>
       ` : null}
 
       ${result ? html`
         <div class=${`result ${result.correct ? 'correct' : 'wrong'}`}>
-          <strong>${result.correct ? 'Rätt!' : 'Inte riktigt.'}</strong>
+          <strong><${UiText} progress=${progress} id=${result.correct ? 'feedback.correct' : 'feedback.wrong'} />${result.correct ? '!' : ''}</strong>
           <div class="answer-summary">
-            ${!result.correct ? html`<span class="answer-prefix">Rätt svar:</span>` : null}
+            ${!result.correct ? html`<span class="answer-prefix"><${UiText} progress=${progress} id="term.answer" />:</span>` : null}
             <span class="hanzi answer-hanzi">${item.hanzi}</span>
             <span class="answer-pinyin">${item.pinyin}</span>
             <span>${item.sv}</span>

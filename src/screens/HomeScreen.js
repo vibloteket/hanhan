@@ -33,7 +33,7 @@ export function HomeScreen({ progress, setProgress, go }) {
         ` : shouldReviewNext ? html`
           <${Button} progress=${progress} labelKey="action.review" onClick=${() => go('review')} />
           ${next ? html`
-            <${Button} progress=${progress} kind="secondary" onClick=${() => go('lesson', next)}>Nästa lektion</${Button}>
+            <button class="button secondary" onClick=${() => go('lesson', next)}><${UiText} progress=${progress} id="action.next" /> <${UiText} progress=${progress} id="lesson.title" /></button>
           ` : null}
         ` : next ? html`
           <${Button} progress=${progress} labelKey=${completedCount ? 'action.continue' : 'action.start'} onClick=${() => go('lesson', next)} />
@@ -52,17 +52,17 @@ export function HomeScreen({ progress, setProgress, go }) {
         </div>
         <div class="session-actions">
           <${Button} progress=${progress} labelKey="action.continue" onClick=${() => go('lesson', next)} />
-          <button class="link-button danger-link" onClick=${cancelActiveLesson}>Avbryt</button>
+          <button class="link-button danger-link" onClick=${cancelActiveLesson}><${UiText} progress=${progress} id="action.cancel" /></button>
         </div>
       </section>
     ` : null}
 
     <section class="stats-grid">
       <button class="stat-card clickable" onClick=${() => go('review')}>
-        <strong>${dueCount}</strong><span>kort att repetera</span>
+        <strong>${dueCount}</strong><span><${UiText} progress=${progress} id="status.due" /></span>
       </button>
       <button class="stat-card clickable" onClick=${() => go('lessons')}>
-        <strong>${completedCount}</strong><span>klara lektioner</span>
+        <strong>${completedCount}</strong><span><${UiText} progress=${progress} id="lesson.complete" /> · <${UiText} progress=${progress} id="lesson.title" /></span>
       </button>
       <button class="stat-card clickable" onClick=${() => go('progress')}>
         <strong>${Object.keys(progress.cards).length}</strong><span>inlärda kort</span>
@@ -70,7 +70,7 @@ export function HomeScreen({ progress, setProgress, go }) {
     </section>
 
     <section class="screen">
-      <h2>Lektioner</h2>
+      <h2><${UiText} progress=${progress} id="action.learn" /></h2>
       <div class="pack-list">
         ${packs.map((pack) => {
           const completed = pack.lessons.filter((lesson) => progress.completedLessons.includes(`${pack.id}/${lesson.id}`)).length;

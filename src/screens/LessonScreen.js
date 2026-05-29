@@ -4,6 +4,7 @@ import { getLesson, lessonKey } from '../content/packs.js';
 import { lessonSteps } from '../exercises.js';
 import { ensureCards } from '../srs.js';
 import { Button } from '../components/Button.js';
+import { UiText } from '../components/UiText.js';
 import { ExerciseCard } from '../components/ExerciseCard.js';
 
 function matchingSession(progress, route) {
@@ -119,8 +120,8 @@ export function LessonScreen({ progress, setProgress, route, go }) {
 
       ${finished ? html`
         <section class="exercise-card complete-card">
-          <h2>Lektion klar</h2>
-          <p>${correctCount}/${answers.length} övningar rätt. Orden läggs nu in i repetition, där skrivfrågor kommer gradvis senare.</p>
+          <h2><${UiText} progress=${progress} id="lesson.complete" /></h2>
+          <p>${correctCount}/${answers.length} övningar <${UiText} progress=${progress} id="feedback.correct" />. Orden läggs nu in i repetition, där skrivfrågor kommer gradvis senare.</p>
           ${lesson.unlocksUiKeys?.length ? html`<p>Du låste upp ${lesson.unlocksUiKeys.length} UI-termer.</p>` : null}
           <${Button} progress=${progress} labelKey="lesson.complete" onClick=${completeLesson} />
         </section>

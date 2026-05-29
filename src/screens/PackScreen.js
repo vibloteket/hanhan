@@ -1,6 +1,7 @@
 import { html } from '../html.js';
 import { packById, lessonKey } from '../content/packs.js';
 import { Button } from '../components/Button.js';
+import { UiText } from '../components/UiText.js';
 
 export function PackScreen({ progress, route, go }) {
   const pack = packById[route.packId];
@@ -23,7 +24,7 @@ export function PackScreen({ progress, route, go }) {
                 <p>${lesson.descriptionSv}</p>
               </div>
               <button class="button secondary" onClick=${() => go('lesson', { packId: pack.id, lessonId: lesson.id })}>
-                ${active ? 'Fortsätt' : done ? 'Öva igen' : 'Starta'}
+                ${active ? html`<${UiText} progress=${progress} id="action.continue" />` : done ? html`<${UiText} progress=${progress} id="action.practice" />` : html`<${UiText} progress=${progress} id="action.start" />`}
               </button>
             </article>
           `;

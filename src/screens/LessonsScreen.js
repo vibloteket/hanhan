@@ -1,6 +1,7 @@
 import { html } from '../html.js';
 import { packs, lessonKey } from '../content/packs.js';
 import { Button } from '../components/Button.js';
+import { UiText } from '../components/UiText.js';
 
 function formatDateTime(value) {
   if (!value) return '';
@@ -18,7 +19,7 @@ export function LessonsScreen({ progress, go }) {
   return html`
     <section class="screen lessons-screen">
       <${Button} progress=${progress} labelKey="action.back" kind="ghost" onClick=${() => go('home')} />
-      <h1>Lektioner</h1>
+      <h1><${UiText} progress=${progress} id="lesson.title" /></h1>
       <p class="muted">Alla lektioner, grupperade per paket.</p>
 
       <div class="lesson-list all-lessons-list">
@@ -35,12 +36,12 @@ export function LessonsScreen({ progress, go }) {
                 <h3>${lesson.titleSv}</h3>
                 <p>${pack.titleSv} · ${lesson.descriptionSv}</p>
                 ${active && startedAt ? html`<div class="muted small lesson-date">Startad: ${startedAt}</div>` : null}
-                ${done && completedAt ? html`<div class="muted small lesson-date">Klar: ${completedAt}</div>` : null}
+                ${done && completedAt ? html`<div class="muted small lesson-date"><${UiText} progress=${progress} id="lesson.complete" />: ${completedAt}</div>` : null}
               </div>
               <div class="lesson-row-actions">
-                ${active ? html`<span class="status-chip learning">Pågående</span>` : done ? html`<span class="status-chip strong">Klar</span>` : html`<span class="status-chip weak">Ej klar</span>`}
+                ${active ? html`<span class="status-chip learning">Pågående</span>` : done ? html`<span class="status-chip strong"><${UiText} progress=${progress} id="lesson.complete" /></span>` : html`<span class="status-chip weak">Ej klar</span>`}
                 <button class="button secondary" onClick=${() => go('lesson', { packId: pack.id, lessonId: lesson.id })}>
-                  ${active ? 'Fortsätt' : done ? 'Öva igen' : 'Starta'}
+                  ${active ? html`<${UiText} progress=${progress} id="action.continue" />` : done ? html`<${UiText} progress=${progress} id="action.practice" />` : html`<${UiText} progress=${progress} id="action.start" />`}
                 </button>
               </div>
             </article>
