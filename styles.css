@@ -36,6 +36,7 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .button.secondary { background: var(--panel); color: var(--ink); border-color: var(--line); box-shadow: none; }
 .button.ghost { background: transparent; color: var(--muted); border-color: var(--line); box-shadow: none; }
 .button.danger { background: var(--red-dark); }
+.inline-label-combo { display: inline-flex; align-items: center; justify-content: center; gap: 0.35em; flex-wrap: wrap; }
 .link-button { border: 0; background: transparent; color: var(--red-dark); text-decoration: underline; padding: 12px 0; }
 
 .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }

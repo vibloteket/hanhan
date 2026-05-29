@@ -33,7 +33,9 @@ export function HomeScreen({ progress, setProgress, go }) {
         ` : shouldReviewNext ? html`
           <${Button} progress=${progress} labelKey="action.review" onClick=${() => go('review')} />
           ${next ? html`
-            <button class="button secondary" onClick=${() => go('lesson', next)}><${UiText} progress=${progress} id="action.next" /> <${UiText} progress=${progress} id="lesson.title" /></button>
+            <button class="button secondary" onClick=${() => go('lesson', next)}>
+              <span class="inline-label-combo"><${UiText} progress=${progress} id="action.next" /><span aria-hidden="true">·</span><${UiText} progress=${progress} id="lesson.title" /></span>
+            </button>
           ` : null}
         ` : next ? html`
           <${Button} progress=${progress} labelKey=${completedCount ? 'action.continue' : 'action.start'} onClick=${() => go('lesson', next)} />
