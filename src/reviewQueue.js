@@ -35,7 +35,7 @@ export function answerReviewQueue(queueEntries, result, maxRetries = 1) {
   if (result?.correct) return rest;
   const attempts = current.attempts || 0;
   if (attempts >= maxRetries) return rest;
-  return [...rest, { ...current, attempts: attempts + 1 }];
+  return [{ ...current, attempts: attempts + 1 }, ...rest];
 }
 
 export function reviewProgressLabel(answeredCount, remainingCount) {

@@ -54,10 +54,10 @@ test('review queue separates first-round prompts from later typing prompts', () 
   ]);
 });
 
-test('correct answers remove entry and first wrong answer requeues that entry at the end', () => {
+test('correct answers remove entry and first wrong answer gives an immediate retry', () => {
   const queue = [{ itemId: 'a', kind: 'type-pinyin', attempts: 0 }, { itemId: 'b', kind: 'mc-zh-sv', attempts: 0 }];
   assert.deepEqual(answerReviewQueue(queue, { correct: true }), [{ itemId: 'b', kind: 'mc-zh-sv', attempts: 0 }]);
-  assert.deepEqual(answerReviewQueue(queue, { correct: false }), [{ itemId: 'b', kind: 'mc-zh-sv', attempts: 0 }, { itemId: 'a', kind: 'type-pinyin', attempts: 1 }]);
+  assert.deepEqual(answerReviewQueue(queue, { correct: false }), [{ itemId: 'a', kind: 'type-pinyin', attempts: 1 }, { itemId: 'b', kind: 'mc-zh-sv', attempts: 0 }]);
 });
 
 test('second wrong answer drops entry from the current session', () => {
