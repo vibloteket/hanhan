@@ -20,7 +20,8 @@ export function ReviewScreen({ progress, setProgress, go }) {
     if (!currentEntry || !currentItem) return;
     setProgress((currentProgress) => {
       const oldCard = currentProgress.cards[currentItem.id];
-      const cards = { ...currentProgress.cards, [currentItem.id]: updateCard(oldCard, result) };
+      const cardResult = result.correct && (currentEntry.attempts || 0) > 0 ? { ...result, hard: true } : result;
+      const cards = { ...currentProgress.cards, [currentItem.id]: updateCard(oldCard, cardResult) };
       return {
         ...currentProgress,
         cards,

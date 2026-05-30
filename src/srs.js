@@ -44,6 +44,14 @@ export function updateCard(card, result) {
     return next;
   }
 
+  if (result.hard) {
+    next.correctStreak = 0;
+    next.ease = Math.max(1.3, card.ease || 2.3);
+    next.intervalDays = 0;
+    next.dueAt = new Date(Date.now() + 15 * MINUTE).toISOString();
+    return next;
+  }
+
   const credit = mode === 'type-hanzi' ? 1.4 : mode === 'type-pinyin' ? 1.15 : 0.75;
   next.correctStreak = (card.correctStreak || 0) + 1;
   next.ease = Math.min(3.0, (card.ease || 2.3) + (mode === 'multiple-choice' ? 0.02 : 0.05));
