@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
-  <title id="title">MànMàn simple icon</title>
-  <desc id="desc">Simplified MànMàn icon for favicon and small sizes.</desc>
+  <title id="title">HànHàn simple icon</title>
+  <desc id="desc">Simplified HànHàn icon for favicon and small sizes.</desc>
   <defs>
     <linearGradient id="redGrad" x1="180" y1="120" x2="844" y2="904" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#f25b43"/>
@@ -15,10 +15,10 @@
     <rect x="288" y="250" width="448" height="524" rx="78" fill="#fff8e8"/>
     <text x="512" y="524"
       font-family="Noto Sans SC, PingFang SC, Microsoft YaHei, sans-serif"
-      font-size="328"
+      font-size="340"
       font-weight="900"
       text-anchor="middle"
       dominant-baseline="central"
-      fill="#b91f1a">慢</text>
+      fill="#b91f1a">汉</text>
   </g>
 </svg>

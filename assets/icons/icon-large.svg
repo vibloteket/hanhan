@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
-  <title id="title">MànMàn icon</title>
-  <desc id="desc">A red rounded-square app icon with a cream flashcard, the Chinese character 慢, and a small completion check.</desc>
+  <title id="title">HànHàn icon</title>
+  <desc id="desc">A red rounded-square app icon with a cream flashcard, the Chinese character 汉, and a small completion check.</desc>
   <defs>
     <linearGradient id="redGrad" x1="180" y1="120" x2="844" y2="904" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#f25b43"/>
@@ -30,11 +30,11 @@
     <rect x="286" y="244" width="452" height="536" rx="78" fill="none" stroke="#ffe2a8" stroke-width="10" opacity="0.75"/>
     <text x="512" y="526"
       font-family="Noto Sans SC, PingFang SC, Microsoft YaHei, sans-serif"
-      font-size="318"
+      font-size="340"
       font-weight="900"
       text-anchor="middle"
       dominant-baseline="central"
-      fill="#b91f1a">慢</text>
+      fill="#b91f1a">汉</text>
   </g>
 
   <g filter="url(#cardShadow)">
