@@ -1,26 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
   <title id="title">MànMàn simple icon</title>
-  <desc id="desc">Simplified MànMàn icon: the character 慢 above a small snail, for favicon and small sizes.</desc>
+  <desc id="desc">Simplified MànMàn icon for favicon and small sizes.</desc>
   <defs>
     <linearGradient id="redGrad" x1="180" y1="120" x2="844" y2="904" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#f6694f"/>
-      <stop offset="1" stop-color="#bd271f"/>
+      <stop offset="0" stop-color="#f25b43"/>
+      <stop offset="1" stop-color="#a91f1a"/>
     </linearGradient>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
       <feDropShadow dx="0" dy="28" stdDeviation="34" flood-color="#3a180f" flood-opacity="0.20"/>
     </filter>
   </defs>
   <rect x="96" y="96" width="832" height="832" rx="208" fill="url(#redGrad)" filter="url(#shadow)"/>
-  <text x="512" y="392" font-family="Noto Sans SC, PingFang SC, Microsoft YaHei, sans-serif"
-    font-size="300" font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#fff8e8">慢</text>
-  <g transform="translate(512 680)">
-    <path d="M -150 70 Q -150 18 -96 18 L 60 18 Q 78 18 92 4" fill="none" stroke="#fff8e8" stroke-width="34" stroke-linecap="round"/>
-    <path d="M 84 8 Q 104 -34 128 -52" fill="none" stroke="#fff8e8" stroke-width="22" stroke-linecap="round"/>
-    <path d="M 60 12 Q 70 -26 86 -46" fill="none" stroke="#fff8e8" stroke-width="22" stroke-linecap="round"/>
-    <circle cx="132" cy="-58" r="13" fill="#ffd9a0"/>
-    <circle cx="90" cy="-52" r="11" fill="#ffd9a0"/>
-    <circle cx="-58" cy="6" r="78" fill="#ffd9a0"/>
-    <path d="M -58 6 m 0 -50 a 50 50 0 1 1 -36 16" fill="none" stroke="#bd271f" stroke-width="22" stroke-linecap="round"/>
-    <circle cx="-58" cy="6" r="16" fill="#bd271f"/>
+  <g transform="rotate(-7 512 512)">
+    <rect x="288" y="250" width="448" height="524" rx="78" fill="#fff8e8"/>
+    <text x="512" y="524"
+      font-family="Noto Sans SC, PingFang SC, Microsoft YaHei, sans-serif"
+      font-size="300"
+      font-weight="900"
+      text-anchor="middle"
+      dominant-baseline="central"
+      fill="#b91f1a">慢</text>
   </g>
 </svg>
