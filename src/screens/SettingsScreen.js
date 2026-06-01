@@ -18,7 +18,7 @@ export function SettingsScreen({ progress, setProgress, go }) {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `mandarinmode-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    link.download = `hanhan-backup-${new Date().toISOString().slice(0, 10)}.json`;
     link.click();
     URL.revokeObjectURL(url);
     setMessage('Backup exporterad.');
@@ -70,7 +70,7 @@ export function SettingsScreen({ progress, setProgress, go }) {
       </section>
 
       <section class="screen panel about-panel">
-        <h2>Om Mandarin Mode</h2>
+        <h2>Om HànHàn</h2>
         <dl class="about-list">
           <div><dt>Version</dt><dd>${APP_VERSION}</dd></div>
           <div><dt>Build</dt><dd>${BUILD_COMMIT}</dd></div>

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-site_name="${1:-mandarin-mode}"
+site_name="${1:-hanhan}"
 target="/var/www/${site_name}"
 
 if [[ ! "$site_name" =~ ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])$ ]]; then
@@ -10,7 +10,7 @@ if [[ ! "$site_name" =~ ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])$ ]]; then
 fi
 
 case "$site_name" in
-  pc|picoclaw|m|www|nanobot|nb|cgi-bin)
+  pc|picoclaw|m|www|nanobot|nb|cgi-bin|learn-chinese|mandarin-mode|hanhan)
     echo "Blocked site name: $site_name" >&2
     exit 2
     ;;
@@ -31,5 +31,5 @@ rm -rf "$target"
 mkdir -p "$target"
 cp -R "$stage/public/." "$target/"
 
-echo "Deployed Mandarin Mode to $target"
+echo "Deployed HànHàn to $target"
 echo "Expected URL: https://${site_name}.viblo.se/"

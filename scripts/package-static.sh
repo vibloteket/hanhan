@@ -30,4 +30,4 @@ done
 
 find "$out_dir" -name '.DS_Store' -delete
 
-echo "Packaged Mandarin Mode static files into $out_dir"
+echo "Packaged HànHàn static files into $out_dir"

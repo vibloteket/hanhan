@@ -114,7 +114,7 @@ export const appUiBasics = {
     },
     {
       id: 'mandarin-mode-name',
-      titleSv: 'Mandarin Mode',
+      titleSv: 'HànHàn',
       descriptionSv: 'Appens kinesiska namn, byggt från tecken du redan sett.',
       unlocksUiKeys: ['app.title'],
       practiceModes: ['type-pinyin'],
@@ -123,10 +123,10 @@ export const appUiBasics = {
         {
           id: 'ui-mode',
           sv: 'kinesiskt läge',
-          hanzi: '中文模式',
-          pinyin: 'zhōngwén móshì',
+          hanzi: '汉汉',
+          pinyin: 'hàn hàn',
           uiKey: 'app.title',
-          notesSv: 'Appens namn på kinesiska: Mandarin Mode.',
+          notesSv: 'Appens namn på kinesiska: HànHàn.',
           components: [
             { hanzi: '中', pinyin: 'zhōng', sv: 'kinesiska / Kina' },
             { hanzi: '文', pinyin: 'wén', sv: 'text / språk' },
