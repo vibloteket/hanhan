@@ -10,7 +10,7 @@ if [[ ! "$site_name" =~ ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])$ ]]; then
 fi
 
 case "$site_name" in
-  pc|picoclaw|m|www|nanobot|nb|cgi-bin|learn-chinese|mandarin-mode|hanhan)
+  pc|picoclaw|m|www|nanobot|nb|cgi-bin|learn-chinese|mandarin-mode)
     echo "Blocked site name: $site_name" >&2
     exit 2
     ;;
