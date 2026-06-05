@@ -50,7 +50,14 @@ export function App() {
   else if (route.screen === 'progress') screen = html`<${ProgressScreen} progress=${progress} go=${go} />`;
   else if (route.screen === 'lessons') screen = html`<${LessonsScreen} progress=${progress} go=${go} />`;
   else if (route.screen === 'settings') screen = html`<${SettingsScreen} progress=${progress} setProgress=${setProgress} go=${go} />`;
-  else screen = html`<${HomeScreen} progress=${progress} setProgress=${setProgress} go=${go} />`;
+  else if (route.screen === 'home') {
+    const isNewUser = progress.completedLessons.length === 0 && !progress.activeSession;
+    screen = isNewUser
+      ? html`<${WelcomeScreen} go=${go} />`
+      : html`<${HomeScreen} progress=${progress} setProgress=${setProgress} go=${go} />`;
+  } else {
+    screen = html`<${HomeScreen} progress=${progress} setProgress=${setProgress} go=${go} />`;
+  }
 
   const focusMode = route.screen === 'lesson' || route.screen === 'review';
 
@@ -59,7 +66,7 @@ export function App() {
       ${focusMode ? null : html`
         <header class="app-header">
           <button class="brand" onClick=${() => go('home')}>
-            <span class="brand-mark"><img src="./assets/icons/icon.svg?v=43" alt="" /></span>
+            <span class="brand-mark"><img src="./assets/icons/icon.svg?v=44" alt="" /></span>
             <span><${UiText} progress=${progress} id="app.title" /></span>
           </button>
         </header>
