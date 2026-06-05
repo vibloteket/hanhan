@@ -8,6 +8,7 @@ import { ReviewScreen } from './screens/ReviewScreen.js';
 import { SettingsScreen } from './screens/SettingsScreen.js';
 import { ProgressScreen } from './screens/ProgressScreen.js';
 import { LessonsScreen } from './screens/LessonsScreen.js';
+import { WelcomeScreen } from './screens/WelcomeScreen.js';
 import { UiText } from './components/UiText.js';
 
 function routeFromHistory() {
