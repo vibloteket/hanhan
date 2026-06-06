@@ -18,6 +18,7 @@ function routeFromHistory() {
 export function App() {
   const [progress, setProgress] = useState(() => loadProgress());
   const [route, setRoute] = useState(() => routeFromHistory());
+  const [started, setStarted] = useState(false);
 
   useEffect(() => saveProgress(progress), [progress]);
 
@@ -36,6 +37,7 @@ export function App() {
   }, []);
 
   function go(screen, params = {}, options = {}) {
+    if (screen === 'home') setStarted(true);
     const nextRoute = { screen, ...params };
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setRoute(nextRoute);
@@ -52,7 +54,7 @@ export function App() {
   else if (route.screen === 'lessons') screen = html`<${LessonsScreen} progress=${progress} go=${go} />`;
   else if (route.screen === 'settings') screen = html`<${SettingsScreen} progress=${progress} setProgress=${setProgress} go=${go} />`;
   else if (route.screen === 'home') {
-    const isNewUser = progress.completedLessons.length === 0 && !progress.activeSession;
+    const isNewUser = !started && progress.completedLessons.length === 0 && !progress.activeSession;
     screen = isNewUser
       ? html`<${WelcomeScreen} go=${go} />`
       : html`<${HomeScreen} progress=${progress} setProgress=${setProgress} go=${go} />`;
@@ -67,7 +69,7 @@ export function App() {
       ${focusMode ? null : html`
         <header class="app-header">
           <button class="brand" onClick=${() => go('home')}>
-            <span class="brand-mark"><img src="./assets/icons/icon.svg?v=45" alt="" /></span>
+            <span class="brand-mark"><img src="./assets/icons/icon.svg?v=46" alt="" /></span>
             <span><${UiText} progress=${progress} id="app.title" /></span>
           </button>
         </header>
