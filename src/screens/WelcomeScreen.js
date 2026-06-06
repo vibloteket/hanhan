@@ -5,7 +5,7 @@ export function WelcomeScreen({ go }) {
     <section class="screen welcome-screen">
       <div class="welcome-card">
         <div class="welcome-icon">
-          <img src="./assets/icons/icon-large.svg?v=48" alt="" width="120" height="120" />
+          <img src="./assets/icons/icon-large.svg?v=49" alt="" width="120" height="120" />
         </div>
         <h1>HànHàn</h1>
         <p class="welcome-subtitle">Lär dig mandarin från svenska — steg för steg, utan stress.</p>
@@ -16,8 +16,8 @@ export function WelcomeScreen({ go }) {
             <span>Appens knappar och texter byts gradvis till kinesiska allt eftersom du lär dig orden.</span>
           </div>
           <div class="welcome-feature">
-            <strong>Ingen inloggning</strong>
-            <span>All data sparas lokalt i din webbläsare. Inga konton, inga servrar.</span>
+            <strong>Inga konton, ingen inloggning</strong>
+            <span>All data sparas lokalt i din webbläsare.</span>
           </div>
           <div class="welcome-feature">
             <strong>Repetition</strong>
