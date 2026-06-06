@@ -155,19 +155,3 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
   .hero { padding: 20px; border-radius: 22px; }
   .landing-feature-grid { grid-template-columns: 1fr; }
 }
-
-.welcome-screen { display: flex; align-items: center; justify-content: center; min-height: 80dvh; padding: 24px; }
-.welcome-card { max-width: 520px; width: 100%; text-align: center; display: flex; flex-direction: column; gap: 24px; }
-.welcome-icon { margin: 0 auto 8px; }
-.welcome-icon img { display: block; margin: 0 auto; border-radius: 28px; box-shadow: 0 6px 24px rgba(0,0,0,.08); }
-.welcome-card h1 { font-size: 2.6rem; letter-spacing: -.03em; margin: 0; }
-.welcome-subtitle { color: var(--muted); font-size: 1.1rem; }
-.welcome-features { display: flex; flex-direction: column; gap: 16px; text-align: left; }
-.welcome-feature { display: grid; grid-template-columns: 32px 1fr; gap: 8px 12px; }
-.welcome-feature:before { content: ''; width: 12px; height: 12px; background: var(--gold); border-radius: 50%; margin-top: 4px; justify-self: center; }
-.welcome-feature strong { font-size: 1rem; }
-.welcome-feature span { color: var(--muted); font-size: .92rem; grid-column: 2; }
-.welcome-actions { display: flex; flex-direction: column; gap: 12px; align-items: center; margin-top: 8px; }
-.welcome-actions .button { min-width: 220px; }
-.welcome-hint { font-size: .88rem; color: var(--muted); }
-.welcome-hint a { color: var(--ink); text-decoration: underline; }
