@@ -5,7 +5,7 @@ export function WelcomeScreen({ go }) {
     <section class="screen welcome-screen">
       <div class="welcome-card">
         <div class="welcome-icon">
-          <img src="./assets/icons/icon-large.svg?v=47" alt="" width="120" height="120" />
+          <img src="./assets/icons/icon-large.svg?v=48" alt="" width="120" height="120" />
         </div>
         <h1>HànHàn</h1>
         <p class="welcome-subtitle">Lär dig mandarin från svenska — steg för steg, utan stress.</p>
