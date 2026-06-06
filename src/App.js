@@ -69,7 +69,7 @@ export function App() {
       ${focusMode ? null : html`
         <header class="app-header">
           <button class="brand" onClick=${() => go('home')}>
-            <span class="brand-mark"><img src="./assets/icons/icon.svg?v=46" alt="" /></span>
+            <span class="brand-mark"><img src="./assets/icons/icon.svg?v=47" alt="" /></span>
             <span><${UiText} progress=${progress} id="app.title" /></span>
           </button>
         </header>

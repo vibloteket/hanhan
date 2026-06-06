@@ -80,7 +80,6 @@ export function SettingsScreen({ progress, setProgress, go }) {
           <div><dt>Kontakt</dt><dd><a href=${`mailto:${CONTACT_EMAIL}`}>${CONTACT_EMAIL}</a></dd></div>
         </dl>
         <p><a href="./about.html">Öppna projektsidan</a></p>
-        <p class="muted small">Om du inte ser senaste ändringar: kontrollera asset-versionen här och ladda om sidan.</p>
       </section>
 
       ${message ? html`<p class="notice">${message}</p>` : null}
