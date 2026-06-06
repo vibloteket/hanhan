@@ -1,12 +1,11 @@
 import { html } from '../html.js';
-import { Button } from '../components/Button.js';
 
 export function WelcomeScreen({ go }) {
   return html`
     <section class="screen welcome-screen">
       <div class="welcome-card">
         <div class="welcome-icon">
-          <img src="./assets/icons/icon-large.svg?v=44" alt="" width="120" height="120" />
+          <img src="./assets/icons/icon-large.svg?v=45" alt="" width="120" height="120" />
         </div>
         <h1>HànHàn</h1>
         <p class="welcome-subtitle">Lär dig mandarin från svenska — steg för steg, utan stress.</p>
@@ -27,7 +26,7 @@ export function WelcomeScreen({ go }) {
         </div>
 
         <div class="welcome-actions">
-          <${Button} label="Kom igång" kind="primary" onClick=${() => go('home')} />
+          <button class="button primary" onClick=${() => go('home')}>Kom igång</button>
           <p class="welcome-hint">
             Du kan alltid läsa mer på <a href="./about.html">Om HànHàn</a>.
           </p>
