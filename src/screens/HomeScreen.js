@@ -93,7 +93,7 @@ export function HomeScreen({ progress, setProgress, go }) {
     <section class="screen panel home-settings-link" onClick=${() => go('about')}>
       <div>
         <h2>Om HànHàn</h2>
-        <p>Vad är HànHàn? Fokusområden, integritet och kontakt — ${CONTACT_EMAIL}.</p>
+        <p>Vad är HànHàn? Fokusområden, integritet och kontakt. <button class="inline-link" onClick=${(e) => { e.stopPropagation(); go('settings'); }}>Inställningar</button> — ${CONTACT_EMAIL}</p>
       </div>
       <span class="pill">Öppna</span>
     </section>
