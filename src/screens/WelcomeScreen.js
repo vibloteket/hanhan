@@ -1,20 +1,26 @@
 import { html } from '../html.js';
 import { CONTACT_EMAIL } from '../buildInfo.js';
 
-export function WelcomeScreen({ go }) {
+export function WelcomeScreen({ go, showAppLink }) {
   return html`
     <section class="hero screen">
       <div class="hero-title">
         <div class="welcome-icon">
-          <img src="./assets/icons/icon-large.svg?v=51" alt="" width="96" height="96" />
+          <img src="./assets/icons/icon-large.svg?v=52" alt="" width="96" height="96" />
         </div>
         <p class="eyebrow">Praktisk mandarin från svenska</p>
         <h1>HànHàn</h1>
         <p>En liten webbapp för att lära sig vardagsmandarin, app-ord och pinyin — med ett gränssnitt som gradvis växlar till kinesiska.</p>
       </div>
-      <div class="hero-actions">
-        <button class="button" onClick=${() => go('home')}>Kom igång</button>
-      </div>
+      ${showAppLink ? html`
+        <div class="hero-actions">
+          <button class="button" onClick=${() => go('home')}>Tillbaka till appen</button>
+        </div>
+      ` : html`
+        <div class="hero-actions">
+          <button class="button" onClick=${() => go('home')}>Kom igång</button>
+        </div>
+      `}
     </section>
 
     <section class="screen panel">

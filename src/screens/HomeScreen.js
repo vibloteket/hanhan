@@ -3,6 +3,7 @@ import { packs, findNextLesson, allItems, getLesson } from '../content/packs.js'
 import { dueCards } from '../srs.js';
 import { Button } from '../components/Button.js';
 import { UiText } from '../components/UiText.js';
+import { CONTACT_EMAIL } from '../buildInfo.js';
 
 export function HomeScreen({ progress, setProgress, go }) {
   const activeLesson = progress.activeSession?.type === 'lesson'
@@ -89,10 +90,10 @@ export function HomeScreen({ progress, setProgress, go }) {
       </div>
     </section>
 
-    <section class="screen panel home-settings-link" onClick=${() => go('settings')}>
+    <section class="screen panel home-settings-link" onClick=${() => go('about')}>
       <div>
-        <h2><${UiText} progress=${progress} id="settings.title" /></h2>
-        <p>Språk, backup, import/export och nollställning.</p>
+        <h2>Om HànHàn</h2>
+        <p>Vad är HànHàn? Fokusområden, integritet och kontakt — ${CONTACT_EMAIL}.</p>
       </div>
       <span class="pill">Öppna</span>
     </section>
