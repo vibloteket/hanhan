@@ -40,12 +40,11 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .link-button { border: 0; background: transparent; color: var(--red-dark); text-decoration: underline; padding: 12px 0; }
 
 .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+.nav-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
+.nav-grid .stat-card strong { font-size: 1.2rem; }
 .stat-card, .panel { border: 1px solid var(--line); border-radius: 20px; padding: 16px; background: var(--panel); }
 button.stat-card { text-align: left; color: inherit; cursor: pointer; }
-.stat-card.clickable:hover, .home-settings-link:hover { border-color: #d8b98d; transform: translateY(-1px); }
-.home-settings-link { display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; transition: transform .15s ease, border-color .15s ease; }
-.home-settings-link h2 { margin: 0 0 4px; }
-.home-settings-link p { margin: 0; }
+.stat-card.clickable:hover { border-color: #d8b98d; transform: translateY(-1px); }
 .ongoing-session { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
 .ongoing-session h2 { margin: 0 0 4px; }
 .ongoing-session p { margin: 0; color: var(--muted); }
@@ -141,7 +140,6 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
   .lesson-row { grid-template-columns: auto 1fr; }
   .lesson-row .button { grid-column: 1 / -1; }
   .lesson-row-actions { grid-column: 1 / -1; align-items: stretch; flex-direction: column; }
-  .home-settings-link { align-items: flex-start; flex-direction: column; }
   .choice-grid, .answer-form { grid-template-columns: 1fr; }
   .ongoing-session { align-items: stretch; flex-direction: column; }
   .session-actions { align-items: stretch; flex-direction: column; }
