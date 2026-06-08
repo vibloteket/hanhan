@@ -70,7 +70,7 @@ export function SettingsScreen({ progress, setProgress, go }) {
       </section>
 
       <section class="screen panel about-panel">
-        <h2>Om HànHàn</h2>
+        <h2>Licens & kontakt</h2>
         <dl class="about-list">
           <div><dt>Version</dt><dd>${APP_VERSION}</dd></div>
           <div><dt>Build</dt><dd>${BUILD_COMMIT}</dd></div>
@@ -79,7 +79,6 @@ export function SettingsScreen({ progress, setProgress, go }) {
           <div><dt>Licens</dt><dd><a href="./LICENSE.txt">${APP_LICENSE}</a></dd></div>
           <div><dt>Kontakt</dt><dd><a href=${`mailto:${CONTACT_EMAIL}`}>${CONTACT_EMAIL}</a></dd></div>
         </dl>
-        <p><a href="./about.html">Öppna projektsidan</a></p>
       </section>
 
       ${message ? html`<p class="notice">${message}</p>` : null}
