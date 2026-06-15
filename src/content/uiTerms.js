@@ -19,7 +19,7 @@ export const uiTerms = [
   { key: 'action.export', sv: 'Exportera backup', en: 'Export backup', zh: '导出备份', pinyin: 'dǎochū bèifèn' },
   { key: 'action.import', sv: 'Importera backup', en: 'Import backup', zh: '导入备份', pinyin: 'dǎorù bèifèn' },
 
-  { key: 'lesson.title', sv: 'Lektion', en: 'Lesson', zh: '课程', pinyin: 'kèchéng' },
+  { key: 'lesson.title', sv: 'Lektioner', en: 'Lessons', zh: '课程', pinyin: 'kèchéng' },
   { key: 'lesson.complete', sv: 'Klar', en: 'Complete', zh: '完成', pinyin: 'wánchéng' },
   { key: 'term.word', sv: 'Ord', en: 'Word', zh: '词', pinyin: 'cí' },
   { key: 'term.answer', sv: 'Svar', en: 'Answer', zh: '答案', pinyin: 'dá’àn' },
