@@ -180,6 +180,8 @@ export const appUiBasics = {
         { id: 'ui-answer-char', sv: 'svara', hanzi: '答', pinyin: 'dá', notesSv: 'Första tecknet i 答案.' },
         { id: 'ui-answer', sv: 'svar', hanzi: '答案', pinyin: 'dá’àn', uiKey: 'term.answer', components: [{ hanzi: '答', pinyin: 'dá', sv: 'svara' }, { hanzi: '案', pinyin: 'àn', sv: 'förslag / fall' }] },
         { id: 'ui-down-next-char', sv: 'nästa / ned', hanzi: '下', pinyin: 'xià', notesSv: 'Första tecknet i 下一个.' },
+        { id: 'ui-one-char', sv: 'ett', hanzi: '一', pinyin: 'yī', notesSv: 'Andra tecknet i 下一个. Grundläggande räkneord.' },
+        { id: 'ui-measure-char', sv: 'styck (måttsord)', hanzi: '个', pinyin: 'ge', notesSv: 'Tredje tecknet i 下一个. Ett vanligt måttsord.' },
         { id: 'ui-next', sv: 'nästa', hanzi: '下一个', pinyin: 'xià yí ge', uiKey: 'action.next', components: [{ hanzi: '下', pinyin: 'xià', sv: 'nästa / ned' }, { hanzi: '一', pinyin: 'yī', sv: 'ett' }, { hanzi: '个', pinyin: 'ge', sv: 'styck' }] },
         { id: 'ui-show-answer', sv: 'visa svar', hanzi: '显示答案', pinyin: 'xiǎnshì dá’àn', uiKey: 'action.showAnswer', components: [{ hanzi: '显示', pinyin: 'xiǎnshì', sv: 'visa' }, { hanzi: '答案', pinyin: 'dá’àn', sv: 'svar' }] },
       ],
