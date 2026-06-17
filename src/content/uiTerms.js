@@ -9,6 +9,7 @@ export const uiTerms = [
   { key: 'action.start', sv: 'Starta', en: 'Start', zh: '开始', pinyin: 'kāishǐ' },
   { key: 'action.continue', sv: 'Fortsätt', en: 'Continue', zh: '继续', pinyin: 'jìxù' },
   { key: 'action.review', sv: 'Repetera', en: 'Review', zh: '复习', pinyin: 'fùxí' },
+  { key: 'review.title', sv: 'Repetition', en: 'Review', zh: '复习', pinyin: 'fùxí' },
   { key: 'action.learn', sv: 'Lär dig', en: 'Learn', zh: '学习', pinyin: 'xuéxí' },
   { key: 'action.practice', sv: 'Öva', en: 'Practice', zh: '练习', pinyin: 'liànxí' },
   { key: 'action.back', sv: 'Tillbaka', en: 'Back', zh: '返回', pinyin: 'fǎnhuí' },
@@ -31,8 +32,13 @@ export const uiTerms = [
 
   { key: 'status.today', sv: 'Idag', en: 'Today', zh: '今天', pinyin: 'jīntiān' },
   { key: 'status.due', sv: 'Att repetera', en: 'Due', zh: '要复习', pinyin: 'yào fùxí' },
+  { key: 'status.inProgress', sv: 'Pågående', en: 'In progress', zh: '进行中', pinyin: 'jìnxíng zhōng' },
+  { key: 'status.incomplete', sv: 'Ej klar', en: 'Incomplete', zh: '未完成', pinyin: 'wèi wánchéng' },
+  { key: 'status.learnedCards', sv: 'lärda kort', en: 'learned cards', zh: '已学', pinyin: 'yǐxué' },
+  { key: 'status.mastered', sv: 'Sitter', en: 'Mastered', zh: '熟', pinyin: 'shú' },
   { key: 'status.streak', sv: 'Streak', en: 'Streak', zh: '连续天数', pinyin: 'liánxù tiānshù' },
   { key: 'status.language', sv: 'Språk', en: 'Language', zh: '语言', pinyin: 'yǔyán' },
+  { key: 'section.data', sv: 'Data', en: 'Data', zh: '数据', pinyin: 'shùjù' },
 ];
 
 export const uiTermByKey = Object.fromEntries(uiTerms.map((term) => [term.key, term]));

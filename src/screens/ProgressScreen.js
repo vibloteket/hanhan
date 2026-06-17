@@ -8,8 +8,8 @@ import { isMasteredCard, MASTERED_STREAK } from '../mastery.js';
 function cardStatus(card) {
   if (!card) return { label: 'Inte startad', className: 'not-started' };
   const due = new Date(card.dueAt).getTime() <= Date.now();
-  if (due) return { label: 'Dags att repetera', className: 'due' };
-  if (isMasteredCard(card)) return { label: 'Sitter', className: 'mastered' };
+  if (due) return { label: 'Dags att repetera', key: 'status.due', className: 'due' };
+  if (isMasteredCard(card)) return { label: 'Sitter', key: 'status.mastered', className: 'mastered' };
   if ((card.correctStreak || 0) >= 3 || (card.intervalDays || 0) >= 3) return { label: 'Stark', className: 'strong' };
   if ((card.correctStreak || 0) >= 1) return { label: 'På gång', className: 'learning' };
   return { label: 'Ny / svag', className: 'weak' };
@@ -70,9 +70,9 @@ export function ProgressScreen({ progress, go }) {
       <p class="muted">Alla ord och fraser som du har låst upp genom lektioner.</p>
 
       <section class="summary-grid" aria-label="Sammanfattning">
-        <div class="summary-card"><strong>${learnedItems.length}</strong><span>lärda kort</span></div>
+        <div class="summary-card"><strong>${learnedItems.length}</strong><span><${UiText} progress=${progress} id="status.learnedCards" /></span></div>
         <div class="summary-card"><strong>${dueCount}</strong><span>dags att repetera</span></div>
-        <div class="summary-card"><strong>${masteredCount}</strong><span>sitter (${MASTERED_STREAK}+ rätt i rad)</span></div>
+        <div class="summary-card"><strong>${masteredCount}</strong><span><${UiText} progress=${progress} id="status.mastered" /> (${MASTERED_STREAK}+ rätt i rad)</span></div>
       </section>
 
       ${learnedItems.length ? html`
@@ -104,7 +104,7 @@ export function ProgressScreen({ progress, go }) {
                 </div>
               </div>
               <div class="learned-meta">
-                <span class=${`status-chip ${status.className}`}>${status.label}</span>
+                <span class=${`status-chip ${status.className}`}>${status.key ? html`<${UiText} progress=${progress} id=${status.key} />` : status.label}</span>
                 <span class="muted small"><${UiText} progress=${progress} id="action.next" />: ${formatDue(card)}</span>
                 <span class="muted small"><${UiText} progress=${progress} id="feedback.correct" /> i rad: ${card.correctStreak || 0}</span>
               </div>

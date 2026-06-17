@@ -4,6 +4,7 @@ import { allItems, itemById } from '../content/packs.js';
 import { updateCard } from '../srs.js';
 import { answerReviewQueue, createReviewQueue, reviewProgressLabel } from '../reviewQueue.js';
 import { Button } from '../components/Button.js';
+import { UiText } from '../components/UiText.js';
 import { ExerciseCard } from '../components/ExerciseCard.js';
 
 export function ReviewScreen({ progress, setProgress, go }) {
@@ -47,7 +48,7 @@ export function ReviewScreen({ progress, setProgress, go }) {
         <span class="focus-spacer"></span>
         <span class="pill">${reviewProgressLabel(answeredCount, remainingCount)}</span>
       </div>
-      <h1>Repetition</h1>
+      <h1><${UiText} progress=${progress} id="review.title" /></h1>
 
       ${!initialQueue.length ? html`
         <section class="exercise-card complete-card">

@@ -58,7 +58,7 @@ export function SettingsScreen({ progress, setProgress, go }) {
       </section>
 
       <section class="screen panel">
-        <h2>Data</h2>
+        <h2><${UiText} progress=${progress} id="section.data" /></h2>
         <p>Din inlärningsdata sparas i den här webbläsaren. Export/import skyddar vid byte av mobil, webbläsare eller host.</p>
         <div class="settings-actions">
           <${Button} progress=${progress} labelKey="action.export" onClick=${exportBackup} />

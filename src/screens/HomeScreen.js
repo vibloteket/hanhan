@@ -67,7 +67,7 @@ export function HomeScreen({ progress, setProgress, go }) {
         <strong>${completedCount}</strong><span><${UiText} progress=${progress} id="lesson.complete" /> · <${UiText} progress=${progress} id="lesson.title" /></span>
       </button>
       <button class="stat-card clickable" onClick=${() => go('progress')}>
-        <strong>${Object.keys(progress.cards).length}</strong><span>inlärda kort</span>
+        <strong>${Object.keys(progress.cards).length}</strong><span><${UiText} progress=${progress} id="status.learnedCards" /></span>
       </button>
     </section>
 
