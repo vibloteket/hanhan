@@ -32,7 +32,7 @@ export function isMasteredUiKey(progress, key) {
 export function uiLabel(progress, key) {
   const term = uiTermByKey[key];
   if (!term) return key;
-  const mode = progress.settings?.uiMode || 'dynamic';
+  const mode = progress?.settings?.uiMode || 'dynamic';
   const unlocked = isUnlocked(progress, key);
 
   if (mode === 'sv' || !unlocked) return term.sv;
@@ -44,7 +44,7 @@ export function uiLabel(progress, key) {
 export function uiHint(progress, key) {
   const term = uiTermByKey[key];
   if (!term) return '';
-  const mode = progress.settings?.uiMode || 'dynamic';
+  const mode = progress?.settings?.uiMode || 'dynamic';
   if (!isUnlocked(progress, key) || mode === 'sv') return '';
   return `${term.sv} · ${term.pinyin}`;
 }

@@ -211,10 +211,10 @@ export const appUiBasics = {
       ],
     },
     {
-      id: 'data-progress',
-      titleSv: 'Ordlista och data',
-      descriptionSv: 'Ord för dagens repetition, språk och backup.',
-      unlocksUiKeys: ['nav.progress', 'status.due', 'status.language', 'status.learnedCards', 'status.mastered', 'section.data', 'action.export', 'action.import', 'action.reset', 'action.cancel'],
+      id: 'word-list-status',
+      titleSv: 'Ordlista och status',
+      descriptionSv: 'Ord för ordlistan, dagens repetition och status på kort.',
+      unlocksUiKeys: ['nav.progress', 'status.due', 'status.language', 'status.learnedCards', 'status.mastered', 'section.data'],
       practiceModes: ['type-pinyin'],
       items: [
         { id: 'ui-progress', sv: 'ordlista / lista med ord', hanzi: '词表', pinyin: 'cíbiǎo', uiKey: 'nav.progress', components: [{ hanzi: '词', pinyin: 'cí', sv: 'ord' }, { hanzi: '表', pinyin: 'biǎo', sv: 'lista / tabell' }] },
@@ -230,6 +230,15 @@ export const appUiBasics = {
         { id: 'ui-already-char', sv: 'redan', hanzi: '已', pinyin: 'yǐ', notesSv: 'Första tecknet i 已学: redan lärt.' },
         { id: 'ui-learned-cards', sv: 'lärda kort', hanzi: '已学', pinyin: 'yǐxué', uiKey: 'status.learnedCards', components: [{ hanzi: '已', pinyin: 'yǐ', sv: 'redan' }, { hanzi: '学', pinyin: 'xué', sv: 'lära sig' }] },
         { id: 'ui-mastered', sv: 'sitter / bekant', hanzi: '熟', pinyin: 'shú', uiKey: 'status.mastered', notesSv: 'Används här för ord som sitter: de känns bekanta och säkra.' },
+      ],
+    },
+    {
+      id: 'backup-data-actions',
+      titleSv: 'Backup och datahantering',
+      descriptionSv: 'Export, import, avbryt och nollställ i inställningarna.',
+      unlocksUiKeys: ['action.export', 'action.import', 'action.reset', 'action.cancel'],
+      practiceModes: ['type-pinyin'],
+      items: [
         { id: 'ui-keep-char', sv: 'skydda / behålla', hanzi: '保', pinyin: 'bǎo', notesSv: 'Första tecknet i 保存.' },
         { id: 'ui-save', sv: 'spara', hanzi: '保存', pinyin: 'bǎocún', components: [{ hanzi: '保', pinyin: 'bǎo', sv: 'skydda / behålla' }, { hanzi: '存', pinyin: 'cún', sv: 'spara / lagra' }] },
         { id: 'ui-take-char', sv: 'ta', hanzi: '取', pinyin: 'qǔ', notesSv: 'Första tecknet i 取消.' },
