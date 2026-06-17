@@ -69,14 +69,14 @@ export function SettingsScreen({ progress, setProgress, go }) {
       </section>
 
       <section class="screen panel about-panel">
-        <h2>Licens & kontakt</h2>
+        <h2><${UiText} progress=${progress} id="section.licenseContact" /></h2>
         <dl class="about-list">
-          <div><dt>Version</dt><dd>${APP_VERSION}</dd></div>
-          <div><dt>Build</dt><dd>${BUILD_COMMIT}</dd></div>
-          <div><dt>Byggdatum</dt><dd>${BUILD_DATE}</dd></div>
-          <div><dt>Asset-version</dt><dd>${ASSET_VERSION}</dd></div>
-          <div><dt>Licens</dt><dd><a href="./LICENSE.txt">${APP_LICENSE}</a></dd></div>
-          <div><dt>Kontakt</dt><dd><a href=${`mailto:${CONTACT_EMAIL}`}>${CONTACT_EMAIL}</a></dd></div>
+          <div><dt><${UiText} progress=${progress} id="term.version" /></dt><dd>${APP_VERSION}</dd></div>
+          <div><dt><${UiText} progress=${progress} id="term.build" /></dt><dd>${BUILD_COMMIT}</dd></div>
+          <div><dt><${UiText} progress=${progress} id="term.buildDate" /></dt><dd>${BUILD_DATE}</dd></div>
+          <div><dt><${UiText} progress=${progress} id="term.assetVersion" /></dt><dd>${ASSET_VERSION}</dd></div>
+          <div><dt><${UiText} progress=${progress} id="term.license" /></dt><dd><a href="./LICENSE.txt">${APP_LICENSE}</a></dd></div>
+          <div><dt><${UiText} progress=${progress} id="term.contact" /></dt><dd><a href=${`mailto:${CONTACT_EMAIL}`}>${CONTACT_EMAIL}</a></dd></div>
         </dl>
       </section>
 

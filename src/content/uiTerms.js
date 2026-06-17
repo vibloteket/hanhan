@@ -33,6 +33,13 @@ export const uiTerms = [
   { key: 'status.mastered', sv: 'Sitter', en: 'Mastered', zh: '熟', pinyin: 'shú' },
   { key: 'status.language', sv: 'Språk', en: 'Language', zh: '语言', pinyin: 'yǔyán' },
   { key: 'section.data', sv: 'Data', en: 'Data', zh: '数据', pinyin: 'shùjù' },
+  { key: 'section.licenseContact', sv: 'Licens & kontakt', en: 'License & contact', zh: '许可与联系', pinyin: 'xǔkě yǔ liánxì' },
+  { key: 'term.version', sv: 'Version', en: 'Version', zh: '版本', pinyin: 'bǎnběn' },
+  { key: 'term.build', sv: 'Build', en: 'Build', zh: '构建', pinyin: 'gòujiàn' },
+  { key: 'term.buildDate', sv: 'Byggdatum', en: 'Build date', zh: '构建日期', pinyin: 'gòujiàn rìqī' },
+  { key: 'term.assetVersion', sv: 'Asset-version', en: 'Asset version', zh: '资源版本', pinyin: 'zīyuán bǎnběn' },
+  { key: 'term.license', sv: 'Licens', en: 'License', zh: '许可', pinyin: 'xǔkě' },
+  { key: 'term.contact', sv: 'Kontakt', en: 'Contact', zh: '联系', pinyin: 'liánxì' },
 ];
 
 export const uiTermByKey = Object.fromEntries(uiTerms.map((term) => [term.key, term]));
