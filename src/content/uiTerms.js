@@ -1,7 +1,6 @@
 export const uiTerms = [
   { key: 'app.title', sv: 'HànHàn', en: 'HànHàn', zh: '汉汉', pinyin: 'hàn hàn' },
   { key: 'nav.home', sv: 'Hem', en: 'Home', zh: '首页', pinyin: 'shǒuyè' },
-  { key: 'nav.packs', sv: 'Paket', en: 'Packs', zh: '学习包', pinyin: 'xuéxí bāo' },
   { key: 'nav.progress', sv: 'Ordlista', en: 'Word list', zh: '词表', pinyin: 'cíbiǎo' },
   { key: 'nav.about', sv: 'Om HànHàn', en: 'About HànHàn', zh: '关于汉汉', pinyin: 'guānyú hàn hàn' },
   { key: 'settings.title', sv: 'Inställningar', en: 'Settings', zh: '设置', pinyin: 'shèzhì' },
@@ -15,7 +14,6 @@ export const uiTerms = [
   { key: 'action.back', sv: 'Tillbaka', en: 'Back', zh: '返回', pinyin: 'fǎnhuí' },
   { key: 'action.next', sv: 'Nästa', en: 'Next', zh: '下一个', pinyin: 'xià yí ge' },
   { key: 'action.showAnswer', sv: 'Visa svar', en: 'Show answer', zh: '显示答案', pinyin: 'xiǎnshì dá’àn' },
-  { key: 'action.save', sv: 'Spara', en: 'Save', zh: '保存', pinyin: 'bǎocún' },
   { key: 'action.cancel', sv: 'Avbryt', en: 'Cancel', zh: '取消', pinyin: 'qǔxiāo' },
   { key: 'action.reset', sv: 'Nollställ', en: 'Reset', zh: '重置', pinyin: 'chóngzhì' },
   { key: 'action.export', sv: 'Exportera backup', en: 'Export backup', zh: '导出备份', pinyin: 'dǎochū bèifèn' },
@@ -27,16 +25,12 @@ export const uiTerms = [
   { key: 'term.answer', sv: 'Svar', en: 'Answer', zh: '答案', pinyin: 'dá’àn' },
   { key: 'feedback.correct', sv: 'Rätt', en: 'Correct', zh: '对', pinyin: 'duì' },
   { key: 'feedback.wrong', sv: 'Fel', en: 'Wrong', zh: '错', pinyin: 'cuò' },
-  { key: 'feedback.easy', sv: 'Lätt', en: 'Easy', zh: '简单', pinyin: 'jiǎndān' },
-  { key: 'feedback.hard', sv: 'Svårt', en: 'Hard', zh: '难', pinyin: 'nán' },
 
-  { key: 'status.today', sv: 'Idag', en: 'Today', zh: '今天', pinyin: 'jīntiān' },
   { key: 'status.due', sv: 'Att repetera', en: 'Due', zh: '要复习', pinyin: 'yào fùxí' },
   { key: 'status.inProgress', sv: 'Pågående', en: 'In progress', zh: '进行中', pinyin: 'jìnxíng zhōng' },
   { key: 'status.incomplete', sv: 'Ej klar', en: 'Incomplete', zh: '未完成', pinyin: 'wèi wánchéng' },
   { key: 'status.learnedCards', sv: 'lärda kort', en: 'learned cards', zh: '已学', pinyin: 'yǐxué' },
   { key: 'status.mastered', sv: 'Sitter', en: 'Mastered', zh: '熟', pinyin: 'shú' },
-  { key: 'status.streak', sv: 'Streak', en: 'Streak', zh: '连续天数', pinyin: 'liánxù tiānshù' },
   { key: 'status.language', sv: 'Språk', en: 'Language', zh: '语言', pinyin: 'yǔyán' },
   { key: 'section.data', sv: 'Data', en: 'Data', zh: '数据', pinyin: 'shùjù' },
 ];
