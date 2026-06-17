@@ -3,6 +3,7 @@ export const uiTerms = [
   { key: 'nav.home', sv: 'Hem', en: 'Home', zh: '首页', pinyin: 'shǒuyè' },
   { key: 'nav.packs', sv: 'Paket', en: 'Packs', zh: '学习包', pinyin: 'xuéxí bāo' },
   { key: 'nav.progress', sv: 'Ordlista', en: 'Word list', zh: '词表', pinyin: 'cíbiǎo' },
+  { key: 'nav.about', sv: 'Om HànHàn', en: 'About HànHàn', zh: '关于汉汉', pinyin: 'guānyú hàn hàn' },
   { key: 'settings.title', sv: 'Inställningar', en: 'Settings', zh: '设置', pinyin: 'shèzhì' },
 
   { key: 'action.start', sv: 'Starta', en: 'Start', zh: '开始', pinyin: 'kāishǐ' },

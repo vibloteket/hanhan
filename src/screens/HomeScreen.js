@@ -91,11 +91,11 @@ export function HomeScreen({ progress, setProgress, go }) {
 
     <section class="screen nav-grid">
       <button class="stat-card clickable" onClick=${() => go('settings')}>
-        <strong>Inställningar</strong>
+        <strong><${UiText} progress=${progress} id="settings.title" /></strong>
         <span>Språk, backup, import/export</span>
       </button>
       <button class="stat-card clickable" onClick=${() => go('about')}>
-        <strong>Om HànHàn</strong>
+        <strong><${UiText} progress=${progress} id="nav.about" /></strong>
         <span>Fokus, integritet, kontakt</span>
       </button>
     </section>

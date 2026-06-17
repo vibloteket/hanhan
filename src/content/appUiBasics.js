@@ -116,7 +116,7 @@ export const appUiBasics = {
       id: 'app-hanhan-name',
       titleSv: 'Appens namn: 汉汉',
       descriptionSv: 'Tecknet 汉 för kinesiska språket, och hur det blir appens namn i reduplikation.',
-      unlocksUiKeys: ['app.title'],
+      unlocksUiKeys: ['app.title', 'nav.about'],
       practiceModes: ['type-pinyin'],
       items: [
         { id: 'ui-han-char', sv: 'kinesiska (språk)', hanzi: '汉', pinyin: 'hàn', notesSv: 'En förkortning för kinesiska språket, som i 汉语.' },
@@ -129,6 +129,20 @@ export const appUiBasics = {
           notesSv: 'Appens namn: Hàn betyder kinesiska språket. Fördubblat som en vänlig smekform, på samma sätt som andra appar.',
           components: [
             { hanzi: '汉', pinyin: 'hàn', sv: 'kinesiska språket' },
+          ],
+        },
+        { id: 'ui-about-char', sv: 'stänga / relatera', hanzi: '关', pinyin: 'guān', notesSv: 'Första tecknet i 关于.' },
+        { id: 'ui-about-word', sv: 'om / angående', hanzi: '关于', pinyin: 'guānyú', components: [{ hanzi: '关', pinyin: 'guān', sv: 'relatera' }] },
+        {
+          id: 'ui-about-hanhan',
+          sv: 'Om HànHàn',
+          hanzi: '关于汉汉',
+          pinyin: 'guānyú hàn hàn',
+          uiKey: 'nav.about',
+          notesSv: 'Vanlig rubrik för en Om-sida: 关于 betyder om eller angående.',
+          components: [
+            { hanzi: '关于', pinyin: 'guānyú', sv: 'om / angående' },
+            { hanzi: '汉汉', pinyin: 'hàn hàn', sv: 'HànHàn' },
           ],
         },
       ],
@@ -161,13 +175,16 @@ export const appUiBasics = {
       id: 'continue-lesson',
       titleSv: 'Fortsätt och lektion',
       descriptionSv: 'Två vanliga ord i lektionsflödet.',
-      unlocksUiKeys: ['action.continue', 'lesson.title'],
+      unlocksUiKeys: ['action.continue', 'lesson.title', 'lesson.complete'],
       practiceModes: ['type-pinyin'],
       items: [
         { id: 'ui-continue-char', sv: 'fortsätta', hanzi: '续', pinyin: 'xù', notesSv: 'Ett tecken i 继续.' },
         { id: 'ui-continue', sv: 'fortsätt', hanzi: '继续', pinyin: 'jìxù', uiKey: 'action.continue', components: [{ hanzi: '续', pinyin: 'xù', sv: 'fortsätta' }] },
         { id: 'ui-class-char', sv: 'lektion', hanzi: '课', pinyin: 'kè', notesSv: 'Första tecknet i 课程.' },
         { id: 'ui-lesson', sv: 'lektion / kurs', hanzi: '课程', pinyin: 'kèchéng', uiKey: 'lesson.title', components: [{ hanzi: '课', pinyin: 'kè', sv: 'lektion' }, { hanzi: '程', pinyin: 'chéng', sv: 'kurs / process' }] },
+        { id: 'ui-complete-char1', sv: 'färdig / komplett', hanzi: '完', pinyin: 'wán', notesSv: 'Första tecknet i 完成.' },
+        { id: 'ui-complete-char2', sv: 'bli / åstadkomma', hanzi: '成', pinyin: 'chéng', notesSv: 'Andra tecknet i 完成.' },
+        { id: 'ui-complete', sv: 'klar / slutförd', hanzi: '完成', pinyin: 'wánchéng', uiKey: 'lesson.complete', components: [{ hanzi: '完', pinyin: 'wán', sv: 'färdig / komplett' }, { hanzi: '成', pinyin: 'chéng', sv: 'bli / åstadkomma' }] },
       ],
     },
     {
