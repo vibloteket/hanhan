@@ -1,5 +1,8 @@
-import { allLessons, lessonKey } from './content/packs.js';
+import { allItems, allLessons, lessonKey } from './content/packs.js';
 import { uiTermByKey } from './content/uiTerms.js';
+import { isMasteredCard } from './mastery.js';
+
+const uiItemByKey = Object.fromEntries(allItems.filter((item) => item.uiKey).map((item) => [item.uiKey, item]));
 
 export function unlockedUiKeysFor(progress) {
   const unlocked = new Set(progress?.unlockedUiKeys || []);
@@ -17,22 +20,31 @@ export function isUnlocked(progress, key) {
   return unlockedUiKeysFor(progress).has(key);
 }
 
+export function uiItemForKey(key) {
+  return uiItemByKey[key];
+}
+
+export function isMasteredUiKey(progress, key) {
+  const item = uiItemForKey(key);
+  return Boolean(item && isMasteredCard(progress?.cards?.[item.id]));
+}
+
 export function uiLabel(progress, key) {
   const term = uiTermByKey[key];
   if (!term) return key;
-  const mode = progress.settings?.uiMode || 'gradual-assisted';
+  const mode = progress.settings?.uiMode || 'dynamic';
   const unlocked = isUnlocked(progress, key);
 
   if (mode === 'sv' || !unlocked) return term.sv;
   if (mode === 'zh') return term.zh;
-  if (mode === 'gradual-hints') return term.zh;
+  if (isMasteredUiKey(progress, key)) return term.zh;
   return `${term.zh} · ${term.sv}`;
 }
 
 export function uiHint(progress, key) {
   const term = uiTermByKey[key];
   if (!term) return '';
-  const mode = progress.settings?.uiMode || 'gradual-assisted';
+  const mode = progress.settings?.uiMode || 'dynamic';
   if (!isUnlocked(progress, key) || mode === 'sv') return '';
   return `${term.sv} · ${term.pinyin}`;
 }

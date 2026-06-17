@@ -8,6 +8,14 @@ test('normalizeProgress fills missing newer fields', () => {
   assert.deepEqual(normalized.lessonMeta, {});
   assert.deepEqual(normalized.unlockedExerciseTypes, []);
   assert.equal(normalized.activeSession, null);
+  assert.equal(normalized.settings.uiMode, 'dynamic');
+});
+
+test('normalizeProgress migrates legacy gradual UI modes to dynamic', () => {
+  const assisted = normalizeProgress({ schemaVersion: 1, settings: { uiMode: 'gradual-assisted' } });
+  const hints = normalizeProgress({ schemaVersion: 1, settings: { uiMode: 'gradual-hints' } });
+  assert.equal(assisted.settings.uiMode, 'dynamic');
+  assert.equal(hints.settings.uiMode, 'dynamic');
 });
 
 test('normalizeProgress rejects unsupported schemas', () => {

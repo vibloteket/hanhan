@@ -1,18 +1,46 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { isUnlocked, uiLabel, unlockedUiKeysFor } from '../src/uiText.js';
+import { isUnlocked, isMasteredUiKey, uiLabel, unlockedUiKeysFor } from '../src/uiText.js';
 
 test('UI labels unlock from completed lessons even if stored unlockedUiKeys is stale', () => {
   const progress = {
     completedLessons: ['app-ui-basics/start-button'],
     unlockedUiKeys: [],
-    settings: { uiMode: 'gradual-assisted' },
+    settings: { uiMode: 'dynamic' },
   };
 
   assert.equal(isUnlocked(progress, 'action.start'), true);
   assert.equal(uiLabel(progress, 'action.start'), '开始 · Starta');
   assert.equal(isUnlocked(progress, 'action.review'), false);
   assert.equal(uiLabel(progress, 'action.review'), 'Repetera');
+});
+
+test('dynamic UI labels become Chinese-only when the backing card is mastered', () => {
+  const progress = {
+    completedLessons: ['app-ui-basics/start-button'],
+    unlockedUiKeys: [],
+    settings: { uiMode: 'dynamic' },
+    cards: {
+      'ui-start': { correctStreak: 4 },
+    },
+  };
+
+  assert.equal(isMasteredUiKey(progress, 'action.start'), true);
+  assert.equal(uiLabel(progress, 'action.start'), '开始');
+});
+
+test('dynamic UI labels restore Swedish support when mastery streak drops', () => {
+  const progress = {
+    completedLessons: ['app-ui-basics/start-button'],
+    unlockedUiKeys: [],
+    settings: { uiMode: 'dynamic' },
+    cards: {
+      'ui-start': { correctStreak: 3 },
+    },
+  };
+
+  assert.equal(isMasteredUiKey(progress, 'action.start'), false);
+  assert.equal(uiLabel(progress, 'action.start'), '开始 · Starta');
 });
 
 test('unlockedUiKeysFor combines persisted and completed-lesson unlocks', () => {

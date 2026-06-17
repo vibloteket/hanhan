@@ -17,7 +17,7 @@ export function createDefaultProgress() {
       correctAnswers: 0,
     },
     settings: {
-      uiMode: 'gradual-assisted',
+      uiMode: 'dynamic',
     },
   };
 }
@@ -26,6 +26,9 @@ export function normalizeProgress(input) {
   const defaults = createDefaultProgress();
   if (!input || typeof input !== 'object') return defaults;
   if (input.schemaVersion !== 1) return defaults;
+  const rawSettings = { ...defaults.settings, ...(input.settings || {}) };
+  const legacyDynamicModes = new Set(['gradual-assisted', 'gradual-hints']);
+  const uiMode = legacyDynamicModes.has(rawSettings.uiMode) ? 'dynamic' : rawSettings.uiMode;
   return {
     ...defaults,
     ...input,
@@ -36,7 +39,7 @@ export function normalizeProgress(input) {
     cards: input.cards && typeof input.cards === 'object' ? input.cards : {},
     activeSession: input.activeSession && typeof input.activeSession === 'object' ? input.activeSession : null,
     stats: { ...defaults.stats, ...(input.stats || {}) },
-    settings: { ...defaults.settings, ...(input.settings || {}) },
+    settings: { ...rawSettings, uiMode },
   };
 }
 

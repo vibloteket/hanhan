@@ -3,11 +3,13 @@ import { useState } from 'preact/hooks';
 import { allItems, packById } from '../content/packs.js';
 import { Button } from '../components/Button.js';
 import { UiText } from '../components/UiText.js';
+import { isMasteredCard, MASTERED_STREAK } from '../mastery.js';
 
 function cardStatus(card) {
   if (!card) return { label: 'Inte startad', className: 'not-started' };
   const due = new Date(card.dueAt).getTime() <= Date.now();
   if (due) return { label: 'Dags att repetera', className: 'due' };
+  if (isMasteredCard(card)) return { label: 'Sitter', className: 'mastered' };
   if ((card.correctStreak || 0) >= 3 || (card.intervalDays || 0) >= 3) return { label: 'Stark', className: 'strong' };
   if ((card.correctStreak || 0) >= 1) return { label: 'På gång', className: 'learning' };
   return { label: 'Ny / svag', className: 'weak' };
@@ -55,7 +57,7 @@ export function ProgressScreen({ progress, go }) {
     });
 
   const dueCount = learnedItems.filter(({ status }) => status.className === 'due').length;
-  const strongCount = learnedItems.filter(({ status }) => status.className === 'strong').length;
+  const masteredCount = learnedItems.filter(({ status }) => status.className === 'mastered').length;
   const normalizedQuery = normalizeSearch(query);
   const visibleItems = normalizedQuery
     ? learnedItems.filter((entry) => searchableText(entry).includes(normalizedQuery))
@@ -70,7 +72,7 @@ export function ProgressScreen({ progress, go }) {
       <section class="summary-grid" aria-label="Sammanfattning">
         <div class="summary-card"><strong>${learnedItems.length}</strong><span>lärda kort</span></div>
         <div class="summary-card"><strong>${dueCount}</strong><span>dags att repetera</span></div>
-        <div class="summary-card"><strong>${strongCount}</strong><span>starka kort</span></div>
+        <div class="summary-card"><strong>${masteredCount}</strong><span>sitter (${MASTERED_STREAK}+ rätt i rad)</span></div>
       </section>
 
       ${learnedItems.length ? html`

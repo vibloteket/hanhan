@@ -52,9 +52,8 @@ export function SettingsScreen({ progress, setProgress, go }) {
 
       <section class="screen panel">
         <h2><${UiText} progress=${progress} id="status.language" /></h2>
+        <label><input type="radio" checked=${progress.settings.uiMode === 'dynamic'} onChange=${() => setMode('dynamic')} /> Dynamiskt: svenska → kinesiska + svenska → kinesiska när ordet sitter</label>
         <label><input type="radio" checked=${progress.settings.uiMode === 'sv'} onChange=${() => setMode('sv')} /> Svenska</label>
-        <label><input type="radio" checked=${progress.settings.uiMode === 'gradual-assisted'} onChange=${() => setMode('gradual-assisted')} /> Gradvis kinesiska + svenska</label>
-        <label><input type="radio" checked=${progress.settings.uiMode === 'gradual-hints'} onChange=${() => setMode('gradual-hints')} /> Gradvis kinesiska, hint vid tryck/hover</label>
         <label><input type="radio" checked=${progress.settings.uiMode === 'zh'} onChange=${() => setMode('zh')} /> Kinesiska för upplåsta ord</label>
       </section>
 
