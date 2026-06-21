@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { lessonSteps, reviewKindFor, reviewKindsFor, unlockedExerciseTypesFor } from '../src/exercises.js';
+import { lessonSteps, pickChoices, reviewKindFor, reviewKindsFor, unlockedExerciseTypesFor } from '../src/exercises.js';
 
 test('normal lessons are recognition-first by default', () => {
   const lesson = { items: [{ id: 'a' }, { id: 'b' }] };
@@ -23,6 +23,20 @@ test('lessons only use already introduced practice modes', () => {
   assert.deepEqual(lessonSteps(lesson, { unlockedExerciseTypes: ['type-pinyin'] }).map((step) => step.kind), [
     'intro', 'mc-zh-sv', 'mc-sv-zh', 'type-pinyin',
   ]);
+});
+
+test('multiple-choice options do not repeat the same label', () => {
+  const item = { id: 'ui-language-char', sv: 'språk', hanzi: '语', pinyin: 'yǔ' };
+  const choices = pickChoices(item, 'sv');
+  assert.equal(choices.filter((choice) => choice.label === 'språk').length, 1);
+  assert.equal(new Set(choices.map((choice) => choice.label)).size, choices.length);
+});
+
+test('multiple-choice options do not include a distractor with the correct label', () => {
+  const item = { id: 'action-review-copy', sv: 'repetition', hanzi: '复习', pinyin: 'fùxí' };
+  const choices = pickChoices(item, 'hanzi');
+  assert.equal(choices.filter((choice) => choice.label === '复习').length, 1);
+  assert.equal(new Set(choices.map((choice) => choice.label)).size, choices.length);
 });
 
 test('review does not use typing before exercise type is unlocked', () => {

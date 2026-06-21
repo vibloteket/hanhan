@@ -7,10 +7,19 @@ function hash(text) {
 }
 
 export function pickChoices(item, field, count = 4) {
-  const pool = allItems
-    .filter((candidate) => candidate.id !== item.id)
-    .sort((a, b) => hash(item.id + a.id) - hash(item.id + b.id))
-    .slice(0, count - 1);
+  const correctLabel = item[field];
+  const seenLabels = new Set([correctLabel]);
+  const pool = [];
+
+  for (const candidate of allItems
+    .filter((candidate) => candidate.id !== item.id && candidate[field] && candidate[field] !== correctLabel)
+    .sort((a, b) => hash(item.id + a.id) - hash(item.id + b.id))) {
+    if (seenLabels.has(candidate[field])) continue;
+    seenLabels.add(candidate[field]);
+    pool.push(candidate);
+    if (pool.length >= count - 1) break;
+  }
+
   return [...pool, item]
     .sort((a, b) => hash(field + a.id + item.id) - hash(field + b.id + item.id))
     .map((candidate) => ({ id: candidate.id, label: candidate[field] }));
