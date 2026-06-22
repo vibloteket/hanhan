@@ -1,0 +1,36 @@
+name: Deploy to Codeberg Pages
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm run check
+      - run: npm test
+      - name: Build static files
+        run: ./scripts/package-static.sh dist
+      - name: Deploy to pages branch
+        run: |
+          # Codeberg Pages serves from the root of the pages branch.
+          # The CNAME/.domains file at the root tells the server which
+          # custom domains to answer on.
+          echo 'hanhan.viblo.se' > dist/.domains
+          touch dist/.nojekyll
+          git config user.name 'ci'
+          git config user.email 'ci@hanhan'
+          git fetch origin pages
+          git worktree add pages-deploy pages
+          cd pages-deploy
+          git rm -rq . || true
+          cp -a ../dist/. .
+          git add -A
+          git commit -q -m "Deploy HànHàn ${{ github.ref_name }}"
+          git push origin pages
