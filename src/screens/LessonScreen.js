@@ -110,7 +110,7 @@ export function LessonScreen({ progress, setProgress, route, go }) {
   return html`
     <section class="screen lesson-screen">
       <div class="focus-top-row">
-        <button class="brand-mark mini" onClick=${() => go('home')} aria-label="Hem"><img src="./assets/icons/icon.svg?v=64" alt="" /></button>
+        <button class="brand-mark mini" onClick=${() => go('home')} aria-label="Hem"><img src="./assets/icons/icon.svg?v=65" alt="" /></button>
         <${Button} progress=${progress} labelKey="action.back" kind="ghost" onClick=${() => go('pack', { packId: route.packId })} />
         <span class="focus-spacer"></span>
         <span class="pill">${Math.min(index + 1, steps.length)}/${steps.length}</span>
