@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: docker
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -27,9 +27,6 @@ jobs:
           git config core.sshCommand "ssh -i ~/.ssh/pages_deploy_key -o IdentitiesOnly=yes"
       - name: Deploy to pages branch
         run: |
-          # Codeberg Pages serves from the root of the pages branch.
-          # The .domains file at the root tells the server which
-          # custom domains to answer on.
           echo 'hanhan.viblo.se' > dist/.domains
           touch dist/.nojekyll
           git config user.name 'hanhan-deploy'
