@@ -69,3 +69,13 @@ test('multi-character items build on an earlier learned component', () => {
     }
   }
 });
+
+
+test('learning meanings do not smuggle UI context into 已学', () => {
+  const item = allItems.find((candidate) => candidate.id === 'ui-learned-cards');
+  assert.ok(item, 'ui-learned-cards should exist');
+  assert.equal(item.hanzi, '已学');
+  assert.match(item.sv, /studerat|avklarat/);
+  assert.doesNotMatch(item.sv, /kort/i, '已学 should not teach that “card” is part of the Chinese term');
+  assert.equal(uiTermByKey['status.learnedCards'].sv, 'lärda kort', 'the Swedish UI label can remain contextual');
+});
