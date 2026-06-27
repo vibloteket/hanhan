@@ -118,6 +118,32 @@ When deciding whether to teach components separately:
 - avoid turning every word into a character etymology lesson
 - keep lessons coherent even if that makes some lessons slightly longer
 
+## UI labels vs learning meanings
+
+Separate **product/UI translation** from **what the learner should learn the Chinese means**.
+
+A Swedish UI label may be more contextual than the Chinese label. That is fine for the interface, but the study item must not smuggle Swedish UI context into the meaning of the Chinese word.
+
+Example:
+
+```txt
+UI context:     status.learnedCards
+Swedish UI:     lärda kort
+Chinese UI:     已学
+Learning meaning for 已学: redan studerat / avklarat
+Not:            lärda kort
+```
+
+Reason: `已学` does not contain “kort”. In another app it could refer to learned lessons, recipes, words, or anything else supplied by context.
+
+Guidelines:
+
+- `uiTerms[*].sv` may be a natural Swedish UI label for this app.
+- `lesson.items[*].sv` should be the learner-facing meaning of the Chinese expression itself.
+- If the UI meaning is more specific than the Chinese expression, keep the specificity in `uiTerms` and explain the difference in `notesSv`.
+- Multiple-choice answers and typed prompts should use the learning meaning, not blindly use the Swedish UI label as the correct answer.
+- Add or keep tests for known context-sensitive cases, especially where Swedish adds nouns not present in Chinese.
+
 ## Progress and mastery
 
 Mastery should be based on recent correct performance, not just lesson completion.
