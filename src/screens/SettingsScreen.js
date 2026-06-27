@@ -55,6 +55,7 @@ export function SettingsScreen({ progress, setProgress, go }) {
         <label><input type="radio" checked=${progress.settings.uiMode === 'dynamic'} onChange=${() => setMode('dynamic')} /> Dynamiskt: svenska → kinesiska + svenska → kinesiska när ordet sitter</label>
         <label><input type="radio" checked=${progress.settings.uiMode === 'sv'} onChange=${() => setMode('sv')} /> Svenska</label>
         <label><input type="radio" checked=${progress.settings.uiMode === 'zh'} onChange=${() => setMode('zh')} /> Kinesiska för upplåsta ord</label>
+        <label><input type="radio" checked=${progress.settings.uiMode === 'zh-all'} onChange=${() => setMode('zh-all')} /> Debug: kinesiska för alla UI-ord</label>
       </section>
 
       <section class="screen panel">

@@ -28,7 +28,12 @@ export function normalizeProgress(input) {
   if (input.schemaVersion !== 1) return defaults;
   const rawSettings = { ...defaults.settings, ...(input.settings || {}) };
   const legacyDynamicModes = new Set(['gradual-assisted', 'gradual-hints']);
-  const uiMode = legacyDynamicModes.has(rawSettings.uiMode) ? 'dynamic' : rawSettings.uiMode;
+  const allowedUiModes = new Set(['dynamic', 'sv', 'zh', 'zh-all']);
+  const uiMode = legacyDynamicModes.has(rawSettings.uiMode)
+    ? 'dynamic'
+    : allowedUiModes.has(rawSettings.uiMode)
+      ? rawSettings.uiMode
+      : defaults.settings.uiMode;
   return {
     ...defaults,
     ...input,

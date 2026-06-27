@@ -35,8 +35,8 @@ export function uiLabel(progress, key) {
   const mode = progress?.settings?.uiMode || 'dynamic';
   const unlocked = isUnlocked(progress, key);
 
-  if (mode === 'sv' || !unlocked) return term.sv;
-  if (mode === 'zh') return term.zh;
+  if (mode === 'sv' || (!unlocked && mode !== 'zh-all')) return term.sv;
+  if (mode === 'zh' || mode === 'zh-all') return term.zh;
   if (isMasteredUiKey(progress, key)) return term.zh;
   return `${term.zh} · ${term.sv}`;
 }
@@ -45,6 +45,6 @@ export function uiHint(progress, key) {
   const term = uiTermByKey[key];
   if (!term) return '';
   const mode = progress?.settings?.uiMode || 'dynamic';
-  if (!isUnlocked(progress, key) || mode === 'sv') return '';
+  if ((mode !== 'zh-all' && !isUnlocked(progress, key)) || mode === 'sv') return '';
   return `${term.sv} · ${term.pinyin}`;
 }

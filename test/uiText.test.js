@@ -53,3 +53,14 @@ test('unlockedUiKeysFor combines persisted and completed-lesson unlocks', () => 
   assert.equal(keys.has('feedback.correct'), true);
   assert.equal(keys.has('action.review'), true);
 });
+
+test('debug Chinese UI mode shows locked labels in Chinese too', () => {
+  const progress = {
+    completedLessons: [],
+    unlockedUiKeys: [],
+    settings: { uiMode: 'zh-all' },
+  };
+
+  assert.equal(isUnlocked(progress, 'action.review'), false);
+  assert.equal(uiLabel(progress, 'action.review'), '复习');
+});

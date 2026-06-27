@@ -18,6 +18,13 @@ test('normalizeProgress migrates legacy gradual UI modes to dynamic', () => {
   assert.equal(hints.settings.uiMode, 'dynamic');
 });
 
+test('normalizeProgress preserves supported debug UI mode and rejects unknown modes', () => {
+  const debug = normalizeProgress({ schemaVersion: 1, settings: { uiMode: 'zh-all' } });
+  const unknown = normalizeProgress({ schemaVersion: 1, settings: { uiMode: 'emoji' } });
+  assert.equal(debug.settings.uiMode, 'zh-all');
+  assert.equal(unknown.settings.uiMode, 'dynamic');
+});
+
 test('normalizeProgress rejects unsupported schemas', () => {
   assert.deepEqual(normalizeProgress({ schemaVersion: 999 }).completedLessons, []);
 });
