@@ -1,5 +1,5 @@
 import { html } from './html.js';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useState, useCallback } from 'preact/hooks';
 import { loadProgress, saveProgress } from './storage.js';
 import { HomeScreen } from './screens/HomeScreen.js';
 import { PackScreen } from './screens/PackScreen.js';
@@ -11,6 +11,31 @@ import { LessonsScreen } from './screens/LessonsScreen.js';
 import { WelcomeScreen } from './screens/WelcomeScreen.js';
 import { UiText } from './components/UiText.js';
 
+function useDueRefresh(setProgress) {
+  const handleVisibility = useCallback(() => {
+    if (document.visibilityState === 'visible') {
+      setProgress((prev) => ({ ...prev }));
+    }
+  }, [setProgress]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (document.visibilityState === 'visible') {
+        setProgress((prev) => ({ ...prev }));
+      }
+    }, 30_000);
+
+    document.addEventListener('visibilitychange', handleVisibility);
+    window.addEventListener('focus', handleVisibility);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibility);
+      window.removeEventListener('focus', handleVisibility);
+    };
+  }, [handleVisibility]);
+}
+
 function routeFromHistory() {
   return history.state?.mandarinModeRoute || { screen: 'home' };
 }
@@ -21,6 +46,7 @@ export function App() {
   const [started, setStarted] = useState(false);
 
   useEffect(() => saveProgress(progress), [progress]);
+  useDueRefresh(setProgress);
 
   useEffect(() => {
     if (!history.state?.mandarinModeRoute) {
@@ -70,7 +96,7 @@ export function App() {
       ${focusMode ? null : html`
         <header class="app-header">
           <button class="brand" onClick=${() => go('home')}>
-            <span class="brand-mark"><img src="./assets/icons/icon.svg?v=66" alt="" /></span>
+            <span class="brand-mark"><img src="./assets/icons/icon.svg?v=67" alt="" /></span>
             <span><${UiText} progress=${progress} id="app.title" /></span>
           </button>
         </header>
