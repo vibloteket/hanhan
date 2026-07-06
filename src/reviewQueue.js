@@ -43,3 +43,15 @@ export function reviewProgressLabel(answeredCount, remainingCount) {
   if (!totalCount) return '0/0';
   return `${Math.min(answeredCount + 1, totalCount)}/${totalCount}`;
 }
+
+export function reviewCardCounts(queueEntries) {
+  const uniqueIds = new Set(queueEntries.map((entry) => entry.itemId));
+  const extras = queueEntries.length - uniqueIds.size;
+  return { cards: uniqueIds.size, extras };
+}
+
+export function reviewProgressCompact(totalCards, extras, answeredUniqueIdCount) {
+  if (!totalCards && !extras) return '0/0';
+  const base = `${Math.min(answeredUniqueIdCount + 1, totalCards)}/${totalCards}`;
+  return extras > 0 ? `${base}  +${extras}` : base;
+}

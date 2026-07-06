@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { answerReviewQueue, createReviewQueue, currentReviewItem, reviewProgressLabel, shuffleEntries } from '../src/reviewQueue.js';
+import { answerReviewQueue, createReviewQueue, currentReviewItem, reviewCardCounts, reviewProgressCompact, reviewProgressLabel, shuffleEntries } from '../src/reviewQueue.js';
 
 const items = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
 const itemById = Object.fromEntries(items.map((item) => [item.id, item]));
@@ -71,4 +71,21 @@ test('current review item and progress label are deterministic', () => {
   assert.equal(reviewProgressLabel(0, 3), '1/3');
   assert.equal(reviewProgressLabel(2, 1), '3/3');
   assert.equal(reviewProgressLabel(0, 0), '0/0');
+});
+
+test('reviewCardCounts separates unique cards from extras', () => {
+  assert.deepEqual(reviewCardCounts([
+    { itemId: 'a' }, { itemId: 'b' }, { itemId: 'a' },
+  ]), { cards: 2, extras: 1 });
+  assert.deepEqual(reviewCardCounts([
+    { itemId: 'a' }, { itemId: 'b' },
+  ]), { cards: 2, extras: 0 });
+  assert.deepEqual(reviewCardCounts([]), { cards: 0, extras: 0 });
+});
+
+test('reviewProgressCompact shows unique cards and extras separately', () => {
+  assert.equal(reviewProgressCompact(9, 3, 4), '5/9  +3');
+  assert.equal(reviewProgressCompact(9, 0, 4), '5/9');
+  assert.equal(reviewProgressCompact(0, 0, 0), '0/0');
+  assert.equal(reviewProgressCompact(5, 0, 5), '5/5');
 });
