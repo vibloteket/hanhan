@@ -13,6 +13,7 @@ export function ReviewScreen({ progress, setProgress, go }) {
   const [queue, setQueue] = useState(initialQueue);
   const [answeredCount, setAnsweredCount] = useState(0);
   const [answeredCardIds, setAnsweredCardIds] = useState(new Set());
+  const [peakExtras, setPeakExtras] = useState(initialQueue.length - initialCounts.cards);
   const [deferredCount, setDeferredCount] = useState(0);
   const currentEntry = queue[0];
   const currentItem = currentEntry ? itemById[currentEntry.itemId] : null;
@@ -40,6 +41,10 @@ export function ReviewScreen({ progress, setProgress, go }) {
     }
     setQueue((currentQueue) => answerReviewQueue(currentQueue, result));
     setAnsweredCount((value) => value + 1);
+    setPeakExtras((prev) => {
+      const currentExtras = queue.length - initialCounts.cards;
+      return Math.max(prev, currentExtras);
+    });
     setAnsweredCardIds((prev) => {
       if (prev.has(currentItem.id)) return prev;
       const next = new Set(prev);
@@ -54,7 +59,7 @@ export function ReviewScreen({ progress, setProgress, go }) {
         <button class="brand-mark mini" onClick=${() => go('home')} aria-label="Hem"><img src="./assets/icons/icon.svg?v=67" alt="" /></button>
         <${Button} progress=${progress} labelKey="action.back" kind="ghost" onClick=${() => go('home')} />
         <span class="focus-spacer"></span>
-        <span class="pill">${reviewProgressCompact(initialCounts.cards, queue.length - initialCounts.cards, answeredCardIds.size)}</span>
+        <span class="pill">${reviewProgressCompact(initialCounts.cards, peakExtras, answeredCardIds.size)}</span>
       </div>
       <h1><${UiText} progress=${progress} id="review.title" /></h1>
 
