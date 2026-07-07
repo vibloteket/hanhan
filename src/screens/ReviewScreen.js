@@ -1,5 +1,5 @@
 import { html } from '../html.js';
-import { useMemo, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { allItems, itemById } from '../content/packs.js';
 import { updateCard } from '../srs.js';
 import { answerReviewQueue, createReviewQueue, reviewProgressLabel } from '../reviewQueue.js';
@@ -12,30 +12,33 @@ export function ReviewScreen({ progress, setProgress, go }) {
   const [queue, setQueue] = useState(initialQueue);
   const [answeredCount, setAnsweredCount] = useState(0);
   const [deferredCount, setDeferredCount] = useState(0);
+  // Defer card updates until we leave the review screen
+  const pendingCards = useRef({});
   const currentEntry = queue[0];
   const currentItem = currentEntry ? itemById[currentEntry.itemId] : null;
 
+  // Flush pending card updates to real progress when leaving
+  useEffect(() => {
+    return () => {
+      const updates = pendingCards.current;
+      if (!Object.keys(updates).length) return;
+      setProgress((currentProgress) => ({
+        ...currentProgress,
+        cards: { ...currentProgress.cards, ...updates },
+      }));
+    };
+  }, []);
+
   function answer(result) {
     if (!currentEntry || !currentItem) return;
-    setProgress((currentProgress) => {
-      const oldCard = currentProgress.cards[currentItem.id];
-      const cardResult = result.correct && (currentEntry.attempts || 0) > 0 ? { ...result, hard: true } : result;
-      const cards = { ...currentProgress.cards, [currentItem.id]: updateCard(oldCard, cardResult) };
-      return {
-        ...currentProgress,
-        cards,
-        stats: {
-          ...currentProgress.stats,
-          reviewAnswers: (currentProgress.stats.reviewAnswers || 0) + 1,
-          correctAnswers: (currentProgress.stats.correctAnswers || 0) + (result.correct ? 1 : 0),
-        },
-      };
-    });
+    const oldCard = progress.cards[currentItem.id];
+    const cardResult = result.correct && (currentEntry.attempts || 0) > 0 ? { ...result, hard: true } : result;
+    const updated = updateCard(oldCard, cardResult);
+    pendingCards.current[currentItem.id] = updated;
     if (!result.correct && (currentEntry.attempts || 0) >= 1) {
       setDeferredCount((value) => value + 1);
     }
     setQueue((currentQueue) => answerReviewQueue(currentQueue, result));
-    // Only count this answer if the entry was new (attempts=0) and will be removed from the queue
     if ((currentEntry.attempts || 0) === 0 && result.correct) {
       setAnsweredCount((value) => value + 1);
     }
