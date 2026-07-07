@@ -1,10 +1,9 @@
-name: Deploy to Codeberg Pages
+name: Deploy Pages
 
 on:
   push:
     branches: [main]
-    tags:
-      - 'v*'
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -18,25 +17,10 @@ jobs:
       - run: npm test
       - name: Build static files
         run: ./scripts/package-static.sh dist
-      - name: Configure SSH deploy key
-        run: |
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-          printf '%s\n' "${{ secrets.PAGES_DEPLOY_KEY }}" > ~/.ssh/pages_deploy_key
-          chmod 600 ~/.ssh/pages_deploy_key
-          ssh-keyscan codeberg.org >> ~/.ssh/known_hosts
-          git config core.sshCommand "ssh -i ~/.ssh/pages_deploy_key -o IdentitiesOnly=yes"
-      - name: Deploy to pages branch
-        run: |
-          echo 'hanhan.viblo.se' > dist/.domains
-          touch dist/.nojekyll
-          git config user.name 'hanhan-deploy'
-          git config user.email 'hanhan-deploy@users.noreply.codeberg.org'
-          git fetch git@codeberg.org:viblo-ai/hanhan.git pages
-          git worktree add pages-deploy FETCH_HEAD
-          cd pages-deploy
-          git rm -rq . || true
-          cp -a ../dist/. .
-          git add -A
-          git commit -q -m "Deploy HànHàn ${{ github.ref_name }}" || exit 0
-          git push git@codeberg.org:viblo-ai/hanhan.git HEAD:pages
+      - name: Deploy to Codeberg Pages
+        uses: https://codeberg.org/git-pages/action@v2
+        with:
+          site: https://hanhan.viblo.se/
+          server: codeberg.page
+          token: ${{ forge.token }}
+          source: dist/

@@ -44,7 +44,6 @@ npm run check
 ## Live
 
 - App: <https://hanhan.viblo.se/>
-- Codeberg Pages-preview: <https://viblo-ai.codeberg.page/hanhan/>
 
 ## Licens
 
