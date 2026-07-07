@@ -2,23 +2,18 @@ import { html } from '../html.js';
 import { useMemo, useState } from 'preact/hooks';
 import { allItems, itemById } from '../content/packs.js';
 import { updateCard } from '../srs.js';
-import { answerReviewQueue, createReviewQueue, reviewCardCounts, reviewProgressCompact } from '../reviewQueue.js';
+import { answerReviewQueue, createReviewQueue, reviewProgressLabel } from '../reviewQueue.js';
 import { Button } from '../components/Button.js';
 import { UiText } from '../components/UiText.js';
 import { ExerciseCard } from '../components/ExerciseCard.js';
 
 export function ReviewScreen({ progress, setProgress, go }) {
   const initialQueue = useMemo(() => createReviewQueue(progress, allItems), []);
-  const initialCounts = useMemo(() => reviewCardCounts(initialQueue), []);
   const [queue, setQueue] = useState(initialQueue);
   const [answeredCount, setAnsweredCount] = useState(0);
-  const [answeredCardIds, setAnsweredCardIds] = useState(new Set());
-  const [peakExtras, setPeakExtras] = useState(initialQueue.length - initialCounts.cards);
   const [deferredCount, setDeferredCount] = useState(0);
   const currentEntry = queue[0];
   const currentItem = currentEntry ? itemById[currentEntry.itemId] : null;
-  const remainingCount = queue.length;
-  const totalCount = answeredCount + remainingCount;
 
   function answer(result) {
     if (!currentEntry || !currentItem) return;
@@ -40,17 +35,10 @@ export function ReviewScreen({ progress, setProgress, go }) {
       setDeferredCount((value) => value + 1);
     }
     setQueue((currentQueue) => answerReviewQueue(currentQueue, result));
-    setAnsweredCount((value) => value + 1);
-    setPeakExtras((prev) => {
-      const currentExtras = queue.length - initialCounts.cards;
-      return Math.max(prev, currentExtras);
-    });
-    setAnsweredCardIds((prev) => {
-      if (prev.has(currentItem.id)) return prev;
-      const next = new Set(prev);
-      next.add(currentItem.id);
-      return next;
-    });
+    // Only count this answer if it wasn't a retry (first attempt for this entry)
+    if ((currentEntry.attempts || 0) === 0) {
+      setAnsweredCount((value) => value + 1);
+    }
   }
 
   return html`
@@ -59,7 +47,7 @@ export function ReviewScreen({ progress, setProgress, go }) {
         <button class="brand-mark mini" onClick=${() => go('home')} aria-label="Hem"><img src="./assets/icons/icon.svg?v=67" alt="" /></button>
         <${Button} progress=${progress} labelKey="action.back" kind="ghost" onClick=${() => go('home')} />
         <span class="focus-spacer"></span>
-        <span class="pill">${reviewProgressCompact(initialCounts.cards, peakExtras, answeredCardIds.size)}</span>
+        <span class="pill">${reviewProgressLabel(answeredCount, queue.length)}</span>
       </div>
       <h1><${UiText} progress=${progress} id="review.title" /></h1>
 
