@@ -35,8 +35,8 @@ export function ReviewScreen({ progress, setProgress, go }) {
       setDeferredCount((value) => value + 1);
     }
     setQueue((currentQueue) => answerReviewQueue(currentQueue, result));
-    // Only count this answer if it wasn't a retry (first attempt for this entry)
-    if ((currentEntry.attempts || 0) === 0) {
+    // Only count this answer if the entry was new (attempts=0) and will be removed from the queue
+    if ((currentEntry.attempts || 0) === 0 && result.correct) {
       setAnsweredCount((value) => value + 1);
     }
   }
