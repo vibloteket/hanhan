@@ -1,6 +1,6 @@
 import { html } from '../html.js';
 import { packs, findNextLesson, allItems, getLesson } from '../content/packs.js';
-import { dueCards } from '../srs.js';
+import { createReviewQueue } from '../reviewQueue.js';
 import { Button } from '../components/Button.js';
 import { UiText } from '../components/UiText.js';
 
@@ -11,7 +11,7 @@ export function HomeScreen({ progress, setProgress, go }) {
   const next = activeLesson
     ? { packId: progress.activeSession.packId, lessonId: progress.activeSession.lessonId }
     : findNextLesson(progress);
-  const dueCount = dueCards(progress, allItems).length;
+  const dueCount = createReviewQueue(progress, allItems).length;
   const shouldReviewNext = !activeLesson && dueCount > 0;
   const completedCount = progress.completedLessons.length;
 
