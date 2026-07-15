@@ -31,10 +31,10 @@ export function ReviewScreen({ progress, setProgress, go }) {
 
   function answer(result) {
     if (!currentEntry || !currentItem) return;
-    const oldCard = progress.cards[currentItem.id];
+    const oldCard = pendingCards.current[currentEntry.cardId] || progress.cards[currentEntry.cardId];
     const cardResult = result.correct && (currentEntry.attempts || 0) > 0 ? { ...result, hard: true } : result;
     const updated = updateCard(oldCard, cardResult);
-    pendingCards.current[currentItem.id] = updated;
+    pendingCards.current[currentEntry.cardId] = updated;
     if (!result.correct && (currentEntry.attempts || 0) >= 1) {
       setDeferredCount((value) => value + 1);
     }

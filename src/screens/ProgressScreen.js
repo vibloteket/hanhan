@@ -4,6 +4,7 @@ import { allItems, packById } from '../content/packs.js';
 import { Button } from '../components/Button.js';
 import { UiText } from '../components/UiText.js';
 import { isMasteredCard, MASTERED_STREAK } from '../mastery.js';
+import { cardId, REVIEW_SKILLS } from '../srs.js';
 
 function cardStatus(card) {
   if (!card) return { label: 'Inte startad', className: 'not-started' };
@@ -48,16 +49,26 @@ function searchableText({ item, status }) {
 export function ProgressScreen({ progress, go }) {
   const [query, setQuery] = useState('');
   const learnedItems = allItems
-    .filter((item) => progress.cards[item.id])
-    .map((item) => ({ item, card: progress.cards[item.id], status: cardStatus(progress.cards[item.id]) }))
+    .map((item) => {
+      const skills = REVIEW_SKILLS
+        .map((skill) => {
+          const card = progress.cards[cardId(item.id, skill.id)];
+          return card ? { ...skill, card, status: cardStatus(card) } : null;
+        })
+        .filter(Boolean);
+      const card = skills.map((entry) => entry.card).sort((a, b) => new Date(a.dueAt) - new Date(b.dueAt))[0];
+      return card ? { item, card, skills, status: cardStatus(card) } : null;
+    })
+    .filter(Boolean)
     .sort((a, b) => {
       const dueDiff = new Date(a.card.dueAt).getTime() - new Date(b.card.dueAt).getTime();
       if (dueDiff) return dueDiff;
       return a.item.packId.localeCompare(b.item.packId) || a.item.hanzi.localeCompare(b.item.hanzi);
     });
 
-  const dueCount = learnedItems.filter(({ status }) => status.className === 'due').length;
-  const masteredCount = learnedItems.filter(({ status }) => status.className === 'mastered').length;
+  const skillCards = learnedItems.flatMap(({ skills }) => skills);
+  const dueCount = skillCards.filter(({ status }) => status.className === 'due').length;
+  const masteredCount = skillCards.filter(({ status }) => status.className === 'mastered').length;
   const normalizedQuery = normalizeSearch(query);
   const visibleItems = normalizedQuery
     ? learnedItems.filter((entry) => searchableText(entry).includes(normalizedQuery))
@@ -91,7 +102,7 @@ export function ProgressScreen({ progress, go }) {
 
         ${visibleItems.length ? html`
         <div class="learned-list">
-          ${visibleItems.map(({ item, card, status }) => {
+          ${visibleItems.map(({ item, skills }) => {
             const hanziLength = Array.from(item.hanzi).length;
             return html`
             <article class="learned-card" key=${item.id}>
@@ -104,9 +115,12 @@ export function ProgressScreen({ progress, go }) {
                 </div>
               </div>
               <div class="learned-meta">
-                <span class=${`status-chip ${status.className}`}>${status.key ? html`<${UiText} progress=${progress} id=${status.key} />` : status.label}</span>
-                <span class="muted small"><${UiText} progress=${progress} id="action.next" />: ${formatDue(card)}</span>
-                <span class="muted small"><${UiText} progress=${progress} id="feedback.correct" /> i rad: ${card.correctStreak || 0}</span>
+                ${skills.map(({ id, label, card, status }) => html`
+                  <div key=${id}>
+                    <span class=${`status-chip ${status.className}`}>${label}: ${status.key ? html`<${UiText} progress=${progress} id=${status.key} />` : status.label}</span>
+                    <span class="muted small"> · <${UiText} progress=${progress} id="action.next" />: ${formatDue(card)} · ${card.correctStreak || 0} rätt i rad</span>
+                  </div>
+                `)}
               </div>
             </article>
           `})}

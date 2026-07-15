@@ -1,9 +1,20 @@
 const DAY = 24 * 60 * 60 * 1000;
 const MINUTE = 60 * 1000;
 
-export function createCard(itemId) {
+export const REVIEW_SKILLS = [
+  { id: 'recognize-meaning', kind: 'mc-zh-sv', label: 'Betydelse' },
+  { id: 'recall-hanzi', kind: 'mc-sv-zh', label: 'Tecken' },
+  { id: 'recall-pinyin', kind: 'type-pinyin', label: 'Pinyin' },
+];
+
+export function cardId(itemId, skill) {
+  return `${itemId}/${skill}`;
+}
+
+export function createCard(itemId, skill = 'recognize-meaning') {
   return {
     itemId,
+    skill,
     dueAt: new Date().toISOString(),
     intervalDays: 0,
     ease: 2.3,
@@ -17,17 +28,27 @@ export function createCard(itemId) {
 export function ensureCards(progress, items) {
   const cards = { ...progress.cards };
   for (const item of items) {
-    if (!cards[item.id]) cards[item.id] = createCard(item.id);
+    for (const { id: skill } of REVIEW_SKILLS) {
+      const id = cardId(item.id, skill);
+      if (!cards[id]) cards[id] = createCard(item.id, skill);
+    }
   }
   return { ...progress, cards };
 }
 
 export function dueCards(progress, items, now = new Date()) {
   const nowMs = now.getTime();
-  return items
-    .map((item) => ({ item, card: progress.cards[item.id] }))
-    .filter(({ card }) => card && new Date(card.dueAt).getTime() <= nowMs)
-    .sort((a, b) => new Date(a.card.dueAt) - new Date(b.card.dueAt));
+  const due = [];
+  for (const item of items) {
+    for (const skill of REVIEW_SKILLS) {
+      const id = cardId(item.id, skill.id);
+      const card = progress.cards[id];
+      if (card && new Date(card.dueAt).getTime() <= nowMs) {
+        due.push({ item, card, cardId: id, skill: skill.id, kind: skill.kind });
+      }
+    }
+  }
+  return due.sort((a, b) => new Date(a.card.dueAt) - new Date(b.card.dueAt));
 }
 
 export function updateCard(card, result) {

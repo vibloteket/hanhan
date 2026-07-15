@@ -21,7 +21,7 @@ test('dynamic UI labels become Chinese-only when the backing card is mastered', 
     unlockedUiKeys: [],
     settings: { uiMode: 'dynamic' },
     cards: {
-      'ui-start': { correctStreak: 4 },
+      'ui-start/recognize-meaning': { correctStreak: 4 },
     },
   };
 
@@ -35,7 +35,7 @@ test('dynamic UI labels restore Swedish support when mastery streak drops', () =
     unlockedUiKeys: [],
     settings: { uiMode: 'dynamic' },
     cards: {
-      'ui-start': { correctStreak: 3 },
+      'ui-start/recognize-meaning': { correctStreak: 3 },
     },
   };
 

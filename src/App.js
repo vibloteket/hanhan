@@ -10,6 +10,18 @@ import { ProgressScreen } from './screens/ProgressScreen.js';
 import { LessonsScreen } from './screens/LessonsScreen.js';
 import { WelcomeScreen } from './screens/WelcomeScreen.js';
 import { UiText } from './components/UiText.js';
+import { allItems, allLessons, lessonKey } from './content/packs.js';
+import { ensureCards } from './srs.js';
+
+function ensureCompletedLessonCards(progress) {
+  const completed = new Set(progress.completedLessons || []);
+  const learnedIds = new Set(
+    allLessons
+      .filter((lesson) => completed.has(lessonKey(lesson.packId, lesson.id)))
+      .flatMap((lesson) => lesson.items.map((item) => item.id))
+  );
+  return ensureCards(progress, allItems.filter((item) => learnedIds.has(item.id)));
+}
 
 function useDueRefresh(setProgress) {
   const handleVisibility = useCallback(() => {
@@ -41,7 +53,7 @@ function routeFromHistory() {
 }
 
 export function App() {
-  const [progress, setProgress] = useState(() => loadProgress());
+  const [progress, setProgress] = useState(() => ensureCompletedLessonCards(loadProgress()));
   const [route, setRoute] = useState(() => routeFromHistory());
   const [started, setStarted] = useState(false);
 

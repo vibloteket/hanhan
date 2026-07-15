@@ -1,6 +1,7 @@
 import { allItems, allLessons, lessonKey } from './content/packs.js';
 import { uiTermByKey } from './content/uiTerms.js';
 import { isMasteredCard } from './mastery.js';
+import { cardId } from './srs.js';
 
 const uiItemByKey = Object.fromEntries(allItems.filter((item) => item.uiKey).map((item) => [item.uiKey, item]));
 
@@ -26,7 +27,7 @@ export function uiItemForKey(key) {
 
 export function isMasteredUiKey(progress, key) {
   const item = uiItemForKey(key);
-  return Boolean(item && isMasteredCard(progress?.cards?.[item.id]));
+  return Boolean(item && isMasteredCard(progress?.cards?.[cardId(item.id, 'recognize-meaning')]));
 }
 
 export function uiLabel(progress, key) {

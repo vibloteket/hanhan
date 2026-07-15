@@ -22,6 +22,12 @@ export function createDefaultProgress() {
   };
 }
 
+function normalizeCards(cards) {
+  if (!cards || typeof cards !== 'object') return {};
+  // Legacy cards used the bare item id. Skill cards always carry an explicit skill.
+  return Object.fromEntries(Object.entries(cards).filter(([, card]) => card?.skill));
+}
+
 export function normalizeProgress(input) {
   const defaults = createDefaultProgress();
   if (!input || typeof input !== 'object') return defaults;
@@ -41,7 +47,7 @@ export function normalizeProgress(input) {
     lessonMeta: input.lessonMeta && typeof input.lessonMeta === 'object' ? input.lessonMeta : {},
     unlockedUiKeys: Array.isArray(input.unlockedUiKeys) ? input.unlockedUiKeys : [],
     unlockedExerciseTypes: Array.isArray(input.unlockedExerciseTypes) ? input.unlockedExerciseTypes : [],
-    cards: input.cards && typeof input.cards === 'object' ? input.cards : {},
+    cards: normalizeCards(input.cards),
     activeSession: input.activeSession && typeof input.activeSession === 'object' ? input.activeSession : null,
     stats: { ...defaults.stats, ...(input.stats || {}) },
     settings: { ...rawSettings, uiMode },

@@ -1,4 +1,3 @@
-import { reviewKindsFor } from './exercises.js';
 import { dueCards } from './srs.js';
 
 export function shuffleEntries(entries, rng = Math.random) {
@@ -11,17 +10,14 @@ export function shuffleEntries(entries, rng = Math.random) {
 }
 
 export function createReviewQueue(progress, items, rng = Math.random) {
-  const due = dueCards(progress, items);
-  const firstRound = [];
-  const laterRounds = [];
-
-  for (const { item, card } of due) {
-    const [firstKind, ...extraKinds] = reviewKindsFor(card, progress);
-    firstRound.push({ itemId: item.id, kind: firstKind, attempts: 0 });
-    laterRounds.push(...extraKinds.map((kind) => ({ itemId: item.id, kind, attempts: 0 })));
-  }
-
-  return [...shuffleEntries(firstRound, rng), ...shuffleEntries(laterRounds, rng)];
+  const entries = dueCards(progress, items).map(({ item, cardId, skill, kind }) => ({
+    cardId,
+    itemId: item.id,
+    skill,
+    kind,
+    attempts: 0,
+  }));
+  return shuffleEntries(entries, rng);
 }
 
 export function currentReviewItem(queueEntries, itemById) {

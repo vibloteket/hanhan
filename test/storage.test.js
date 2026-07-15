@@ -25,6 +25,14 @@ test('normalizeProgress preserves supported debug UI mode and rejects unknown mo
   assert.equal(unknown.settings.uiMode, 'dynamic');
 });
 
+test('normalizeProgress discards legacy generic cards and keeps skill cards', () => {
+  const normalized = normalizeProgress({ schemaVersion: 1, cards: {
+    legacy: { itemId: 'legacy', dueAt: '2026-01-01T00:00:00Z' },
+    'known/recall-pinyin': { itemId: 'known', skill: 'recall-pinyin', dueAt: '2026-01-01T00:00:00Z' },
+  } });
+  assert.deepEqual(Object.keys(normalized.cards), ['known/recall-pinyin']);
+});
+
 test('normalizeProgress rejects unsupported schemas', () => {
   assert.deepEqual(normalizeProgress({ schemaVersion: 999 }).completedLessons, []);
 });
