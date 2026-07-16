@@ -40,10 +40,12 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .link-button { border: 0; background: transparent; color: var(--red-dark); text-decoration: underline; padding: 12px 0; }
 
 .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
-.nav-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
-.nav-grid .stat-card strong { font-size: 1.2rem; }
+.nav-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+.nav-grid .stat-card { min-width: 0; overflow-wrap: anywhere; }
+.nav-grid .stat-card strong { min-width: 0; font-size: 1.2rem; }
+.nav-grid .stat-card strong .ui-text { white-space: normal; word-break: normal; overflow-wrap: anywhere; }
 .stat-card, .panel { border: 1px solid var(--line); border-radius: 20px; padding: 16px; background: var(--panel); }
-button.stat-card { text-align: left; color: inherit; cursor: pointer; }
+button.stat-card { min-width: 0; text-align: left; color: inherit; cursor: pointer; }
 .stat-card.clickable:hover { border-color: #d8b98d; transform: translateY(-1px); }
 .ongoing-session { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
 .ongoing-session h2 { margin: 0 0 4px; }
@@ -137,6 +139,7 @@ button.stat-card { text-align: left; color: inherit; cursor: pointer; }
   .app-header { position: static; align-items: center; justify-content: flex-start; padding: 12px 0 4px; background: transparent; backdrop-filter: none; }
   .brand span:last-child { display: none; }
   .stats-grid, .summary-grid { grid-template-columns: 1fr; }
+  .nav-grid { grid-template-columns: 1fr; }
   .settings-actions { align-items: stretch; flex-direction: column; }
   .lesson-row { grid-template-columns: auto 1fr; }
   .lesson-row .button { grid-column: 1 / -1; }
