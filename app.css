@@ -90,7 +90,8 @@ button.stat-card { min-width: 0; text-align: left; color: inherit; cursor: point
 .component-part { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 10px; color: var(--muted); }
 .component-hanzi { display: inline-grid; place-items: center; min-width: 38px; min-height: 38px; padding: 4px 8px; border-radius: 12px; background: white; color: var(--red-dark); font-size: 1.35rem; font-weight: 900; }
 .choice-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-.choice { min-height: 58px; padding: 12px; border-radius: 18px; border: 1px solid var(--line); background: #fffaf0; font-weight: 750; }
+.choice { display: flex; align-items: center; gap: 10px; min-height: 58px; padding: 12px; border-radius: 18px; border: 1px solid var(--line); background: #fffaf0; font-weight: 750; text-align: left; }
+.choice-key { display: inline-grid; flex: 0 0 auto; place-items: center; width: 1.7rem; height: 1.7rem; border: 1px solid #d8c4a6; border-radius: 8px; background: white; color: var(--muted); font-size: .8rem; font-weight: 800; }
 .answer-form { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
 .answer-form input { min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; background: white; font-size: 1.1rem; }
 .result { display: grid; gap: 8px; border-radius: 18px; padding: 14px; }

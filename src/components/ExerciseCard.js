@@ -1,16 +1,30 @@
 import { html } from '../html.js';
-import { useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { Button } from './Button.js';
 import { UiText } from './UiText.js';
 import { pickChoices } from '../exercises.js';
 import { isCorrectHanzi, isCorrectPinyin } from '../textUtils.js';
 
+function isTypingTarget(target) {
+  return target instanceof HTMLElement && (
+    target.matches('input, textarea, select') || target.isContentEditable
+  );
+}
+
 export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
   const [input, setInput] = useState('');
   const [result, setResult] = useState(null);
+  const inputRef = useRef(null);
+  const nextButtonRef = useRef(null);
   const item = step.item;
   const hanziLength = Array.from(item.hanzi || '').length;
   const hanziSizeClass = hanziLength >= 4 ? 'phrase' : hanziLength >= 3 ? 'long' : '';
+  const isMc = step.kind === 'mc-zh-sv' || step.kind === 'mc-sv-zh';
+  const isPinyin = step.kind === 'type-pinyin';
+  const choices = useMemo(
+    () => isMc ? pickChoices(item, step.kind === 'mc-zh-sv' ? 'sv' : 'hanzi') : [],
+    [item.id, step.kind]
+  );
 
   function finish(correct, mode, given = input) {
     setResult({ correct, mode, given });
@@ -23,6 +37,25 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
     if (step.kind === 'intro') onIntroDone?.();
     else onAnswer(payload);
   }
+
+  useEffect(() => {
+    if (step.kind === 'intro' || result) nextButtonRef.current?.focus();
+    else if (!isMc) inputRef.current?.focus();
+  }, [item.id, step.kind, result]);
+
+  useEffect(() => {
+    if (!isMc || result) return undefined;
+    function handleChoiceKey(event) {
+      if (isTypingTarget(event.target) || event.altKey || event.ctrlKey || event.metaKey) return;
+      const index = Number(event.key) - 1;
+      const choice = choices[index];
+      if (!choice || index < 0 || index > 3) return;
+      event.preventDefault();
+      finish(choice.id === item.id, 'multiple-choice', choice.label);
+    }
+    addEventListener('keydown', handleChoiceKey);
+    return () => removeEventListener('keydown', handleChoiceKey);
+  }, [isMc, result, choices, item.id]);
 
   if (step.kind === 'intro') {
     return html`
@@ -42,13 +75,11 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
             `)}
           </div>
         ` : null}
-        <${Button} progress=${progress} labelKey="action.next" onClick=${next} />
+        <${Button} buttonRef=${nextButtonRef} progress=${progress} labelKey="action.next" onClick=${next} />
       </section>
     `;
   }
 
-  const isMc = step.kind === 'mc-zh-sv' || step.kind === 'mc-sv-zh';
-  const isPinyin = step.kind === 'type-pinyin';
   const prompt = step.kind === 'mc-zh-sv'
     ? html`Vad betyder <strong>${item.hanzi}</strong>?`
     : step.kind === 'mc-sv-zh'
@@ -72,9 +103,10 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
 
       ${isMc && !result ? html`
         <div class="choice-grid">
-          ${pickChoices(item, step.kind === 'mc-zh-sv' ? 'sv' : 'hanzi').map((choice) => html`
+          ${choices.map((choice, index) => html`
             <button class="choice" key=${choice.id} onClick=${() => finish(choice.id === item.id, mode, choice.label)}>
-              ${choice.label}
+              <span class="choice-key" aria-hidden="true">${index + 1}</span>
+              <span>${choice.label}</span>
             </button>
           `)}
         </div>
@@ -83,6 +115,7 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
       ${!isMc && !result ? html`
         <form onSubmit=${submitText} class="answer-form">
           <input
+            ref=${inputRef}
             value=${input}
             onInput=${(event) => setInput(event.currentTarget.value)}
             placeholder=${isPinyin ? 't.ex. fuxi eller fùxí' : 't.ex. 复习'}
@@ -106,7 +139,7 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
             <span>${item.sv}</span>
           </div>
         </div>
-        <${Button} progress=${progress} labelKey="action.next" onClick=${next} />
+        <${Button} buttonRef=${nextButtonRef} progress=${progress} labelKey="action.next" onClick=${next} />
       ` : null}
     </section>
   `;
