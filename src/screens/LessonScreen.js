@@ -1,5 +1,5 @@
 import { html } from '../html.js';
-import { useEffect, useMemo, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { getLesson, lessonKey } from '../content/packs.js';
 import { lessonSteps } from '../exercises.js';
 import { ensureCards } from '../srs.js';
@@ -19,6 +19,7 @@ export function LessonScreen({ progress, setProgress, route, go }) {
   const savedSession = matchingSession(progress, route);
   const [index, setIndex] = useState(() => savedSession?.index || 0);
   const [answers, setAnswers] = useState(() => savedSession?.answers || []);
+  const completeButtonRef = useRef(null);
   const steps = useMemo(() => lesson ? lessonSteps(lesson, progress) : [], [lesson, progress]);
 
   useEffect(() => {
@@ -41,6 +42,10 @@ export function LessonScreen({ progress, setProgress, route, go }) {
       };
     });
   }, [lesson, route.packId, route.lessonId, setProgress]);
+
+  useEffect(() => {
+    if (lesson && index >= steps.length) completeButtonRef.current?.focus();
+  }, [lesson, index, steps.length]);
 
   if (!lesson) return html`<section class="screen"><p>Lektionen hittades inte.</p></section>`;
 
@@ -123,7 +128,7 @@ export function LessonScreen({ progress, setProgress, route, go }) {
           <h2><${UiText} progress=${progress} id="lesson.complete" /></h2>
           <p>${correctCount}/${answers.length} övningar <${UiText} progress=${progress} id="feedback.correct" />. Orden läggs nu in i repetition, där skrivfrågor kommer gradvis senare.</p>
           ${lesson.unlocksUiKeys?.length ? html`<p>Du låste upp ${lesson.unlocksUiKeys.length} UI-termer.</p>` : null}
-          <${Button} progress=${progress} labelKey="lesson.complete" onClick=${completeLesson} />
+          <${Button} buttonRef=${completeButtonRef} progress=${progress} labelKey="lesson.complete" onClick=${completeLesson} />
         </section>
       ` : html`
         <${ExerciseCard}
