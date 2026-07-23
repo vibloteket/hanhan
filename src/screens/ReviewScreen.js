@@ -14,6 +14,7 @@ export function ReviewScreen({ progress, setProgress, go }) {
   const [deferredCount, setDeferredCount] = useState(0);
   // Defer card updates until we leave the review screen
   const pendingCards = useRef({});
+  const homeButtonRef = useRef(null);
   const currentEntry = queue[0];
   const currentItem = currentEntry ? itemById[currentEntry.itemId] : null;
 
@@ -28,6 +29,10 @@ export function ReviewScreen({ progress, setProgress, go }) {
       }));
     };
   }, []);
+
+  useEffect(() => {
+    if (initialQueue.length && !currentEntry) homeButtonRef.current?.focus();
+  }, [initialQueue.length, currentEntry]);
 
   function answer(result) {
     if (!currentEntry || !currentItem) return;
@@ -70,7 +75,7 @@ export function ReviewScreen({ progress, setProgress, go }) {
         <section class="exercise-card complete-card">
           <h2>Klar för nu</h2>
           <p>${deferredCount ? `${deferredCount} svåra kort kommer tillbaka senare.` : 'Bra jobbat. Om du missade något fick det komma tillbaka i samma runda.'}</p>
-          <${Button} progress=${progress} labelKey="nav.home" onClick=${() => go('home')} />
+          <${Button} buttonRef=${homeButtonRef} progress=${progress} labelKey="nav.home" onClick=${() => go('home')} />
         </section>
       `}
     </section>
