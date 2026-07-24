@@ -35,6 +35,7 @@ test('lesson revisions expose only newly added content and UI keys', () => {
     completedLessons: [lessonKey(lesson.packId, lesson.id)],
     lessonMeta: { [lessonKey(lesson.packId, lesson.id)]: { revision: 1 } },
   };
+  assert.equal(lessonNeedsUpdate({ completedLessons: [], lessonMeta: {} }, lesson), false, 'untouched lessons are new, not updated');
   assert.equal(lessonNeedsUpdate(legacyProgress, lesson), true);
   assert.deepEqual(lessonItemsForRevision(lesson, 1).map((item) => item.id), [
     'ui-source-char', 'ui-code-char', 'ui-code', 'ui-source-code',

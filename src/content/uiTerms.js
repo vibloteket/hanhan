@@ -16,6 +16,7 @@ export const uiTerms = [
   { key: 'action.showAnswer', sv: 'Visa svar', en: 'Show answer', zh: '显示答案', pinyin: 'xiǎnshì dá’àn' },
   { key: 'action.cancel', sv: 'Avbryt', en: 'Cancel', zh: '取消', pinyin: 'qǔxiāo' },
   { key: 'action.reset', sv: 'Nollställ', en: 'Reset', zh: '重置', pinyin: 'chóngzhì' },
+  { key: 'action.update', sv: 'Uppdatera', en: 'Update', zh: '更新', pinyin: 'gēngxīn' },
   { key: 'action.export', sv: 'Exportera backup', en: 'Export backup', zh: '导出备份', pinyin: 'dǎochū bèifèn' },
   { key: 'action.import', sv: 'Importera backup', en: 'Import backup', zh: '导入备份', pinyin: 'dǎorù bèifèn' },
 

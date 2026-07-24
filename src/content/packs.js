@@ -38,7 +38,8 @@ export function completedLessonRevision(progress, packId, lessonId) {
 }
 
 export function lessonNeedsUpdate(progress, lesson) {
-  return completedLessonRevision(progress, lesson.packId, lesson.id) < lessonRevision(lesson);
+  const completedRevision = completedLessonRevision(progress, lesson.packId, lesson.id);
+  return completedRevision > 0 && completedRevision < lessonRevision(lesson);
 }
 
 export function lessonItemsForRevision(lesson, fromRevision = 0) {
@@ -55,7 +56,8 @@ export function lessonUiKeysForRevision(lesson, revision = lessonRevision(lesson
 
 export function findNextLesson(progress) {
   for (const lesson of allLessons) {
-    if (lessonNeedsUpdate(progress, lesson)) {
+    const completed = completedLessonRevision(progress, lesson.packId, lesson.id) > 0;
+    if (!completed || lessonNeedsUpdate(progress, lesson)) {
       return { packId: lesson.packId, lessonId: lesson.id };
     }
   }

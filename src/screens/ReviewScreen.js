@@ -52,7 +52,7 @@ export function ReviewScreen({ progress, setProgress, go }) {
   return html`
     <section class="screen lesson-screen">
       <div class="focus-top-row">
-        <button class="brand-mark mini" onClick=${() => go('home')} aria-label="Hem"><img src="./assets/icons/icon.svg?v=72" alt="" /></button>
+        <button class="brand-mark mini" onClick=${() => go('home')} aria-label="Hem"><img src="./assets/icons/icon.svg?v=73" alt="" /></button>
         <${Button} progress=${progress} labelKey="action.back" kind="ghost" onClick=${() => go('home')} />
         <span class="focus-spacer"></span>
         <span class="pill">${reviewProgressLabel(answeredCount, queue.length)}</span>
