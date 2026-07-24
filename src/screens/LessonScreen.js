@@ -1,31 +1,36 @@
 import { html } from '../html.js';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import { getLesson, lessonKey } from '../content/packs.js';
+import { completedLessonRevision, getLesson, lessonItemsForRevision, lessonKey, lessonRevision, lessonUiKeysForRevision } from '../content/packs.js';
 import { lessonSteps } from '../exercises.js';
 import { ensureCards } from '../srs.js';
 import { Button } from '../components/Button.js';
 import { UiText } from '../components/UiText.js';
 import { ExerciseCard } from '../components/ExerciseCard.js';
 
-function matchingSession(progress, route) {
+function matchingSession(progress, route, lesson = null) {
   const session = progress.activeSession;
-  return session?.type === 'lesson' && session.packId === route.packId && session.lessonId === route.lessonId
-    ? session
-    : null;
+  const matches = session?.type === 'lesson' && session.packId === route.packId && session.lessonId === route.lessonId;
+  if (!matches) return null;
+  if (lesson && session.revision !== lessonRevision(lesson)) return null;
+  return session;
 }
 
 export function LessonScreen({ progress, setProgress, route, go }) {
   const lesson = getLesson(route.packId, route.lessonId);
-  const savedSession = matchingSession(progress, route);
+  const completedRevision = lesson ? completedLessonRevision(progress, route.packId, route.lessonId) : 0;
+  const isUpdate = Boolean(lesson && completedRevision > 0 && completedRevision < lessonRevision(lesson));
+  const lessonItems = lesson ? lessonItemsForRevision(lesson, isUpdate ? completedRevision : 0) : [];
+  const activeLesson = lesson ? { ...lesson, items: lessonItems } : null;
+  const savedSession = matchingSession(progress, route, lesson);
   const [index, setIndex] = useState(() => savedSession?.index || 0);
   const [answers, setAnswers] = useState(() => savedSession?.answers || []);
   const completeButtonRef = useRef(null);
-  const steps = useMemo(() => lesson ? lessonSteps(lesson, progress) : [], [lesson, progress]);
+  const steps = useMemo(() => activeLesson ? lessonSteps(activeLesson, progress) : [], [lesson?.id, completedRevision, progress.unlockedExerciseTypes]);
 
   useEffect(() => {
     if (!lesson) return;
     setProgress((currentProgress) => {
-      const currentSession = matchingSession(currentProgress, route);
+      const currentSession = matchingSession(currentProgress, route, lesson);
       if (currentSession) return currentProgress;
       const now = new Date().toISOString();
       return {
@@ -34,6 +39,8 @@ export function LessonScreen({ progress, setProgress, route, go }) {
           type: 'lesson',
           packId: route.packId,
           lessonId: route.lessonId,
+          revision: lessonRevision(lesson),
+          fromRevision: completedRevision,
           index: 0,
           answers: [],
           startedAt: now,
@@ -61,9 +68,11 @@ export function LessonScreen({ progress, setProgress, route, go }) {
           type: 'lesson',
           packId: route.packId,
           lessonId: route.lessonId,
+          revision: lessonRevision(lesson),
+          fromRevision: completedRevision,
           index: nextIndex,
           answers: nextAnswers,
-          startedAt: matchingSession(currentProgress, route)?.startedAt || now,
+          startedAt: matchingSession(currentProgress, route, lesson)?.startedAt || now,
           updatedAt: now,
         },
       };
@@ -82,8 +91,8 @@ export function LessonScreen({ progress, setProgress, route, go }) {
     setProgress((currentProgress) => {
       const key = lessonKey(route.packId, route.lessonId);
       const now = new Date().toISOString();
-      const session = matchingSession(currentProgress, route);
-      const withCards = ensureCards(currentProgress, lesson.items);
+      const session = matchingSession(currentProgress, route, lesson);
+      const withCards = ensureCards(currentProgress, lessonItems);
       return {
         ...withCards,
         activeSession: null,
@@ -96,9 +105,10 @@ export function LessonScreen({ progress, setProgress, route, go }) {
             ...(withCards.lessonMeta?.[key] || {}),
             startedAt: session?.startedAt || withCards.lessonMeta?.[key]?.startedAt || now,
             completedAt: now,
+            revision: lessonRevision(lesson),
           },
         },
-        unlockedUiKeys: Array.from(new Set([...withCards.unlockedUiKeys, ...(lesson.unlocksUiKeys || [])])),
+        unlockedUiKeys: Array.from(new Set([...withCards.unlockedUiKeys, ...lessonUiKeysForRevision(lesson)])),
         unlockedExerciseTypes: Array.from(new Set([...(withCards.unlockedExerciseTypes || []), ...(lesson.unlocksExerciseTypes || [])])),
         stats: {
           ...withCards.stats,
@@ -115,18 +125,19 @@ export function LessonScreen({ progress, setProgress, route, go }) {
   return html`
     <section class="screen lesson-screen">
       <div class="focus-top-row">
-        <button class="brand-mark mini" onClick=${() => go('home')} aria-label="Hem"><img src="./assets/icons/icon.svg?v=71" alt="" /></button>
+        <button class="brand-mark mini" onClick=${() => go('home')} aria-label="Hem"><img src="./assets/icons/icon.svg?v=72" alt="" /></button>
         <${Button} progress=${progress} labelKey="action.back" kind="ghost" onClick=${() => go('pack', { packId: route.packId })} />
         <span class="focus-spacer"></span>
         <span class="pill">${Math.min(index + 1, steps.length)}/${steps.length}</span>
       </div>
-      <h1>${lesson.titleSv}</h1>
+      <h1>${isUpdate ? `Uppdatering: ${lesson.titleSv}` : lesson.titleSv}</h1>
+      ${isUpdate ? html`<p class="muted">Lektionen har ${lessonItems.length} nya ord sedan du gjorde den senast.</p>` : null}
       <div class="progress-bar"><span style=${`width: ${Math.min(100, (index / Math.max(1, steps.length)) * 100)}%`}></span></div>
 
       ${finished ? html`
         <section class="exercise-card complete-card">
           <h2><${UiText} progress=${progress} id="lesson.complete" /></h2>
-          <p>${correctCount}/${answers.length} övningar <${UiText} progress=${progress} id="feedback.correct" />. Orden läggs nu in i repetition, där skrivfrågor kommer gradvis senare.</p>
+          <p>${correctCount}/${answers.length} övningar <${UiText} progress=${progress} id="feedback.correct" />. ${isUpdate ? 'De nya orden läggs nu in i repetition.' : 'Orden läggs nu in i repetition, där skrivfrågor kommer gradvis senare.'}</p>
           ${lesson.unlocksUiKeys?.length ? html`<p>Du låste upp ${lesson.unlocksUiKeys.length} UI-termer.</p>` : null}
           <${Button} buttonRef=${completeButtonRef} progress=${progress} labelKey="lesson.complete" onClick=${completeLesson} />
         </section>

@@ -10,17 +10,20 @@ import { ProgressScreen } from './screens/ProgressScreen.js';
 import { LessonsScreen } from './screens/LessonsScreen.js';
 import { WelcomeScreen } from './screens/WelcomeScreen.js';
 import { UiText } from './components/UiText.js';
-import { allItems, allLessons, lessonKey } from './content/packs.js';
+import { allItems, allLessons, completedLessonRevision, lessonItemsForRevision } from './content/packs.js';
 import { ensureCards } from './srs.js';
 
 function ensureCompletedLessonCards(progress) {
-  const completed = new Set(progress.completedLessons || []);
-  const learnedIds = new Set(
-    allLessons
-      .filter((lesson) => completed.has(lessonKey(lesson.packId, lesson.id)))
-      .flatMap((lesson) => lesson.items.map((item) => item.id))
+  const learnedIds = new Set(allLessons.flatMap((lesson) => {
+    const revision = completedLessonRevision(progress, lesson.packId, lesson.id);
+    return lessonItemsForRevision(lesson, 0)
+      .filter((item) => (item.addedInRevision || 1) <= revision)
+      .map((item) => item.id);
+  }));
+  const eligibleCards = Object.fromEntries(
+    Object.entries(progress.cards || {}).filter(([, card]) => learnedIds.has(card.itemId))
   );
-  return ensureCards(progress, allItems.filter((item) => learnedIds.has(item.id)));
+  return ensureCards({ ...progress, cards: eligibleCards }, allItems.filter((item) => learnedIds.has(item.id)));
 }
 
 function useDueRefresh(setProgress) {
@@ -108,7 +111,7 @@ export function App() {
       ${focusMode ? null : html`
         <header class="app-header">
           <button class="brand" onClick=${() => go('home')}>
-            <span class="brand-mark"><img src="./assets/icons/icon.svg?v=71" alt="" /></span>
+            <span class="brand-mark"><img src="./assets/icons/icon.svg?v=72" alt="" /></span>
             <span><${UiText} progress=${progress} id="app.title" /></span>
           </button>
         </header>

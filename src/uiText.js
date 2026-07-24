@@ -1,4 +1,4 @@
-import { allItems, allLessons, lessonKey } from './content/packs.js';
+import { allItems, allLessons, completedLessonRevision, lessonUiKeysForRevision } from './content/packs.js';
 import { uiTermByKey } from './content/uiTerms.js';
 import { isMasteredCard } from './mastery.js';
 import { cardId } from './srs.js';
@@ -7,11 +7,11 @@ const uiItemByKey = Object.fromEntries(allItems.filter((item) => item.uiKey).map
 
 export function unlockedUiKeysFor(progress) {
   const unlocked = new Set(progress?.unlockedUiKeys || []);
-  const completed = new Set(progress?.completedLessons || []);
 
   for (const lesson of allLessons) {
-    if (!completed.has(lessonKey(lesson.packId, lesson.id))) continue;
-    for (const key of lesson.unlocksUiKeys || []) unlocked.add(key);
+    const revision = completedLessonRevision(progress, lesson.packId, lesson.id);
+    if (!revision) continue;
+    for (const key of lessonUiKeysForRevision(lesson, revision)) unlocked.add(key);
   }
 
   return unlocked;

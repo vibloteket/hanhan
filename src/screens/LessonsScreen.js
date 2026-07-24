@@ -1,5 +1,5 @@
 import { html } from '../html.js';
-import { packs, lessonKey } from '../content/packs.js';
+import { lessonNeedsUpdate, packs, lessonKey } from '../content/packs.js';
 import { Button } from '../components/Button.js';
 import { UiText } from '../components/UiText.js';
 
@@ -26,6 +26,7 @@ export function LessonsScreen({ progress, go }) {
         ${packs.flatMap((pack) => pack.lessons.map((lesson, index) => {
           const key = lessonKey(pack.id, lesson.id);
           const done = progress.completedLessons.includes(key);
+          const needsUpdate = lessonNeedsUpdate(progress, { ...lesson, packId: pack.id });
           const active = progress.activeSession?.type === 'lesson' && progress.activeSession.packId === pack.id && progress.activeSession.lessonId === lesson.id;
           const completedAt = formatDateTime(progress.lessonMeta?.[key]?.completedAt);
           const startedAt = active ? formatDateTime(progress.activeSession?.startedAt) : '';
@@ -39,9 +40,9 @@ export function LessonsScreen({ progress, go }) {
                 ${done && completedAt ? html`<div class="muted small lesson-date"><${UiText} progress=${progress} id="lesson.complete" />: ${completedAt}</div>` : null}
               </div>
               <div class="lesson-row-actions">
-                ${active ? html`<span class="status-chip learning"><${UiText} progress=${progress} id="status.inProgress" /></span>` : done ? html`<span class="status-chip strong"><${UiText} progress=${progress} id="lesson.complete" /></span>` : html`<span class="status-chip weak"><${UiText} progress=${progress} id="status.incomplete" /></span>`}
+                ${active ? html`<span class="status-chip learning"><${UiText} progress=${progress} id="status.inProgress" /></span>` : needsUpdate ? html`<span class="status-chip due">Uppdaterad</span>` : done ? html`<span class="status-chip strong"><${UiText} progress=${progress} id="lesson.complete" /></span>` : html`<span class="status-chip weak"><${UiText} progress=${progress} id="status.incomplete" /></span>`}
                 <button class="button secondary" onClick=${() => go('lesson', { packId: pack.id, lessonId: lesson.id })}>
-                  ${active ? html`<${UiText} progress=${progress} id="action.continue" />` : done ? html`<${UiText} progress=${progress} id="action.practice" />` : html`<${UiText} progress=${progress} id="action.start" />`}
+                  ${active ? html`<${UiText} progress=${progress} id="action.continue" />` : needsUpdate ? 'Gör uppdateringen' : done ? html`<${UiText} progress=${progress} id="action.practice" />` : html`<${UiText} progress=${progress} id="action.start" />`}
                 </button>
               </div>
             </article>

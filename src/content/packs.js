@@ -27,12 +27,36 @@ export function lessonKey(packId, lessonId) {
   return `${packId}/${lessonId}`;
 }
 
+export function lessonRevision(lesson) {
+  return lesson?.revision || 1;
+}
+
+export function completedLessonRevision(progress, packId, lessonId) {
+  const key = lessonKey(packId, lessonId);
+  if (!progress?.completedLessons?.includes(key)) return 0;
+  return progress.lessonMeta?.[key]?.revision || 1;
+}
+
+export function lessonNeedsUpdate(progress, lesson) {
+  return completedLessonRevision(progress, lesson.packId, lesson.id) < lessonRevision(lesson);
+}
+
+export function lessonItemsForRevision(lesson, fromRevision = 0) {
+  const targetRevision = lessonRevision(lesson);
+  return lesson.items.filter((item) => {
+    const added = item.addedInRevision || 1;
+    return added > fromRevision && added <= targetRevision;
+  });
+}
+
+export function lessonUiKeysForRevision(lesson, revision = lessonRevision(lesson)) {
+  return (lesson.unlocksUiKeys || []).filter((key) => (lesson.uiKeyRevisions?.[key] || 1) <= revision);
+}
+
 export function findNextLesson(progress) {
-  for (const pack of packs) {
-    for (const lesson of pack.lessons) {
-      if (!progress.completedLessons.includes(lessonKey(pack.id, lesson.id))) {
-        return { packId: pack.id, lessonId: lesson.id };
-      }
+  for (const lesson of allLessons) {
+    if (lessonNeedsUpdate(progress, lesson)) {
+      return { packId: lesson.packId, lessonId: lesson.id };
     }
   }
   return null;

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { packs, allItems, lessonKey } from '../src/content/packs.js';
+import { packs, allItems, lessonItemsForRevision, lessonKey, lessonNeedsUpdate, lessonUiKeysForRevision } from '../src/content/packs.js';
 import { uiTermByKey } from '../src/content/uiTerms.js';
 
 test('all content items have required fields and unique IDs', () => {
@@ -26,6 +26,21 @@ test('lesson keys are unique and lessons have items', () => {
       keys.add(key);
     }
   }
+});
+
+test('lesson revisions expose only newly added content and UI keys', () => {
+  const lesson = packs.flatMap((pack) => pack.lessons.map((entry) => ({ ...entry, packId: pack.id })))
+    .find((entry) => entry.id === 'settings-license-contact');
+  const legacyProgress = {
+    completedLessons: [lessonKey(lesson.packId, lesson.id)],
+    lessonMeta: { [lessonKey(lesson.packId, lesson.id)]: { revision: 1 } },
+  };
+  assert.equal(lessonNeedsUpdate(legacyProgress, lesson), true);
+  assert.deepEqual(lessonItemsForRevision(lesson, 1).map((item) => item.id), [
+    'ui-source-char', 'ui-code-char', 'ui-code', 'ui-source-code',
+  ]);
+  assert.equal(lessonUiKeysForRevision(lesson, 1).includes('term.sourceCode'), false);
+  assert.equal(lessonUiKeysForRevision(lesson, 2).includes('term.sourceCode'), true);
 });
 
 test('UI content references existing UI terms', () => {
