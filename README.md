@@ -45,8 +45,8 @@ npm run check
 
 - App: <https://hanhan.viblo.se/>
 
-## Licens
+## Källkod och licens
 
-AGPL-3.0-or-later
+HànHàn är fri programvara med öppen källkod. Koden finns på <https://codeberg.org/viblo-ai/hanhan> och licensieras under AGPL-3.0-or-later.
 
 Kontakt: <vb@viblo.se>

@@ -3,7 +3,7 @@ import { useRef, useState } from 'preact/hooks';
 import { createDefaultProgress, makeBackup, parseBackup } from '../storage.js';
 import { Button } from '../components/Button.js';
 import { UiText } from '../components/UiText.js';
-import { APP_LICENSE, APP_VERSION, ASSET_VERSION, BUILD_COMMIT, BUILD_DATE, CONTACT_EMAIL } from '../buildInfo.js';
+import { APP_LICENSE, APP_VERSION, ASSET_VERSION, BUILD_COMMIT, BUILD_DATE, CONTACT_EMAIL, SOURCE_URL } from '../buildInfo.js';
 
 export function SettingsScreen({ progress, setProgress, go }) {
   const fileRef = useRef(null);
@@ -76,6 +76,7 @@ export function SettingsScreen({ progress, setProgress, go }) {
           <div><dt><${UiText} progress=${progress} id="term.build" /></dt><dd>${BUILD_COMMIT}</dd></div>
           <div><dt><${UiText} progress=${progress} id="term.buildDate" /></dt><dd>${BUILD_DATE}</dd></div>
           <div><dt><${UiText} progress=${progress} id="term.assetVersion" /></dt><dd>${ASSET_VERSION}</dd></div>
+          <div><dt>Källkod</dt><dd><a href=${SOURCE_URL} target="_blank" rel="noopener noreferrer">Codeberg</a></dd></div>
           <div><dt><${UiText} progress=${progress} id="term.license" /></dt><dd><a href="./LICENSE.txt">${APP_LICENSE}</a></dd></div>
           <div><dt><${UiText} progress=${progress} id="term.contact" /></dt><dd><a href=${`mailto:${CONTACT_EMAIL}`}>${CONTACT_EMAIL}</a></dd></div>
         </dl>

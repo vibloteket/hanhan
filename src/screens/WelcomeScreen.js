@@ -1,12 +1,12 @@
 import { html } from '../html.js';
-import { CONTACT_EMAIL } from '../buildInfo.js';
+import { APP_LICENSE, CONTACT_EMAIL, SOURCE_URL } from '../buildInfo.js';
 
 export function WelcomeScreen({ go, showAppLink }) {
   return html`
     <section class="hero screen">
       <div class="hero-title">
         <div class="welcome-icon">
-          <img src="./assets/icons/icon-large.svg?v=69" alt="" width="96" height="96" />
+          <img src="./assets/icons/icon-large.svg?v=70" alt="" width="96" height="96" />
         </div>
         <p class="eyebrow">Praktisk mandarin från svenska</p>
         <h1>HànHàn</h1>
@@ -37,6 +37,12 @@ export function WelcomeScreen({ go, showAppLink }) {
     <section class="screen panel">
       <h2>Inga konton, ingen inloggning</h2>
       <p>Din data sparas lokalt i webbläsaren. Inga servrar, inga konton. I inställningarna kan du exportera och importera backup.</p>
+    </section>
+
+    <section class="screen panel">
+      <h2>Öppen källkod</h2>
+      <p>HànHàn är fri programvara med öppen källkod och licensieras under ${APP_LICENSE}. Du kan läsa koden, rapportera problem och bidra på Codeberg.</p>
+      <p><a class="button secondary" href=${SOURCE_URL} target="_blank" rel="noopener noreferrer">Källkod på Codeberg</a></p>
     </section>
 
     <section class="screen panel">
