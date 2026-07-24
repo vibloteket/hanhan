@@ -38,6 +38,7 @@ export const uiTerms = [
   { key: 'term.build', sv: 'Build', en: 'Build', zh: '构建', pinyin: 'gòujiàn' },
   { key: 'term.buildDate', sv: 'Byggdatum', en: 'Build date', zh: '构建日期', pinyin: 'gòujiàn rìqī' },
   { key: 'term.assetVersion', sv: 'Asset-version', en: 'Asset version', zh: '资源版本', pinyin: 'zīyuán bǎnběn' },
+  { key: 'term.sourceCode', sv: 'Källkod', en: 'Source code', zh: '源代码', pinyin: 'yuán dàimǎ' },
   { key: 'term.license', sv: 'Licens', en: 'License', zh: '许可', pinyin: 'xǔkě' },
   { key: 'term.contact', sv: 'Kontakt', en: 'Contact', zh: '联系', pinyin: 'liánxì' },
 ];

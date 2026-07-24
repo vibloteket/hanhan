@@ -282,11 +282,15 @@ export const appUiBasics = {
     },
     {
       id: 'settings-license-contact',
-      titleSv: 'Teknisk info: licens och kontakt',
-      descriptionSv: 'Licens, kontakt och rubriken Licens & kontakt.',
-      unlocksUiKeys: ['section.licenseContact', 'term.license', 'term.contact'],
+      titleSv: 'Teknisk info: källkod, licens och kontakt',
+      descriptionSv: 'Källkod, licens, kontakt och rubriken Licens & kontakt.',
+      unlocksUiKeys: ['section.licenseContact', 'term.sourceCode', 'term.license', 'term.contact'],
       practiceModes: ['type-pinyin'],
       items: [
+        { id: 'ui-source-char', sv: 'källa / ursprung', hanzi: '源', pinyin: 'yuán', notesSv: 'Första tecknet i 源代码: källkod.' },
+        { id: 'ui-code-char', sv: 'kod / nummer', hanzi: '码', pinyin: 'mǎ', notesSv: 'Används i 代码: kod.' },
+        { id: 'ui-code', sv: 'kod', hanzi: '代码', pinyin: 'dàimǎ', components: [{ hanzi: '码', pinyin: 'mǎ', sv: 'kod / nummer' }] },
+        { id: 'ui-source-code', sv: 'källkod', hanzi: '源代码', pinyin: 'yuán dàimǎ', uiKey: 'term.sourceCode', components: [{ hanzi: '源', pinyin: 'yuán', sv: 'källa / ursprung' }, { hanzi: '代码', pinyin: 'dàimǎ', sv: 'kod' }] },
         { id: 'ui-permit-char', sv: 'kan / får', hanzi: '可', pinyin: 'kě', notesSv: 'Vanligt tecken för kan/får. Här används det i 许可.' },
         { id: 'ui-license', sv: 'licens / tillåtelse', hanzi: '许可', pinyin: 'xǔkě', uiKey: 'term.license', components: [{ hanzi: '可', pinyin: 'kě', sv: 'kan / får' }] },
         { id: 'ui-contact-char', sv: 'koppla / förena', hanzi: '联', pinyin: 'lián', notesSv: 'Första tecknet i 联系.' },
