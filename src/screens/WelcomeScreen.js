@@ -41,8 +41,8 @@ export function WelcomeScreen({ go, showAppLink }) {
 
     <section class="screen panel">
       <h2>Öppen källkod</h2>
-      <p>HànHàn är fri programvara med öppen källkod och licensieras under ${APP_LICENSE}. Du kan läsa koden, rapportera problem och bidra på Codeberg.</p>
-      <p><a class="button secondary" href=${SOURCE_URL} target="_blank" rel="noopener noreferrer">Källkod på Codeberg</a></p>
+      <p>HànHàn är fri programvara med öppen källkod och licensieras under ${APP_LICENSE}. Du kan läsa koden, rapportera problem och bidra på GitHub.</p>
+      <p><a class="button secondary" href=${SOURCE_URL} target="_blank" rel="noopener noreferrer">Källkod på GitHub</a></p>
     </section>
 
     <section class="screen panel">
