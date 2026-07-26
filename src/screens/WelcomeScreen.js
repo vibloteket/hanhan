@@ -6,7 +6,7 @@ export function WelcomeScreen({ go, showAppLink }) {
     <section class="hero screen">
       <div class="hero-title">
         <div class="welcome-icon">
-          <img src="./assets/icons/icon-large.svg?v=79" alt="" width="96" height="96" />
+          <img src="./assets/icons/icon-large.svg?v=80" alt="" width="96" height="96" />
         </div>
         <p class="eyebrow">Praktisk mandarin från svenska</p>
         <h1>HànHàn</h1>
@@ -50,6 +50,13 @@ export function WelcomeScreen({ go, showAppLink }) {
     <section class="screen panel">
       <h2>Inga konton, ingen inloggning</h2>
       <p>Din data sparas lokalt i webbläsaren. Inga servrar, inga konton. I inställningarna kan du exportera och importera backup.</p>
+    </section>
+
+    <section class="screen panel">
+      <h2>Installera på mobilen</h2>
+      <p>HànHàn kan installeras på hemskärmen och användas som en vanlig app. Efter första besöket fungerar hela appen även utan internet.</p>
+      <p><strong>Android:</strong> Öppna webbläsarens meny och välj <i>Installera appen</i> eller <i>Lägg till på startskärmen</i>.</p>
+      <p><strong>iPhone och iPad:</strong> Öppna HànHàn i Safari, tryck på Dela och välj <i>Lägg till på hemskärmen</i>.</p>
     </section>
 
     <section class="screen panel">

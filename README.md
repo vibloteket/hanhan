@@ -33,13 +33,24 @@ Framstegen sparas lokalt i webbläsaren. HànHàn kräver inget konto, har ingen
 - Lokal lagring av framsteg i webbläsaren
 - Export och import av säkerhetskopior i JSON-format
 - Anpassad för både dator, mobil och surfplatta
-- Körs direkt i webbläsaren utan installation eller backend
+- Kan installeras på mobilens hemskärm utan appbutik
+- Hela appen fungerar offline efter det första besöket
+- Körs direkt i webbläsaren utan backend
 
 ## Data och integritet
 
 HànHàn har inget konto och skickar inte dina framsteg till någon server. All studiedata lagras i `localStorage` i den aktuella webbläsaren.
 
 Framstegen kan försvinna om du rensar webbplatsens data eller byter webbläsare eller enhet. Använd därför exportfunktionen i appens inställningar för att skapa en säkerhetskopia som senare kan importeras igen.
+
+## Installera på mobilen
+
+HànHàn kan installeras på hemskärmen och användas som en vanlig app. Efter det första besöket fungerar hela appen även utan internet.
+
+- **Android:** öppna webbläsarens meny och välj **Installera appen** eller **Lägg till på startskärmen**.
+- **iPhone och iPad:** öppna HànHàn i Safari, tryck på Dela och välj **Lägg till på hemskärmen**.
+
+Ingen appbutik eller registrering behövs. När internet finns hämtar HànHàn nya versioner automatiskt. En pågående lektion eller repetition avbryts inte för en uppdatering.
 
 ## Kör lokalt
 

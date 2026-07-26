@@ -12,6 +12,7 @@ import { WelcomeScreen } from './screens/WelcomeScreen.js';
 import { UiText } from './components/UiText.js';
 import { allItems, allLessons, completedLessonRevision, lessonItemsForRevision } from './content/packs.js';
 import { ensureCards } from './srs.js';
+import { setPwaSafeToUpdate } from './pwa.js';
 
 function ensureCompletedLessonCards(progress) {
   const learnedIds = new Set(allLessons.flatMap((lesson) => {
@@ -61,6 +62,7 @@ export function App() {
   const [started, setStarted] = useState(false);
 
   useEffect(() => saveProgress(progress), [progress]);
+  useEffect(() => setPwaSafeToUpdate(route.screen !== 'lesson' && route.screen !== 'review'), [route.screen]);
   useDueRefresh(setProgress);
 
   useEffect(() => {
@@ -111,7 +113,7 @@ export function App() {
       ${focusMode ? null : html`
         <header class="app-header">
           <button class="brand" onClick=${() => go('home')}>
-            <span class="brand-mark"><img src="./assets/icons/icon.svg?v=79" alt="" /></span>
+            <span class="brand-mark"><img src="./assets/icons/icon.svg?v=80" alt="" /></span>
             <span><${UiText} progress=${progress} id="app.title" /></span>
           </button>
         </header>
