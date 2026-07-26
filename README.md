@@ -6,7 +6,7 @@
 
 # HànHàn (汉汉)
 
-HànHàn är en liten, statisk webbapp för svensktalande som vill lära sig grundläggande mandarin. Appen lär ut förenklade kinesiska tecken, pinyin, vanliga ord och uttryck från appens eget gränssnitt.
+HànHàn är en liten, statisk webbapplikation för svensktalande som vill lära sig grundläggande mandarin. Den körs direkt i webbläsaren och fungerar på både dator, mobil och surfplatta – utan installation. HànHàn lär ut förenklade kinesiska tecken, pinyin, vanliga ord och uttryck från sitt eget gränssnitt.
 
 Gränssnittet blir gradvis mer kinesiskt i takt med att orden lärs in:
 
@@ -32,7 +32,8 @@ Framstegen sparas lokalt i webbläsaren. HànHàn kräver inget konto, har ingen
 - Ett gränssnitt som gradvis övergår från svenska till kinesiska
 - Lokal lagring av framsteg i webbläsaren
 - Export och import av säkerhetskopior i JSON-format
-- Mobilvänlig, statisk och utan backend
+- Anpassad för både dator, mobil och surfplatta
+- Körs direkt i webbläsaren utan installation eller backend
 
 ## Data och integritet
 
