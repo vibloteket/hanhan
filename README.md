@@ -1,6 +1,6 @@
-<p>
+<p align="center">
   <a href="https://hanhan.viblo.se/">
-    <img src="assets/icons/icon.svg" alt="HanHan" width="320">
+    <img src="assets/icons/icon.svg" alt="HanHan" width="180">
   </a>
 </p>
 
