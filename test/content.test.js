@@ -44,6 +44,16 @@ test('lesson revisions expose only newly added content and UI keys', () => {
   assert.equal(lessonUiKeysForRevision(lesson, 2).includes('term.sourceCode'), true);
 });
 
+test('personal bonus teaches dream, surname Liu, and Liu Meng in order', () => {
+  const lesson = packs.find((pack) => pack.id === 'personal-bonus')?.lessons
+    .find((candidate) => candidate.id === 'liu-meng');
+  assert.ok(lesson, 'personal bonus lesson should exist');
+  assert.deepEqual(lesson.items.map((item) => item.hanzi), ['梦', '刘', '刘梦']);
+  assert.equal(lesson.items[0].sv, 'dröm');
+  assert.match(lesson.items[1].sv, /efternamn/);
+  assert.match(lesson.items[2].notesSv, /min frus namn/);
+});
+
 test('UI content references existing UI terms', () => {
   for (const pack of packs) {
     for (const lesson of pack.lessons) {

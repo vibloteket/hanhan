@@ -1,7 +1,8 @@
 import { appUiBasics } from './appUiBasics.js';
 import { homeBasics } from './homeBasics.js';
+import { personalBonus } from './personalBonus.js';
 
-export const packs = [appUiBasics, homeBasics].sort((a, b) => a.order - b.order);
+export const packs = [appUiBasics, homeBasics, personalBonus].sort((a, b) => a.order - b.order);
 
 export const packById = Object.fromEntries(packs.map((pack) => [pack.id, pack]));
 
