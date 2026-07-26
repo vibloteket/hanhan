@@ -42,11 +42,11 @@ export function WelcomeScreen({ go, showAppLink }) {
    <section class="screen panel">
       <h2>Varför HànHàn?</h2>
       <p>
-      Jag, Victor 'viblo' Blomqvist, skapade HànHàn för att motivera mig att bli bättre på kinesiska. Jag har tidigare bott och jobbat i Kina, har en kinesisk fru och besöker ibland Kina. 
-      Trots detta (eller kanske tack vare), är min kinesiska inget att hänga i julgranen. Förhoppningen är att detta ska ändras med HànHàn! </p><p>
-      HànHàn är 'opinionated', mitt mål är inte att skapa en generisk flash-card app, utan en webapp anpassad för kinesiska (både pinyin och tecken tex), och med lektioner som jag själv upplever är viktiga.  
-      I det moderna Kina sker väldigt mycket genom mobilen, och även om tex Wechat/微信 har ett engelskt UI, räcker det inte långt. Skanna en QR-kod på en restaurang och ingen engelska är längre i sikte. 
-      Därför börjar HànHàn med att lära ut sitt eget UI.
+      Jag, Victor "viblo" Blomqvist, skapade HànHàn för att motivera mig att bli bättre på kinesiska. Jag har tidigare bott och arbetat i Kina, har en kinesisk fru och besöker ibland Kina. 
+      Trots detta (eller kanske tack vare) är min kinesiska inget att hänga i julgranen. Förhoppningen är att detta ska ändras med HànHàn! </p><p>
+      HànHàn är medvetet nischat, mitt mål är inte att skapa en generisk flashcard-app, utan en webbapp anpassad för kinesiska (både pinyin och tecken tex), och med lektioner som jag själv upplever är viktiga.  
+       </p><p>I det moderna Kina sker väldigt mycket genom mobilen, och även om t.ex. WeChat/微信 har ett engelskt gränssnitt, räcker det inte långt. Skanna en QR-kod på en restaurang och ingen engelska är längre i sikte. 
+      Därför börjar HànHàn med att lära ut sitt eget gränssnitt.
       </p>
       <p>Även om jag byggt HànHàn främst för att lära mig själv, hoppas jag att den även är användbar för dig!</p>
       <p><i>Victor - 2026-07-26</i></p>
