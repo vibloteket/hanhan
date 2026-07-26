@@ -1,58 +1,83 @@
 <p align="center">
   <a href="https://hanhan.viblo.se/">
-    <img src="assets/icons/icon.svg" alt="HanHan" width="180">
+    <img src="assets/icons/icon.svg" alt="HànHàn-logotyp" width="180">
   </a>
 </p>
 
 # HànHàn (汉汉)
 
-HànHàn is a small, static web app for Swedish speakers learning beginner Mandarin. It teaches simplified Chinese characters, pinyin, common words, and app UI terms through short lessons, local progress tracking, and simple spaced repetition. The app is buildless, backend-free, and stores progress locally in the browser.
+HànHàn är en liten, statisk webbapp för svensktalande som vill lära sig grundläggande mandarin. Appen lär ut förenklade kinesiska tecken, pinyin, vanliga ord och uttryck från appens eget gränssnitt.
 
-HànHàn är en liten, statisk webbapp för att lära sig grundläggande mandarin från svenska.
+Gränssnittet blir gradvis mer kinesiskt i takt med att orden lärs in:
 
-Appen är byggd för nybörjare och använder gradvis kinesisk UI-immersion: först visas svenska, sedan kinesiska + svenska, och till slut bara kinesiska när orden sitter.
+**svenska → kinesiska med svensk hjälp → endast kinesiska**
 
-## Live
+Framstegen sparas lokalt i webbläsaren. HànHàn kräver inget konto, har ingen backend och kan köras utan något byggsteg.
 
-- Live App: <https://hanhan.viblo.se/>
+<p align="center">
+  <a href="https://hanhan.viblo.se/"><strong>Öppna HànHàn</strong></a>
+</p>
+
+<p align="center">
+  <a href="https://hanhan.viblo.se/">
+    <img src="assets/screenshots/lesson-hanhan-mobile.jpeg" alt="En HànHàn-lektion på en mobiltelefon" width="369">
+  </a>
+</p>
 
 ## Funktioner
 
 - Svenska → förenklad kinesiska med pinyin
-- Korta lektioner med tecken, ord och UI-termer
-- Repetition med enkel SRS-logik
-- Lokal progress i webbläsaren via `localStorage`
-- Export/import av backup som JSON
+- Korta lektioner med tecken, ord och termer från appens gränssnitt
+- Repetition med enkel intervallrepetition (SRS)
+- Ett gränssnitt som gradvis övergår från svenska till kinesiska
+- Lokal lagring av framsteg i webbläsaren
+- Export och import av säkerhetskopior i JSON-format
 - Mobilvänlig, statisk och utan backend
+
+## Data och integritet
+
+HànHàn har inget konto och skickar inte dina framsteg till någon server. All studiedata lagras i `localStorage` i den aktuella webbläsaren.
+
+Framstegen kan försvinna om du rensar webbplatsens data eller byter webbläsare eller enhet. Använd därför exportfunktionen i appens inställningar för att skapa en säkerhetskopia som senare kan importeras igen.
 
 ## Kör lokalt
 
-Ingen build behövs. Servera bara katalogen statiskt, till exempel:
+Inget byggsteg behövs. Klona källkoden och servera katalogen statiskt, till exempel:
 
 ```bash
+git clone https://github.com/vibloteket/hanhan.git
+cd hanhan
 python3 -m http.server 8000
 ```
 
-Öppna sedan:
-
-```txt
-http://localhost:8000/
-```
+Öppna sedan <http://localhost:8000/>.
 
 ## Tester
+
+Kör testsviten:
 
 ```bash
 npm test
 ```
 
-Syntaxkoll:
+Kontrollera JavaScript-syntaxen:
 
 ```bash
 npm run check
 ```
 
+## Teknik
+
+HànHàn är en byggstegsfri, statisk SPA som använder Preact och htm. Webbläsarberoendena ingår i källkoden, så appen behöver varken backend, konto eller externa runtime-beroenden.
+
+Mer information om produktens och gränssnittets principer finns i [DESIGN.md](DESIGN.md).
+
+## Bidra
+
+Felrapporter, förbättringsförslag och pull requests är välkomna via [projektet på GitHub](https://github.com/vibloteket/hanhan).
+
 ## Källkod och licens
 
-HànHàn är fri programvara med öppen källkod. Koden finns på <https://github.com/vibloteket/hanhan> och licensieras under AGPL-3.0-or-later.
+HànHàn är fri programvara med öppen källkod och licensieras under [AGPL-3.0-or-later](LICENSE.txt).
 
 Kontakt: <vb@viblo.se>
