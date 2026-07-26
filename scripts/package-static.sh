@@ -5,7 +5,7 @@ out_dir="${1:-dist}"
 rm -rf "$out_dir"
 mkdir -p "$out_dir"
 
-cp index.html about.html app.css LICENSE.txt "$out_dir/"
+cp index.html app.css LICENSE.txt "$out_dir/"
 cp -R assets src vendor "$out_dir/"
 
 asset_version="$(grep -oE 'app\.css\?v=[0-9]+' index.html | sed 's/.*=//' | head -1)"

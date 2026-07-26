@@ -73,12 +73,8 @@ HànHàn är en byggstegsfri, statisk SPA som använder Preact och htm. Webbläs
 
 Mer information om produktens och gränssnittets principer finns i [DESIGN.md](DESIGN.md).
 
-## Bidra
+## Feedback, kontakt och källkod
 
-Felrapporter, förbättringsförslag och pull requests är välkomna via [projektet på GitHub](https://github.com/vibloteket/hanhan).
+Har du hittat ett fel eller har ett förbättringsförslag? [Öppna gärna ett ärende på GitHub](https://github.com/vibloteket/hanhan/issues). Du kan också kontakta mig via e-post på <vb@viblo.se>.
 
-## Källkod och licens
-
-HànHàn är fri programvara med öppen källkod och licensieras under [AGPL-3.0-or-later](LICENSE.txt).
-
-Kontakt: <vb@viblo.se>
+HànHàn är fri programvara med öppen källkod. [Källkoden finns på GitHub](https://github.com/vibloteket/hanhan) och licensieras under [AGPL-3.0-or-later](LICENSE.txt).
