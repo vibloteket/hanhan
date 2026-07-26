@@ -6,7 +6,7 @@ export function WelcomeScreen({ go, showAppLink }) {
     <section class="hero screen">
       <div class="hero-title">
         <div class="welcome-icon">
-          <img src="./assets/icons/icon-large.svg?v=75" alt="" width="96" height="96" />
+          <img src="./assets/icons/icon-large.svg?v=76" alt="" width="96" height="96" />
         </div>
         <p class="eyebrow">Praktisk mandarin från svenska</p>
         <h1>HànHàn</h1>
@@ -55,13 +55,8 @@ export function WelcomeScreen({ go, showAppLink }) {
 
     <section class="screen panel">
       <h2>Feedback och källkod</h2>
-      <p>Har du hittat ett fel eller har ett förbättringsförslag? Öppna gärna ett ärende på GitHub. Du kan också kontakta mig via e-post.</p>
-      <p>HànHàn är fri programvara med öppen källkod och licensieras under ${APP_LICENSE}.</p>
-      <div class="button-row">
-        <a class="button secondary" href=${`${SOURCE_URL}/issues`} target="_blank" rel="noopener noreferrer">Rapportera eller föreslå på GitHub</a>
-        <a class="button secondary" href=${`mailto:${CONTACT_EMAIL}`}>Skicka e-post</a>
-        <a class="button secondary" href=${SOURCE_URL} target="_blank" rel="noopener noreferrer">Visa källkoden</a>
-      </div>
+      <p>Har du hittat ett fel eller har ett förbättringsförslag? <a href=${`${SOURCE_URL}/issues`} target="_blank" rel="noopener noreferrer">Öppna gärna ett ärende på GitHub</a>. Du kan också kontakta mig via e-post på <a href=${`mailto:${CONTACT_EMAIL}`}>${CONTACT_EMAIL}</a>.</p>
+      <p>HànHàn är fri programvara med öppen källkod. <a href=${SOURCE_URL} target="_blank" rel="noopener noreferrer">Källkoden finns på GitHub</a> och licensieras under ${APP_LICENSE}.</p>
     </section>
   `;
 }
