@@ -1,3 +1,9 @@
+<p>
+  <a href="https://hanhan.viblo.se/">
+    <img src="assets/icons/icon.svg" alt="HanHan" width="320">
+  </a>
+</p>
+
 # HànHàn (汉汉)
 
 HànHàn is a small, static web app for Swedish speakers learning beginner Mandarin. It teaches simplified Chinese characters, pinyin, common words, and app UI terms through short lessons, local progress tracking, and simple spaced repetition. The app is buildless, backend-free, and stores progress locally in the browser.
@@ -5,6 +11,10 @@ HànHàn is a small, static web app for Swedish speakers learning beginner Manda
 HànHàn är en liten, statisk webbapp för att lära sig grundläggande mandarin från svenska.
 
 Appen är byggd för nybörjare och använder gradvis kinesisk UI-immersion: först visas svenska, sedan kinesiska + svenska, och till slut bara kinesiska när orden sitter.
+
+## Live
+
+- Live App: <https://hanhan.viblo.se/>
 
 ## Funktioner
 
@@ -40,10 +50,6 @@ Syntaxkoll:
 ```bash
 npm run check
 ```
-
-## Live
-
-- App: <https://hanhan.viblo.se/>
 
 ## Källkod och licens
 
