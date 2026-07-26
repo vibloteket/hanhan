@@ -39,6 +39,20 @@ export function WelcomeScreen({ go, showAppLink }) {
       <p>Din data sparas lokalt i webbläsaren. Inga servrar, inga konton. I inställningarna kan du exportera och importera backup.</p>
     </section>
 
+   <section class="screen panel">
+      <h2>Varför HànHàn?</h2>
+      <p>
+      Jag, Victor 'viblo' Blomqvist, skapade HànHàn för att motivera mig att bli bättre på kinesiska. Jag har tidigare bott och jobbat i Kina, har en kinesisk fru och besöker ibland Kina. 
+      Trots detta (eller kanske tack vare), är min kinesiska inget att hänga i julgranen. Förhoppningen är att detta ska ändras med HànHàn! </p><p>
+      HànHàn är 'opinionated', mitt mål är inte att skapa en generisk flash-card app, utan en webapp anpassad för kinesiska (både pinyin och tecken tex), och med lektioner som jag själv upplever är viktiga.  
+      I det moderna Kina sker väldigt mycket genom mobilen, och även om tex Wechat/微信 har ett engelskt UI, räcker det inte långt. Skanna en QR-kod på en restaurang och ingen engelska är längre i sikte. 
+      Därför börjar HànHàn med att lära ut sitt eget UI.
+      </p>
+      <p>Även om jag byggt HànHàn främst för att lära mig själv, hoppas jag att den även är användbar för dig!</p>
+      <p><i>Victor - 2026-07-26</i></p>
+    </section>
+
+
     <section class="screen panel">
       <h2>Öppen källkod</h2>
       <p>HànHàn är fri programvara med öppen källkod och licensieras under ${APP_LICENSE}. Du kan läsa koden, rapportera problem och bidra på GitHub.</p>
