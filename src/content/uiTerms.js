@@ -32,6 +32,7 @@ export const uiTerms = [
   { key: 'status.incomplete', sv: 'Ej klar', en: 'Incomplete', zh: '未完成', pinyin: 'wèi wánchéng' },
   { key: 'status.learnedCards', sv: 'lärda kort', en: 'learned cards', zh: '已学', pinyin: 'yǐxué' },
   { key: 'status.mastered', sv: 'Sitter', en: 'Mastered', zh: '熟', pinyin: 'shú' },
+  { key: 'status.correctStreak', sv: '{count} rätt i rad', en: '{count} correct in a row', zh: '连续答对 {count} 次', pinyin: 'liánxù dáduì {count} cì' },
   { key: 'status.language', sv: 'Språk', en: 'Language', zh: '语言', pinyin: 'yǔyán' },
   { key: 'section.data', sv: 'Data', en: 'Data', zh: '数据', pinyin: 'shùjù' },
   { key: 'section.licenseContact', sv: 'Licens & kontakt', en: 'License & contact', zh: '许可与联系', pinyin: 'xǔkě yǔ liánxì' },

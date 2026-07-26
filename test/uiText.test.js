@@ -64,3 +64,18 @@ test('debug Chinese UI mode shows locked labels in Chinese too', () => {
   assert.equal(isUnlocked(progress, 'action.review'), false);
   assert.equal(uiLabel(progress, 'action.review'), '复习');
 });
+
+test('UI labels interpolate dynamic values before and after unlocking', () => {
+  const lockedProgress = {
+    completedLessons: [],
+    unlockedUiKeys: [],
+    settings: { uiMode: 'dynamic' },
+  };
+  const unlockedProgress = {
+    ...lockedProgress,
+    completedLessons: ['app-ui-basics/correct-streak'],
+  };
+
+  assert.equal(uiLabel(lockedProgress, 'status.correctStreak', { count: 3 }), '3 rätt i rad');
+  assert.equal(uiLabel(unlockedProgress, 'status.correctStreak', { count: 3 }), '连续答对 3 次 · 3 rätt i rad');
+});

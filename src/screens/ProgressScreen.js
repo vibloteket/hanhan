@@ -83,7 +83,7 @@ export function ProgressScreen({ progress, go }) {
       <section class="summary-grid" aria-label="Sammanfattning">
         <div class="summary-card"><strong>${learnedItems.length}</strong><span><${UiText} progress=${progress} id="status.learnedCards" /></span></div>
         <div class="summary-card"><strong>${dueCount}</strong><span>dags att repetera</span></div>
-        <div class="summary-card"><strong>${masteredCount}</strong><span><${UiText} progress=${progress} id="status.mastered" /> (${MASTERED_STREAK}+ rätt i rad)</span></div>
+        <div class="summary-card"><strong>${masteredCount}</strong><span><${UiText} progress=${progress} id="status.mastered" /> (<${UiText} progress=${progress} id="status.correctStreak" values=${{ count: `${MASTERED_STREAK}+` }} />)</span></div>
       </section>
 
       ${learnedItems.length ? html`
@@ -118,7 +118,7 @@ export function ProgressScreen({ progress, go }) {
                 ${skills.map(({ id, label, card, status }) => html`
                   <div key=${id}>
                     <span class=${`status-chip ${status.className}`}>${label}: ${status.key ? html`<${UiText} progress=${progress} id=${status.key} />` : status.label}</span>
-                    <span class="muted small"> · <${UiText} progress=${progress} id="action.next" />: ${formatDue(card)} · ${card.correctStreak || 0} rätt i rad</span>
+                    <span class="muted small"> · <${UiText} progress=${progress} id="action.next" />: ${formatDue(card)} · <${UiText} progress=${progress} id="status.correctStreak" values=${{ count: card.correctStreak || 0 }} /></span>
                   </div>
                 `)}
               </div>

@@ -241,6 +241,31 @@ export const appUiBasics = {
       ],
     },
     {
+      id: 'correct-streak',
+      titleSv: 'Rätt i rad',
+      descriptionSv: 'Bygg frasen som visar hur många gånger du har svarat rätt i följd.',
+      unlocksUiKeys: ['status.correctStreak'],
+      practiceModes: ['type-pinyin'],
+      items: [
+        { id: 'ui-consecutive', sv: 'i följd / sammanhängande', hanzi: '连续', pinyin: 'liánxù', components: [{ hanzi: '续', pinyin: 'xù', sv: 'fortsätta' }] },
+        { id: 'ui-times', sv: 'gång / antal tillfällen', hanzi: '次', pinyin: 'cì' },
+        {
+          id: 'ui-correct-streak',
+          sv: 'tre rätt i rad',
+          hanzi: '连续答对 3 次',
+          pinyin: 'liánxù dáduì sān cì',
+          uiKey: 'status.correctStreak',
+          notesSv: 'Siffran ändras i gränssnittet. 答对 betyder svara rätt och 次 räknar antal tillfällen.',
+          components: [
+            { hanzi: '连续', pinyin: 'liánxù', sv: 'i följd' },
+            { hanzi: '答', pinyin: 'dá', sv: 'svara' },
+            { hanzi: '对', pinyin: 'duì', sv: 'rätt' },
+            { hanzi: '次', pinyin: 'cì', sv: 'gång / tillfälle' },
+          ],
+        },
+      ],
+    },
+    {
       id: 'backup-data-actions',
       titleSv: 'Backup och datahantering',
       descriptionSv: 'Export, import, avbryt och nollställ i inställningarna.',

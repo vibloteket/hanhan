@@ -30,22 +30,26 @@ export function isMasteredUiKey(progress, key) {
   return Boolean(item && isMasteredCard(progress?.cards?.[cardId(item.id, 'recognize-meaning')]));
 }
 
-export function uiLabel(progress, key) {
+function interpolate(text, values = {}) {
+  return String(text).replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match);
+}
+
+export function uiLabel(progress, key, values = {}) {
   const term = uiTermByKey[key];
   if (!term) return key;
   const mode = progress?.settings?.uiMode || 'dynamic';
   const unlocked = isUnlocked(progress, key);
 
-  if (mode === 'sv' || (!unlocked && mode !== 'zh-all')) return term.sv;
-  if (mode === 'zh' || mode === 'zh-all') return term.zh;
-  if (isMasteredUiKey(progress, key)) return term.zh;
-  return `${term.zh} · ${term.sv}`;
+  if (mode === 'sv' || (!unlocked && mode !== 'zh-all')) return interpolate(term.sv, values);
+  if (mode === 'zh' || mode === 'zh-all') return interpolate(term.zh, values);
+  if (isMasteredUiKey(progress, key)) return interpolate(term.zh, values);
+  return `${interpolate(term.zh, values)} · ${interpolate(term.sv, values)}`;
 }
 
-export function uiHint(progress, key) {
+export function uiHint(progress, key, values = {}) {
   const term = uiTermByKey[key];
   if (!term) return '';
   const mode = progress?.settings?.uiMode || 'dynamic';
   if ((mode !== 'zh-all' && !isUnlocked(progress, key)) || mode === 'sv') return '';
-  return `${term.sv} · ${term.pinyin}`;
+  return `${interpolate(term.sv, values)} · ${interpolate(term.pinyin, values)}`;
 }

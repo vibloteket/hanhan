@@ -44,6 +44,19 @@ test('lesson revisions expose only newly added content and UI keys', () => {
   assert.equal(lessonUiKeysForRevision(lesson, 2).includes('term.sourceCode'), true);
 });
 
+test('correct streak lesson follows known answer and correct components', () => {
+  const lessons = packs.find((pack) => pack.id === 'app-ui-basics')?.lessons || [];
+  const streakIndex = lessons.findIndex((lesson) => lesson.id === 'correct-streak');
+  const answerIndex = lessons.findIndex((lesson) => lesson.id === 'answers-feedback');
+  const listIndex = lessons.findIndex((lesson) => lesson.id === 'word-list-status');
+  const lesson = lessons[streakIndex];
+
+  assert.ok(answerIndex >= 0 && answerIndex < streakIndex, '答 should be taught before the streak phrase');
+  assert.ok(listIndex >= 0 && listIndex < streakIndex, 'the streak lesson should follow the word-list lesson');
+  assert.deepEqual(lesson.items.map((item) => item.hanzi), ['连续', '次', '连续答对 3 次']);
+  assert.equal(lesson.items.at(-1).uiKey, 'status.correctStreak');
+});
+
 test('personal bonus teaches dream, surname Liu, and Liu Meng in order', () => {
   const lesson = packs.find((pack) => pack.id === 'personal-bonus')?.lessons
     .find((candidate) => candidate.id === 'liu-meng');
