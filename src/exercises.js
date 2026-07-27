@@ -6,6 +6,21 @@ function hash(text) {
   return value;
 }
 
+function meaningParts(label) {
+  return new Set(String(label || '')
+    .toLocaleLowerCase('sv-SE')
+    .normalize('NFC')
+    .replace(/[()]/g, '/')
+    .split(/\s*(?:\/|,|;|\|)\s*/)
+    .map((part) => part.trim())
+    .filter(Boolean));
+}
+
+function meaningsOverlap(first, second) {
+  const firstParts = meaningParts(first);
+  return [...meaningParts(second)].some((part) => firstParts.has(part));
+}
+
 export function pickChoices(item, field, count = 4) {
   const correctLabel = item[field];
   const seenLabels = new Set([correctLabel]);
@@ -15,6 +30,7 @@ export function pickChoices(item, field, count = 4) {
     .filter((candidate) => candidate.id !== item.id && candidate[field] && candidate[field] !== correctLabel)
     .sort((a, b) => hash(item.id + a.id) - hash(item.id + b.id))) {
     if (seenLabels.has(candidate[field])) continue;
+    if (field === 'sv' && meaningsOverlap(correctLabel, candidate[field])) continue;
     seenLabels.add(candidate[field]);
     pool.push(candidate);
     if (pool.length >= count - 1) break;

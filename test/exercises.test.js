@@ -32,6 +32,15 @@ test('multiple-choice options do not repeat the same label', () => {
   assert.equal(new Set(choices.map((choice) => choice.label)).size, choices.length);
 });
 
+test('Swedish multiple-choice options exclude overlapping meanings', () => {
+  const item = { id: 'ui-practice-study-char', sv: 'öva / studera', hanzi: '习', pinyin: 'xí' };
+  const choices = pickChoices(item, 'sv');
+  assert.equal(choices.some((choice) => choice.label === 'öva'), false);
+  assert.equal(choices.some((choice) => choice.label === 'lära / studera'), false);
+  assert.equal(choices.filter((choice) => choice.label === 'öva / studera').length, 1);
+  assert.equal(choices.length, 4);
+});
+
 test('multiple-choice options do not include a distractor with the correct label', () => {
   const item = { id: 'action-review-copy', sv: 'repetition', hanzi: '复习', pinyin: 'fùxí' };
   const choices = pickChoices(item, 'hanzi');
