@@ -2,9 +2,9 @@ const DAY = 24 * 60 * 60 * 1000;
 const MINUTE = 60 * 1000;
 
 export const REVIEW_SKILLS = [
-  { id: 'recognize-meaning', kind: 'mc-zh-sv', label: 'Betydelse' },
-  { id: 'recall-hanzi', kind: 'mc-sv-zh', label: 'Tecken' },
-  { id: 'recall-pinyin', kind: 'type-pinyin', label: 'Pinyin' },
+  { id: 'recognize-meaning', kind: 'mc-zh-sv', label: 'Betydelse', labelKey: 'term.meaning' },
+  { id: 'recall-hanzi', kind: 'mc-sv-zh', label: 'Tecken', labelKey: 'term.hanzi' },
+  { id: 'recall-pinyin', kind: 'type-pinyin', label: 'Pinyin', labelKey: 'term.pinyin' },
 ];
 
 export function cardId(itemId, skill) {

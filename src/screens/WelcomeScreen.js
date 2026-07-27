@@ -6,7 +6,7 @@ export function WelcomeScreen({ go, showAppLink }) {
     <section class="hero screen">
       <div class="hero-title">
         <div class="welcome-icon">
-          <img src="./assets/icons/icon-large.svg?v=81" alt="" width="96" height="96" />
+          <img src="./assets/icons/icon-large.svg?v=82" alt="" width="96" height="96" />
         </div>
         <p class="eyebrow">Praktisk mandarin från svenska</p>
         <h1>HànHàn</h1>

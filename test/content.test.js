@@ -57,6 +57,21 @@ test('correct streak lesson follows known answer and correct components', () => 
   assert.equal(lesson.items.at(-1).uiKey, 'status.correctStreak');
 });
 
+test('word-list UI lessons teach skill labels and status terms in order', () => {
+  const lessons = packs.find((pack) => pack.id === 'app-ui-basics')?.lessons || [];
+  const skillLesson = lessons.find((lesson) => lesson.id === 'meaning-hanzi-pinyin');
+  const statusLesson = lessons.find((lesson) => lesson.id === 'search-card-status');
+
+  assert.ok(skillLesson, 'skill-label lesson should exist');
+  assert.deepEqual(skillLesson.items.map((item) => item.hanzi), ['意', '意思', '字', '汉字', '拼', '音', '拼音']);
+  assert.deepEqual(skillLesson.unlocksUiKeys, ['term.meaning', 'term.hanzi', 'term.pinyin']);
+  assert.ok(statusLesson, 'search/status lesson should exist');
+  assert.ok(statusLesson.items.some((item) => item.hanzi === '搜索词表' && item.uiKey === 'action.searchWordList'));
+  assert.ok(statusLesson.items.some((item) => item.hanzi === '强' && item.uiKey === 'status.strong'));
+  assert.ok(statusLesson.items.some((item) => item.hanzi === '新 / 弱' && item.uiKey === 'status.newWeak'));
+  assert.ok(statusLesson.items.some((item) => item.hanzi === '现在' && item.uiKey === 'status.now'));
+});
+
 test('personal bonus teaches dream, surname Liu, and Liu Meng in order', () => {
   const lesson = packs.find((pack) => pack.id === 'personal-bonus')?.lessons
     .find((candidate) => candidate.id === 'liu-meng');

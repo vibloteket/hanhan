@@ -11,16 +11,16 @@ function cardStatus(card) {
   const due = new Date(card.dueAt).getTime() <= Date.now();
   if (due) return { label: 'Dags att repetera', key: 'status.due', className: 'due' };
   if (isMasteredCard(card)) return { label: 'Sitter', key: 'status.mastered', className: 'mastered' };
-  if ((card.correctStreak || 0) >= 3 || (card.intervalDays || 0) >= 3) return { label: 'Stark', className: 'strong' };
-  if ((card.correctStreak || 0) >= 1) return { label: 'På gång', className: 'learning' };
-  return { label: 'Ny / svag', className: 'weak' };
+  if ((card.correctStreak || 0) >= 3 || (card.intervalDays || 0) >= 3) return { label: 'Stark', key: 'status.strong', className: 'strong' };
+  if ((card.correctStreak || 0) >= 1) return { label: 'På gång', key: 'status.inProgress', className: 'learning' };
+  return { label: 'Ny / svag', key: 'status.newWeak', className: 'weak' };
 }
 
 function formatDue(card) {
   if (!card?.dueAt) return '—';
   const due = new Date(card.dueAt);
   const now = new Date();
-  if (due.getTime() <= now.getTime()) return 'Nu';
+  if (due.getTime() <= now.getTime()) return null;
   const sameDay = due.toDateString() === now.toDateString();
   if (sameDay) return due.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
   return due.toLocaleDateString('sv-SE', { month: 'short', day: 'numeric' });
@@ -82,13 +82,13 @@ export function ProgressScreen({ progress, go }) {
 
       <section class="summary-grid" aria-label="Sammanfattning">
         <div class="summary-card"><strong>${learnedItems.length}</strong><span><${UiText} progress=${progress} id="status.learnedCards" /></span></div>
-        <div class="summary-card"><strong>${dueCount}</strong><span>dags att repetera</span></div>
+        <div class="summary-card"><strong>${dueCount}</strong><span><${UiText} progress=${progress} id="status.due" /></span></div>
         <div class="summary-card"><strong>${masteredCount}</strong><span><${UiText} progress=${progress} id="status.mastered" /> (<${UiText} progress=${progress} id="status.correctStreak" values=${{ count: `${MASTERED_STREAK}+` }} />)</span></div>
       </section>
 
       ${learnedItems.length ? html`
         <label class="search-box">
-          <span>Sök i ordlistan</span>
+          <span><${UiText} progress=${progress} id="action.searchWordList" /></span>
           <input
             type="search"
             value=${query}
@@ -115,12 +115,14 @@ export function ProgressScreen({ progress, go }) {
                 </div>
               </div>
               <div class="learned-meta">
-                ${skills.map(({ id, label, card, status }) => html`
+                ${skills.map(({ id, label, labelKey, card, status }) => {
+                  const due = formatDue(card);
+                  return html`
                   <div key=${id}>
-                    <span class=${`status-chip ${status.className}`}>${label}: ${status.key ? html`<${UiText} progress=${progress} id=${status.key} />` : status.label}</span>
-                    <span class="muted small"> · <${UiText} progress=${progress} id="action.next" />: ${formatDue(card)} · <${UiText} progress=${progress} id="status.correctStreak" values=${{ count: card.correctStreak || 0 }} /></span>
+                    <span class=${`status-chip ${status.className}`}><${UiText} progress=${progress} id=${labelKey} />: ${status.key ? html`<${UiText} progress=${progress} id=${status.key} />` : status.label}</span>
+                    <span class="muted small"> · <${UiText} progress=${progress} id="action.next" />: ${due ?? html`<${UiText} progress=${progress} id="status.now" />`} · <${UiText} progress=${progress} id="status.correctStreak" values=${{ count: card.correctStreak || 0 }} /></span>
                   </div>
-                `)}
+                `})}
               </div>
             </article>
           `})}
