@@ -65,6 +65,22 @@ test('debug Chinese UI mode shows locked labels in Chinese too', () => {
   assert.equal(uiLabel(progress, 'action.review'), '复习');
 });
 
+test('question prompts interpolate terms before and after unlocking', () => {
+  const lockedProgress = {
+    completedLessons: [],
+    unlockedUiKeys: [],
+    settings: { uiMode: 'dynamic' },
+  };
+  const unlockedProgress = {
+    ...lockedProgress,
+    completedLessons: ['app-ui-basics/questions-multiple-choice'],
+  };
+
+  assert.equal(uiLabel(lockedProgress, 'prompt.whatMeans', { term: '习' }), 'Vad betyder 习?');
+  assert.equal(uiLabel(unlockedProgress, 'prompt.whatMeans', { term: '习' }), '习 是什么意思？ · Vad betyder 习?');
+  assert.equal(uiLabel(unlockedProgress, 'prompt.whichMeans', { term: 'öva' }), '哪个是“öva”的意思？ · Vilket betyder öva?');
+});
+
 test('UI labels interpolate dynamic values before and after unlocking', () => {
   const lockedProgress = {
     completedLessons: [],

@@ -81,9 +81,9 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
   }
 
   const prompt = step.kind === 'mc-zh-sv'
-    ? html`Vad betyder <strong>${item.hanzi}</strong>?`
+    ? html`<${UiText} progress=${progress} id="prompt.whatMeans" values=${{ term: item.hanzi }} />`
     : step.kind === 'mc-sv-zh'
-      ? html`Vilket betyder <strong>${item.sv}</strong>?`
+      ? html`<${UiText} progress=${progress} id="prompt.whichMeans" values=${{ term: item.sv }} />`
       : isPinyin
         ? html`Skriv pinyin för <strong>${item.hanzi}</strong>.`
         : html`Skriv kinesiska tecken för <strong>${item.sv}</strong>.`;
@@ -98,7 +98,12 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
 
   return html`
     <section class="exercise-card">
-      <div class="eyebrow">${isMc ? 'Flerval' : isPinyin ? 'Pinyin' : 'Tecken'}</div>
+      <div class="eyebrow">${isMc
+        ? html`<${UiText} progress=${progress} id="exercise.multipleChoice" />`
+        : isPinyin
+          ? html`<${UiText} progress=${progress} id="term.pinyin" />`
+          : html`<${UiText} progress=${progress} id="term.hanzi" />`
+      }</div>
       <h2>${prompt}</h2>
 
       ${isMc && !result ? html`

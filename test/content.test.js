@@ -72,6 +72,16 @@ test('word-list UI lessons teach skill labels and status terms in order', () => 
   assert.ok(statusLesson.items.some((item) => item.hanzi === '现在' && item.uiKey === 'status.now'));
 });
 
+test('question-card lesson teaches both prompts and multiple choice', () => {
+  const lesson = packs.find((pack) => pack.id === 'app-ui-basics')?.lessons
+    .find((candidate) => candidate.id === 'questions-multiple-choice');
+  assert.ok(lesson, 'question-card lesson should exist');
+  assert.deepEqual(lesson.unlocksUiKeys, ['exercise.multipleChoice', 'prompt.whatMeans', 'prompt.whichMeans']);
+  assert.ok(lesson.items.some((item) => item.hanzi === '是什么意思？' && item.uiKey === 'prompt.whatMeans'));
+  assert.ok(lesson.items.some((item) => item.hanzi === '哪个是它的意思？' && item.uiKey === 'prompt.whichMeans'));
+  assert.ok(lesson.items.some((item) => item.hanzi === '选择题' && item.uiKey === 'exercise.multipleChoice'));
+});
+
 test('personal bonus teaches dream, surname Liu, and Liu Meng in order', () => {
   const lesson = packs.find((pack) => pack.id === 'personal-bonus')?.lessons
     .find((candidate) => candidate.id === 'liu-meng');
