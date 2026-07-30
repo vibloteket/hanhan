@@ -72,6 +72,14 @@ test('word-list UI lessons teach skill labels and status terms in order', () => 
   assert.ok(statusLesson.items.some((item) => item.hanzi === '现在' && item.uiKey === 'status.now'));
 });
 
+test('date lesson teaches only markers used by UI dates', () => {
+  const lesson = packs.find((pack) => pack.id === 'app-ui-basics')?.lessons
+    .find((candidate) => candidate.id === 'dates-in-ui');
+  assert.ok(lesson, 'date lesson should exist');
+  assert.deepEqual(lesson.items.map((item) => item.hanzi), ['月', '日']);
+  assert.equal(lesson.items.some((item) => /[零二三四五六七八九十点分年号]/u.test(item.hanzi)), false, 'future number and spoken-time content must wait');
+});
+
 test('question-card lesson teaches both prompts and multiple choice', () => {
   const lesson = packs.find((pack) => pack.id === 'app-ui-basics')?.lessons
     .find((candidate) => candidate.id === 'questions-multiple-choice');

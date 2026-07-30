@@ -2,18 +2,7 @@ import { html } from '../html.js';
 import { lessonNeedsUpdate, packs, lessonKey } from '../content/packs.js';
 import { Button } from '../components/Button.js';
 import { UiText } from '../components/UiText.js';
-
-function formatDateTime(value) {
-  if (!value) return '';
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return '';
-  return date.toLocaleString('sv-SE', {
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
-}
+import { formatUiDate } from '../dateFormat.js';
 
 export function LessonsScreen({ progress, go }) {
   return html`
@@ -28,8 +17,8 @@ export function LessonsScreen({ progress, go }) {
           const done = progress.completedLessons.includes(key);
           const needsUpdate = lessonNeedsUpdate(progress, { ...lesson, packId: pack.id });
           const active = progress.activeSession?.type === 'lesson' && progress.activeSession.packId === pack.id && progress.activeSession.lessonId === lesson.id;
-          const completedAt = formatDateTime(progress.lessonMeta?.[key]?.completedAt);
-          const startedAt = active ? formatDateTime(progress.activeSession?.startedAt) : '';
+          const completedAt = formatUiDate(progress.lessonMeta?.[key]?.completedAt, progress, { includeTime: true });
+          const startedAt = active ? formatUiDate(progress.activeSession?.startedAt, progress, { includeTime: true }) : '';
           return html`
             <article class=${`lesson-row ${done ? 'done' : ''}`} key=${key}>
               <div class="lesson-number">${index + 1}</div>

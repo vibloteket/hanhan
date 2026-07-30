@@ -5,6 +5,7 @@ import { Button } from '../components/Button.js';
 import { UiText } from '../components/UiText.js';
 import { isMasteredCard, MASTERED_STREAK } from '../mastery.js';
 import { cardId, REVIEW_SKILLS } from '../srs.js';
+import { formatUiDate } from '../dateFormat.js';
 
 function cardStatus(card) {
   if (!card) return { label: 'Inte startad', className: 'not-started' };
@@ -16,14 +17,11 @@ function cardStatus(card) {
   return { label: 'Ny / svag', key: 'status.newWeak', className: 'weak' };
 }
 
-function formatDue(card) {
+function formatDue(card, progress) {
   if (!card?.dueAt) return '—';
   const due = new Date(card.dueAt);
-  const now = new Date();
-  if (due.getTime() <= now.getTime()) return null;
-  const sameDay = due.toDateString() === now.toDateString();
-  if (sameDay) return due.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
-  return due.toLocaleDateString('sv-SE', { month: 'short', day: 'numeric' });
+  if (due.getTime() <= Date.now()) return null;
+  return formatUiDate(due, progress, { timeOnlyToday: true });
 }
 
 function normalizeSearch(value) {
@@ -116,7 +114,7 @@ export function ProgressScreen({ progress, go }) {
               </div>
               <div class="learned-meta">
                 ${skills.map(({ id, label, labelKey, card, status }) => {
-                  const due = formatDue(card);
+                  const due = formatDue(card, progress);
                   return html`
                   <div key=${id}>
                     <span class=${`status-chip ${status.className}`}><${UiText} progress=${progress} id=${labelKey} />: ${status.key ? html`<${UiText} progress=${progress} id=${status.key} />` : status.label}</span>

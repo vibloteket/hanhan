@@ -336,6 +336,16 @@ export const appUiBasics = {
       ],
     },
     {
+      id: 'dates-in-ui',
+      titleSv: 'Datum i appen',
+      descriptionSv: 'Förstå månad och dag i datumen som visas i lektioner och ordlistan.',
+      practiceModes: ['type-pinyin'],
+      items: [
+        { id: 'ui-month-marker', sv: 'månad', hanzi: '月', pinyin: 'yuè', notesSv: 'I appens datum står månaden före 月, till exempel 6月 för juni. Siffrorna lär vi ut i en senare lektion.' },
+        { id: 'ui-day-marker', sv: 'dag / datum', hanzi: '日', pinyin: 'rì', notesSv: 'I appens datum står dagen före 日, till exempel 4日 för den fjärde. Tillsammans visas 6月4日.' },
+      ],
+    },
+    {
       id: 'backup-data-actions',
       titleSv: 'Backup och datahantering',
       descriptionSv: 'Export, import, avbryt och nollställ i inställningarna.',
@@ -372,8 +382,7 @@ export const appUiBasics = {
         { id: 'ui-version', sv: 'version', hanzi: '版本', pinyin: 'bǎnběn', uiKey: 'term.version', components: [{ hanzi: '版', pinyin: 'bǎn', sv: 'version / upplaga' }] },
         { id: 'ui-build-char', sv: 'bygga / konstruera', hanzi: '构', pinyin: 'gòu', notesSv: 'Första tecknet i 构建.' },
         { id: 'ui-build', sv: 'build / bygga', hanzi: '构建', pinyin: 'gòujiàn', uiKey: 'term.build', components: [{ hanzi: '构', pinyin: 'gòu', sv: 'bygga / konstruera' }] },
-        { id: 'ui-day-char', sv: 'dag / sol', hanzi: '日', pinyin: 'rì', notesSv: 'Vanligt tecken för dag. Här används det i 日期: datum.' },
-        { id: 'ui-date', sv: 'datum', hanzi: '日期', pinyin: 'rìqī', components: [{ hanzi: '日', pinyin: 'rì', sv: 'dag / sol' }] },
+        { id: 'ui-date', sv: 'datum', hanzi: '日期', pinyin: 'rìqī', components: [{ hanzi: '日', pinyin: 'rì', sv: 'dag / datum' }] },
         { id: 'ui-build-date', sv: 'byggdatum', hanzi: '构建日期', pinyin: 'gòujiàn rìqī', uiKey: 'term.buildDate', components: [{ hanzi: '构建', pinyin: 'gòujiàn', sv: 'build' }, { hanzi: '日期', pinyin: 'rìqī', sv: 'datum' }] },
         { id: 'ui-resource-char', sv: 'resurs / tillgång', hanzi: '资', pinyin: 'zī', notesSv: 'Första tecknet i 资源.' },
         { id: 'ui-resource', sv: 'resurs / asset', hanzi: '资源', pinyin: 'zīyuán', components: [{ hanzi: '资', pinyin: 'zī', sv: 'resurs / tillgång' }] },
