@@ -254,6 +254,7 @@ export const appUiBasics = {
           sv: 'tre rätt i rad',
           hanzi: '连续答对 3 次',
           pinyin: 'liánxù dáduì sān cì',
+          acceptedPinyin: ['liánxù dáduì 3 cì'],
           uiKey: 'status.correctStreak',
           notesSv: 'Siffran ändras i gränssnittet. 答对 betyder svara rätt och 次 räknar antal tillfällen.',
           components: [

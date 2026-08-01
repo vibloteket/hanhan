@@ -25,6 +25,19 @@ export function isCorrectHanzi(input, item) {
   return normalizeText(input) === normalizeText(item.hanzi);
 }
 
+function normalizePinyinAlternative(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜüńňǹḿ]/g, (char) => toneMap[char] || char)
+    .replace(/([a-z])[1-5]/g, '$1')
+    .replace(/[^a-z0-9]/g, '');
+}
+
 export function isCorrectPinyin(input, item) {
-  return normalizePinyin(input) === normalizePinyin(item.pinyin);
+  if (normalizePinyin(input) === normalizePinyin(item.pinyin)) return true;
+  const normalizedInput = normalizePinyinAlternative(input);
+  return (item.acceptedPinyin || []).some(
+    (answer) => normalizedInput === normalizePinyinAlternative(answer)
+  );
 }
