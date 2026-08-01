@@ -21,7 +21,12 @@ export const itemById = Object.fromEntries(allItems.map((item) => [item.id, item
 export function getLesson(packId, lessonId) {
   const pack = packById[packId];
   const lesson = pack?.lessons.find((candidate) => candidate.id === lessonId);
-  return lesson ? { ...lesson, packId, packTitleSv: pack.titleSv } : null;
+  return lesson ? {
+    ...lesson,
+    packId,
+    packTitleSv: pack.titleSv,
+    items: lesson.items.map((item) => ({ ...item, packId, lessonId })),
+  } : null;
 }
 
 export function lessonKey(packId, lessonId) {

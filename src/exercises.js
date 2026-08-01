@@ -21,22 +21,69 @@ function meaningsOverlap(first, second) {
   return [...meaningParts(second)].some((part) => firstParts.has(part));
 }
 
-export function pickChoices(item, field, count = 4) {
-  const correctLabel = item[field];
-  const seenLabels = new Set([correctLabel]);
-  const pool = [];
+function characterSet(value) {
+  return new Set(Array.from(String(value || '')).filter((character) => /\p{Script=Han}/u.test(character)));
+}
 
-  for (const candidate of allItems
-    .filter((candidate) => candidate.id !== item.id && candidate[field] && candidate[field] !== correctLabel)
-    .sort((a, b) => hash(item.id + a.id) - hash(item.id + b.id))) {
-    if (seenLabels.has(candidate[field])) continue;
-    if (field === 'sv' && meaningsOverlap(correctLabel, candidate[field])) continue;
-    seenLabels.add(candidate[field]);
-    pool.push(candidate);
-    if (pool.length >= count - 1) break;
+function isIntroduced(candidate, progress) {
+  if (Object.values(progress?.cards || {}).some((card) => card.itemId === candidate.id)) return true;
+  return progress?.completedLessons?.includes(lessonKey(candidate.packId, candidate.lessonId)) || false;
+}
+
+export function scoreDistractor(item, candidate, field, progress = null) {
+  let score = 0;
+  const correctLength = Array.from(item[field] || '').length;
+  const candidateLength = Array.from(candidate[field] || '').length;
+  const lengthDifference = Math.abs(correctLength - candidateLength);
+
+  if (field === 'hanzi') {
+    if (lengthDifference === 0) score += 120;
+    else if (lengthDifference === 1) score += 25;
+
+    const correctCharacters = characterSet(item.hanzi);
+    if ([...characterSet(candidate.hanzi)].some((character) => correctCharacters.has(character))) score += 20;
+  } else {
+    if (lengthDifference === 0) score += 20;
+    else if (lengthDifference <= 3) score += 10;
   }
 
-  return [...pool, item]
+  if (candidate.lessonId && candidate.lessonId === item.lessonId && candidate.packId === item.packId) score += 25;
+  else if (candidate.packId && candidate.packId === item.packId) score += 10;
+  if (isIntroduced(candidate, progress)) score += 15;
+  return score;
+}
+
+function keepBest(ranked, entry, limit) {
+  const index = ranked.findIndex((existing) =>
+    entry.score > existing.score || (entry.score === existing.score && entry.tieBreak < existing.tieBreak)
+  );
+  if (index === -1) ranked.push(entry);
+  else ranked.splice(index, 0, entry);
+  if (ranked.length > limit) ranked.pop();
+}
+
+export function pickChoices(item, field, count = 4, progress = null) {
+  const correctLabel = item[field];
+  const pool = [];
+
+  for (const candidate of allItems) {
+    if (candidate.id === item.id || !candidate[field] || candidate[field] === correctLabel) continue;
+    if (field === 'sv' && meaningsOverlap(correctLabel, candidate[field])) continue;
+    const entry = {
+      candidate,
+      score: scoreDistractor(item, candidate, field, progress),
+      tieBreak: hash(item.id + candidate.id),
+    };
+    const duplicateIndex = pool.findIndex((existing) => existing.candidate[field] === candidate[field]);
+    if (duplicateIndex >= 0) {
+      const duplicate = pool[duplicateIndex];
+      if (entry.score < duplicate.score || (entry.score === duplicate.score && entry.tieBreak >= duplicate.tieBreak)) continue;
+      pool.splice(duplicateIndex, 1);
+    }
+    keepBest(pool, entry, count - 1);
+  }
+
+  return [...pool.map((entry) => entry.candidate), item]
     .sort((a, b) => hash(field + a.id + item.id) - hash(field + b.id + item.id))
     .map((candidate) => ({ id: candidate.id, label: candidate[field] }));
 }

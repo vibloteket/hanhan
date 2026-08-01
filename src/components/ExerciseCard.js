@@ -22,8 +22,8 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
   const isMc = step.kind === 'mc-zh-sv' || step.kind === 'mc-sv-zh';
   const isPinyin = step.kind === 'type-pinyin';
   const choices = useMemo(
-    () => isMc ? pickChoices(item, step.kind === 'mc-zh-sv' ? 'sv' : 'hanzi') : [],
-    [item.id, step.kind]
+    () => isMc ? pickChoices(item, step.kind === 'mc-zh-sv' ? 'sv' : 'hanzi', 4, progress) : [],
+    [item.id, step.kind, progress.completedLessons, progress.cards]
   );
 
   function finish(correct, mode, given = input) {

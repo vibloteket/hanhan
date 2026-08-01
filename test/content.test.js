@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { packs, allItems, lessonItemsForRevision, lessonKey, lessonNeedsUpdate, lessonUiKeysForRevision } from '../src/content/packs.js';
+import { packs, allItems, getLesson, lessonItemsForRevision, lessonKey, lessonNeedsUpdate, lessonUiKeysForRevision } from '../src/content/packs.js';
 import { uiTermByKey } from '../src/content/uiTerms.js';
 
 test('all content items have required fields and unique IDs', () => {
@@ -13,6 +13,13 @@ test('all content items have required fields and unique IDs', () => {
     assert.equal(ids.has(item.id), false, `duplicate item id: ${item.id}`);
     ids.add(item.id);
   }
+});
+
+test('getLesson includes item pack and lesson context', () => {
+  const lesson = getLesson('app-ui-basics', 'review-actions');
+  assert.ok(lesson.items.length > 0);
+  assert.equal(lesson.items[0].packId, 'app-ui-basics');
+  assert.equal(lesson.items[0].lessonId, 'review-actions');
 });
 
 test('lesson keys are unique and lessons have items', () => {

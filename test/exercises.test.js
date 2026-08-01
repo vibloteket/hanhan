@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { lessonSteps, pickChoices, reviewKindFor, reviewKindsFor, unlockedExerciseTypesFor } from '../src/exercises.js';
+import { lessonSteps, pickChoices, reviewKindFor, reviewKindsFor, scoreDistractor, unlockedExerciseTypesFor } from '../src/exercises.js';
 
 test('normal lessons are recognition-first by default', () => {
   const lesson = { items: [{ id: 'a' }, { id: 'b' }] };
@@ -46,6 +46,21 @@ test('multiple-choice options do not include a distractor with the correct label
   const choices = pickChoices(item, 'hanzi');
   assert.equal(choices.filter((choice) => choice.label === '复习').length, 1);
   assert.equal(new Set(choices.map((choice) => choice.label)).size, choices.length);
+});
+
+test('Chinese distractors strongly prefer the same character length', () => {
+  const item = { id: 'ui-review', sv: 'repetera', hanzi: '复习', pinyin: 'fùxí', packId: 'app-ui-basics', lessonId: 'review-actions' };
+  const choices = pickChoices(item, 'hanzi');
+  assert.equal(choices.length, 4);
+  assert.equal(choices.filter((choice) => Array.from(choice.label).length === 2).length, 4);
+});
+
+test('distractor scoring prefers similar forms and introduced content', () => {
+  const item = { id: 'right', hanzi: '复习', packId: 'app-ui-basics', lessonId: 'review-actions' };
+  const similar = { id: 'similar', hanzi: '学习', packId: 'app-ui-basics', lessonId: 'learn-actions' };
+  const long = { id: 'long', hanzi: '许可与联系', packId: 'app-ui-basics', lessonId: 'settings-license-contact' };
+  const progress = { cards: { known: { itemId: 'similar' } }, completedLessons: [] };
+  assert.ok(scoreDistractor(item, similar, 'hanzi', progress) > scoreDistractor(item, long, 'hanzi', progress));
 });
 
 test('review does not use typing before exercise type is unlocked', () => {
