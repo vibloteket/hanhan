@@ -18,7 +18,7 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
   const nextButtonRef = useRef(null);
   const item = step.item;
   const hanziLength = Array.from(item.hanzi || '').length;
-  const hanziSizeClass = hanziLength >= 4 ? 'phrase' : hanziLength >= 3 ? 'long' : '';
+  const hanziSizeClass = hanziLength >= 7 ? 'phrase compact' : hanziLength >= 4 ? 'phrase' : hanziLength >= 3 ? 'long' : '';
   const isMc = step.kind === 'mc-zh-sv' || step.kind === 'mc-sv-zh';
   const isPinyin = step.kind === 'type-pinyin';
   const choices = useMemo(

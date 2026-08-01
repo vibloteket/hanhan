@@ -86,6 +86,7 @@ button.stat-card { min-width: 0; text-align: left; color: inherit; cursor: point
 .hanzi.big { max-width: 100%; font-size: clamp(4rem, 22vw, 8rem); line-height: 1; font-weight: 900; text-align: center; }
 .hanzi.big.long { font-size: clamp(3.4rem, 18vw, 7rem); }
 .hanzi.big.phrase { font-size: clamp(2.8rem, 15vw, 5.8rem); white-space: normal; overflow-wrap: anywhere; }
+.hanzi.big.phrase.compact { font-size: clamp(2.2rem, 10vw, 4.8rem); white-space: nowrap; }
 .pinyin { color: var(--red-dark); font-size: 1.25rem; font-weight: 700; }
 .component-list { display: grid; gap: 8px; padding: 12px; border-radius: 18px; background: #fff8e8; border: 1px solid #ead8bd; }
 .component-part { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 10px; color: var(--muted); }
