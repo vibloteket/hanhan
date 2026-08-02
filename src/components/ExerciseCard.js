@@ -130,7 +130,7 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
           <${Button} progress=${progress} labelKey="term.answer" type="submit" disabled=${!input.trim()} />
         </form>
         <button class="link-button" onClick=${() => finish(false, mode, '')}>
-          <${UiText} progress=${progress} id="action.showAnswer" /> / jag vet inte
+          <${UiText} progress=${progress} id="action.showAnswer" /> / <${UiText} progress=${progress} id="action.dontKnow" />
         </button>
       ` : null}
 

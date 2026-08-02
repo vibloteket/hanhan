@@ -14,6 +14,7 @@ export const uiTerms = [
   { key: 'action.back', sv: 'Tillbaka', en: 'Back', zh: '返回', pinyin: 'fǎnhuí' },
   { key: 'action.next', sv: 'Nästa', en: 'Next', zh: '下一个', pinyin: 'xià yí ge' },
   { key: 'action.showAnswer', sv: 'Visa svar', en: 'Show answer', zh: '显示答案', pinyin: 'xiǎnshì dá’àn' },
+  { key: 'action.dontKnow', sv: 'jag vet inte', en: "I don't know", zh: '我不知道', pinyin: 'wǒ bù zhīdào' },
   { key: 'action.cancel', sv: 'Avbryt', en: 'Cancel', zh: '取消', pinyin: 'qǔxiāo' },
   { key: 'action.reset', sv: 'Nollställ', en: 'Reset', zh: '重置', pinyin: 'chóngzhì' },
   { key: 'action.update', sv: 'Uppdatera', en: 'Update', zh: '更新', pinyin: 'gēngxīn' },

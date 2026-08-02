@@ -15,6 +15,21 @@ test('UI labels unlock from completed lessons even if stored unlockedUiKeys is s
   assert.equal(uiLabel(progress, 'action.review'), 'Repetera');
 });
 
+test('dont-know label unlocks through the updated answers lesson', () => {
+  const legacyProgress = {
+    completedLessons: ['app-ui-basics/answers-feedback'],
+    lessonMeta: { 'app-ui-basics/answers-feedback': { revision: 1 } },
+    settings: { uiMode: 'dynamic' },
+  };
+  const updatedProgress = {
+    ...legacyProgress,
+    lessonMeta: { 'app-ui-basics/answers-feedback': { revision: 2 } },
+  };
+
+  assert.equal(uiLabel(legacyProgress, 'action.dontKnow'), 'jag vet inte');
+  assert.equal(uiLabel(updatedProgress, 'action.dontKnow'), '我不知道 · jag vet inte');
+});
+
 test('dynamic UI labels become Chinese-only when the backing card is mastered', () => {
   const progress = {
     completedLessons: ['app-ui-basics/start-button'],

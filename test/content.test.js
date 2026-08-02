@@ -51,6 +51,17 @@ test('lesson revisions expose only newly added content and UI keys', () => {
   assert.equal(lessonUiKeysForRevision(lesson, 2).includes('term.sourceCode'), true);
 });
 
+test('answers lesson revision teaches and unlocks the dont-know action', () => {
+  const lesson = packs.find((pack) => pack.id === 'app-ui-basics')?.lessons
+    .find((candidate) => candidate.id === 'answers-feedback');
+
+  assert.equal(lesson.revision, 2);
+  assert.deepEqual(lessonItemsForRevision(lesson, 1).map((item) => item.hanzi), ['我', '不', '知', '知道', '我不知道']);
+  assert.equal(lessonItemsForRevision(lesson, 1).at(-1).uiKey, 'action.dontKnow');
+  assert.equal(lessonUiKeysForRevision(lesson, 1).includes('action.dontKnow'), false);
+  assert.equal(lessonUiKeysForRevision(lesson, 2).includes('action.dontKnow'), true);
+});
+
 test('correct streak lesson follows known answer and correct components', () => {
   const lessons = packs.find((pack) => pack.id === 'app-ui-basics')?.lessons || [];
   const streakIndex = lessons.findIndex((lesson) => lesson.id === 'correct-streak');
