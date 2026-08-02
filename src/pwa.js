@@ -27,13 +27,16 @@ export function registerPwa() {
 
   addEventListener('load', async () => {
     try {
-      registration = await navigator.serviceWorker.register('./sw.js');
+      registration = await navigator.serviceWorker.register('./sw.js', {
+        updateViaCache: 'none',
+      });
       registration.addEventListener('updatefound', () => {
         const installing = registration.installing;
         installing?.addEventListener('statechange', () => {
           if (installing.state === 'installed') activateWaitingWorker();
         });
       });
+      await registration.update();
       activateWaitingWorker();
     } catch (error) {
       console.error('Kunde inte aktivera offlinestöd.', error);
