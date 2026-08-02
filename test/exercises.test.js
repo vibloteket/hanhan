@@ -56,6 +56,24 @@ test('Swedish choices exclude another contextual meaning of the same Chinese exp
   assert.equal(choices.length, 4);
 });
 
+test('Swedish choices do not use a compound and its explicit component as distractors', () => {
+  const component = { id: 'ui-complete-char1', sv: 'färdig / komplett', hanzi: '完', pinyin: 'wán' };
+  const componentChoices = pickChoices(component, 'sv');
+  assert.equal(componentChoices.some((choice) => choice.label === 'klar / slutförd'), false);
+  assert.equal(componentChoices.length, 4);
+
+  const compound = {
+    id: 'ui-complete',
+    sv: 'klar / slutförd',
+    hanzi: '完成',
+    pinyin: 'wánchéng',
+    components: [{ hanzi: '完', pinyin: 'wán', sv: 'färdig / komplett' }],
+  };
+  const compoundChoices = pickChoices(compound, 'sv');
+  assert.equal(compoundChoices.some((choice) => choice.label === 'färdig / komplett'), false);
+  assert.equal(compoundChoices.length, 4);
+});
+
 test('multiple-choice options do not include a distractor with the correct label', () => {
   const item = { id: 'action-review-copy', sv: 'repetition', hanzi: '复习', pinyin: 'fùxí' };
   const choices = pickChoices(item, 'hanzi');

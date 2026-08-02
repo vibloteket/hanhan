@@ -38,6 +38,12 @@ function characterSet(value) {
   return new Set(Array.from(String(value || '')).filter((character) => /\p{Script=Han}/u.test(character)));
 }
 
+function isExplicitComponent(item, candidate) {
+  return item.components?.some((component) => component.hanzi === candidate.hanzi)
+    || candidate.components?.some((component) => component.hanzi === item.hanzi)
+    || false;
+}
+
 function isIntroduced(candidate, progress) {
   if (Object.values(progress?.cards || {}).some((card) => card.itemId === candidate.id)) return true;
   return progress?.completedLessons?.includes(lessonKey(candidate.packId, candidate.lessonId)) || false;
@@ -81,7 +87,11 @@ export function pickChoices(item, field, count = 4, progress = null) {
 
   for (const candidate of allItems) {
     if (candidate.id === item.id || !candidate[field] || candidate[field] === correctLabel) continue;
-    if (field === 'sv' && (candidate.hanzi === item.hanzi || meaningsOverlap(correctLabel, candidate[field]))) continue;
+    if (field === 'sv' && (
+      candidate.hanzi === item.hanzi
+      || meaningsOverlap(correctLabel, candidate[field])
+      || isExplicitComponent(item, candidate)
+    )) continue;
     const entry = {
       candidate,
       score: scoreDistractor(item, candidate, field, progress),
