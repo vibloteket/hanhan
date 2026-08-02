@@ -26,7 +26,7 @@ export function PackScreen({ progress, route, go }) {
                 <p>${lesson.descriptionSv}</p>
               </div>
               <button class="button secondary" onClick=${() => go('lesson', { packId: pack.id, lessonId: lesson.id })}>
-                ${active ? html`<${UiText} progress=${progress} id="action.continue" />` : needsUpdate ? html`<${UiText} progress=${progress} id="action.update" />` : done ? html`<${UiText} progress=${progress} id="action.practice" />` : html`<${UiText} progress=${progress} id="action.start" />`}
+                ${active ? html`<${UiText} progress=${progress} id="action.continue" />` : needsUpdate ? html`<${UiText} progress=${progress} id="action.supplement" />` : done ? html`<${UiText} progress=${progress} id="action.practice" />` : html`<${UiText} progress=${progress} id="action.start" />`}
               </button>
             </article>
           `;

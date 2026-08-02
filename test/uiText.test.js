@@ -15,6 +15,23 @@ test('UI labels unlock from completed lessons even if stored unlockedUiKeys is s
   assert.equal(uiLabel(progress, 'action.review'), 'Repetera');
 });
 
+test('updated-lesson labels unlock through the revised continue lesson', () => {
+  const legacyProgress = {
+    completedLessons: ['app-ui-basics/continue-lesson'],
+    lessonMeta: { 'app-ui-basics/continue-lesson': { revision: 1 } },
+    settings: { uiMode: 'dynamic' },
+  };
+  const updatedProgress = {
+    ...legacyProgress,
+    lessonMeta: { 'app-ui-basics/continue-lesson': { revision: 2 } },
+  };
+
+  assert.equal(uiLabel(legacyProgress, 'action.supplement'), 'Komplettera');
+  assert.equal(uiLabel(legacyProgress, 'status.newContent'), 'Nytt innehåll');
+  assert.equal(uiLabel(updatedProgress, 'action.supplement'), '补充 · Komplettera');
+  assert.equal(uiLabel(updatedProgress, 'status.newContent'), '新内容 · Nytt innehåll');
+});
+
 test('dont-know label unlocks through the updated answers lesson', () => {
   const legacyProgress = {
     completedLessons: ['app-ui-basics/answers-feedback'],

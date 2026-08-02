@@ -18,6 +18,7 @@ export const uiTerms = [
   { key: 'action.cancel', sv: 'Avbryt', en: 'Cancel', zh: '取消', pinyin: 'qǔxiāo' },
   { key: 'action.reset', sv: 'Nollställ', en: 'Reset', zh: '重置', pinyin: 'chóngzhì' },
   { key: 'action.update', sv: 'Uppdatera', en: 'Update', zh: '更新', pinyin: 'gēngxīn' },
+  { key: 'action.supplement', sv: 'Komplettera', en: 'Supplement', zh: '补充', pinyin: 'bǔchōng' },
   { key: 'action.export', sv: 'Exportera backup', en: 'Export backup', zh: '导出备份', pinyin: 'dǎochū bèifèn' },
   { key: 'action.import', sv: 'Importera backup', en: 'Import backup', zh: '导入备份', pinyin: 'dǎorù bèifèn' },
 
@@ -38,6 +39,7 @@ export const uiTerms = [
   { key: 'status.due', sv: 'Att repetera', en: 'Due', zh: '要复习', pinyin: 'yào fùxí' },
   { key: 'status.inProgress', sv: 'Pågående', en: 'In progress', zh: '进行中', pinyin: 'jìnxíng zhōng' },
   { key: 'status.incomplete', sv: 'Ej klar', en: 'Incomplete', zh: '未完成', pinyin: 'wèi wánchéng' },
+  { key: 'status.newContent', sv: 'Nytt innehåll', en: 'New content', zh: '新内容', pinyin: 'xīn nèiróng' },
   { key: 'status.learnedCards', sv: 'lärda kort', en: 'learned cards', zh: '已学', pinyin: 'yǐxué' },
   { key: 'status.mastered', sv: 'Sitter', en: 'Mastered', zh: '熟', pinyin: 'shú' },
   { key: 'status.strong', sv: 'Stark', en: 'Strong', zh: '强', pinyin: 'qiáng' },

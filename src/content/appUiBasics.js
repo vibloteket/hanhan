@@ -174,9 +174,11 @@ export const appUiBasics = {
     },
     {
       id: 'continue-lesson',
+      revision: 2,
       titleSv: 'Fortsätt och lektion',
-      descriptionSv: 'Två vanliga ord i lektionsflödet.',
-      unlocksUiKeys: ['action.continue', 'lesson.title', 'lesson.complete', 'status.inProgress', 'status.incomplete'],
+      descriptionSv: 'Vanliga ord i lektionsflödet och markeringar för nytt innehåll.',
+      unlocksUiKeys: ['action.continue', 'lesson.title', 'lesson.complete', 'status.inProgress', 'status.incomplete', 'action.supplement', 'status.newContent'],
+      uiKeyRevisions: { 'action.supplement': 2, 'status.newContent': 2 },
       practiceModes: ['type-pinyin'],
       items: [
         { id: 'ui-continue-char', sv: 'fortsätta', hanzi: '续', pinyin: 'xù', notesSv: 'Ett tecken i 继续.' },
@@ -189,6 +191,11 @@ export const appUiBasics = {
         { id: 'ui-progressing', sv: 'pågående', hanzi: '进行中', pinyin: 'jìnxíng zhōng', uiKey: 'status.inProgress', components: [{ hanzi: '中', pinyin: 'zhōng', sv: 'i / mitten' }] },
         { id: 'ui-not-yet-char', sv: 'inte ännu', hanzi: '未', pinyin: 'wèi', notesSv: 'Första tecknet i 未完成.' },
         { id: 'ui-incomplete', sv: 'ej klar', hanzi: '未完成', pinyin: 'wèi wánchéng', uiKey: 'status.incomplete', components: [{ hanzi: '未', pinyin: 'wèi', sv: 'inte ännu' }, { hanzi: '完成', pinyin: 'wánchéng', sv: 'klar / slutförd' }] },
+        { id: 'ui-supplement-char', sv: 'fylla på / komplettera', hanzi: '补', pinyin: 'bǔ', addedInRevision: 2 },
+        { id: 'ui-supplement', sv: 'komplettera / fylla på', hanzi: '补充', pinyin: 'bǔchōng', uiKey: 'action.supplement', addedInRevision: 2, components: [{ hanzi: '补', pinyin: 'bǔ', sv: 'fylla på / komplettera' }, { hanzi: '充', pinyin: 'chōng', sv: 'fylla' }] },
+        { id: 'ui-content-char', sv: 'inre / inom', hanzi: '内', pinyin: 'nèi', addedInRevision: 2 },
+        { id: 'ui-content', sv: 'innehåll', hanzi: '内容', pinyin: 'nèiróng', addedInRevision: 2, components: [{ hanzi: '内', pinyin: 'nèi', sv: 'inre / inom' }, { hanzi: '容', pinyin: 'róng', sv: 'rymma / innehålla' }] },
+        { id: 'ui-new-content', sv: 'nytt innehåll', hanzi: '新内容', pinyin: 'xīn nèiróng', uiKey: 'status.newContent', addedInRevision: 2, components: [{ hanzi: '新', pinyin: 'xīn', sv: 'ny' }, { hanzi: '内容', pinyin: 'nèiróng', sv: 'innehåll' }] },
       ],
     },
     {

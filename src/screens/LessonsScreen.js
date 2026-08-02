@@ -29,9 +29,9 @@ export function LessonsScreen({ progress, go }) {
                 ${done && completedAt ? html`<div class="muted small lesson-date"><${UiText} progress=${progress} id="lesson.complete" />: ${completedAt}</div>` : null}
               </div>
               <div class="lesson-row-actions">
-                ${active ? html`<span class="status-chip learning"><${UiText} progress=${progress} id="status.inProgress" /></span>` : needsUpdate ? html`<span class="status-chip due">Uppdaterad</span>` : done ? html`<span class="status-chip strong"><${UiText} progress=${progress} id="lesson.complete" /></span>` : html`<span class="status-chip weak"><${UiText} progress=${progress} id="status.incomplete" /></span>`}
+                ${active ? html`<span class="status-chip learning"><${UiText} progress=${progress} id="status.inProgress" /></span>` : needsUpdate ? html`<span class="status-chip due"><${UiText} progress=${progress} id="status.newContent" /></span>` : done ? html`<span class="status-chip strong"><${UiText} progress=${progress} id="lesson.complete" /></span>` : html`<span class="status-chip weak"><${UiText} progress=${progress} id="status.incomplete" /></span>`}
                 <button class="button secondary" onClick=${() => go('lesson', { packId: pack.id, lessonId: lesson.id })}>
-                  ${active ? html`<${UiText} progress=${progress} id="action.continue" />` : needsUpdate ? html`<${UiText} progress=${progress} id="action.update" />` : done ? html`<${UiText} progress=${progress} id="action.practice" />` : html`<${UiText} progress=${progress} id="action.start" />`}
+                  ${active ? html`<${UiText} progress=${progress} id="action.continue" />` : needsUpdate ? html`<${UiText} progress=${progress} id="action.supplement" />` : done ? html`<${UiText} progress=${progress} id="action.practice" />` : html`<${UiText} progress=${progress} id="action.start" />`}
                 </button>
               </div>
             </article>
