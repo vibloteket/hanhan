@@ -51,8 +51,13 @@ export function dueCards(progress, items, now = new Date()) {
   return due.sort((a, b) => new Date(a.card.dueAt) - new Date(b.card.dueAt));
 }
 
-export function updateCard(card, result) {
-  const next = { ...card, seenCount: (card.seenCount || 0) + 1, lastResult: result };
+export function updateCard(card, result, now = new Date()) {
+  const next = {
+    ...card,
+    seenCount: (card.seenCount || 0) + 1,
+    lastResult: result,
+    lastReviewedAt: now.toISOString(),
+  };
   const wasCorrect = Boolean(result.correct);
   const mode = result.mode || 'multiple-choice';
 
@@ -61,7 +66,7 @@ export function updateCard(card, result) {
     next.wrongCount = (card.wrongCount || 0) + 1;
     next.ease = Math.max(1.3, (card.ease || 2.3) - 0.2);
     next.intervalDays = 0;
-    next.dueAt = new Date(Date.now() + 15 * MINUTE).toISOString();
+    next.dueAt = new Date(now.getTime() + 15 * MINUTE).toISOString();
     return next;
   }
 
@@ -69,7 +74,7 @@ export function updateCard(card, result) {
     next.correctStreak = 0;
     next.ease = Math.max(1.3, card.ease || 2.3);
     next.intervalDays = 0;
-    next.dueAt = new Date(Date.now() + 15 * MINUTE).toISOString();
+    next.dueAt = new Date(now.getTime() + 15 * MINUTE).toISOString();
     return next;
   }
 
@@ -82,6 +87,6 @@ export function updateCard(card, result) {
   else intervalDays = Math.max(1, card.intervalDays * next.ease * credit);
 
   next.intervalDays = Math.min(90, intervalDays);
-  next.dueAt = new Date(Date.now() + next.intervalDays * DAY).toISOString();
+  next.dueAt = new Date(now.getTime() + next.intervalDays * DAY).toISOString();
   return next;
 }

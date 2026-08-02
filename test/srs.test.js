@@ -45,6 +45,13 @@ test('correct retry after a wrong answer still counts as hard and repeats soon',
   assert.ok(new Date(afterRetryCorrect.dueAt).getTime() < Date.now() + 30 * 60 * 1000);
 });
 
+test('updateCard records the exact review time', () => {
+  const now = new Date('2026-08-02T20:00:00.000Z');
+  const updated = updateCard(createCard('a', 'recognize-meaning'), { correct: false }, now);
+  assert.equal(updated.lastReviewedAt, now.toISOString());
+  assert.equal(updated.dueAt, '2026-08-02T20:15:00.000Z');
+});
+
 test('typed answers receive more scheduling credit than multiple choice', () => {
   const base = { itemId: 'a', dueAt: new Date().toISOString(), intervalDays: 1, ease: 2.3, correctStreak: 1, wrongCount: 0, seenCount: 1 };
   const mc = updateCard(base, { correct: true, mode: 'multiple-choice' });

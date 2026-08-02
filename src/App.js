@@ -93,7 +93,7 @@ export function App() {
   if (route.screen === 'pack') screen = html`<${PackScreen} progress=${progress} route=${route} go=${go} />`;
   else if (route.screen === 'lesson') screen = html`<${LessonScreen} progress=${progress} setProgress=${setProgress} route=${route} go=${go} />`;
   else if (route.screen === 'review') screen = html`<${ReviewScreen} progress=${progress} setProgress=${setProgress} go=${go} />`;
-  else if (route.screen === 'progress') screen = html`<${ProgressScreen} progress=${progress} go=${go} />`;
+  else if (route.screen === 'progress') screen = html`<${ProgressScreen} progress=${progress} setProgress=${setProgress} go=${go} />`;
   else if (route.screen === 'lessons') screen = html`<${LessonsScreen} progress=${progress} go=${go} />`;
   else if (route.screen === 'settings') screen = html`<${SettingsScreen} progress=${progress} setProgress=${setProgress} go=${go} />`;
   else if (route.screen === 'about') screen = html`<${WelcomeScreen} go=${go} showAppLink=${true} />`;

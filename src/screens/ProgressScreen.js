@@ -6,6 +6,7 @@ import { UiText } from '../components/UiText.js';
 import { isMasteredCard, MASTERED_STREAK } from '../mastery.js';
 import { cardId, REVIEW_SKILLS } from '../srs.js';
 import { formatUiDate } from '../dateFormat.js';
+import { DEFAULT_WORD_LIST_SORT, sortWordList, WORD_LIST_SORTS } from '../wordList.js';
 
 function cardStatus(card) {
   if (!card) return { label: 'Inte startad', className: 'not-started' };
@@ -44,8 +45,9 @@ function searchableText({ item, status }) {
   ].join(' '));
 }
 
-export function ProgressScreen({ progress, go }) {
+export function ProgressScreen({ progress, setProgress, go }) {
   const [query, setQuery] = useState('');
+  const sortId = progress.settings?.wordListSort || DEFAULT_WORD_LIST_SORT;
   const learnedItems = allItems
     .map((item) => {
       const skills = REVIEW_SKILLS
@@ -57,20 +59,24 @@ export function ProgressScreen({ progress, go }) {
       const card = skills.map((entry) => entry.card).sort((a, b) => new Date(a.dueAt) - new Date(b.dueAt))[0];
       return card ? { item, card, skills, status: cardStatus(card) } : null;
     })
-    .filter(Boolean)
-    .sort((a, b) => {
-      const dueDiff = new Date(a.card.dueAt).getTime() - new Date(b.card.dueAt).getTime();
-      if (dueDiff) return dueDiff;
-      return a.item.packId.localeCompare(b.item.packId) || a.item.hanzi.localeCompare(b.item.hanzi);
-    });
+    .filter(Boolean);
 
   const skillCards = learnedItems.flatMap(({ skills }) => skills);
   const dueCount = skillCards.filter(({ status }) => status.className === 'due').length;
   const masteredCount = skillCards.filter(({ status }) => status.className === 'mastered').length;
   const normalizedQuery = normalizeSearch(query);
-  const visibleItems = normalizedQuery
+  const matchingItems = normalizedQuery
     ? learnedItems.filter((entry) => searchableText(entry).includes(normalizedQuery))
     : learnedItems;
+  const visibleItems = sortWordList(matchingItems, sortId, progress);
+
+  function changeSort(event) {
+    const wordListSort = event.currentTarget.value;
+    setProgress((current) => ({
+      ...current,
+      settings: { ...current.settings, wordListSort },
+    }));
+  }
 
   return html`
     <section class="screen progress-screen">
@@ -85,16 +91,24 @@ export function ProgressScreen({ progress, go }) {
       </section>
 
       ${learnedItems.length ? html`
-        <label class="search-box">
-          <span><${UiText} progress=${progress} id="action.searchWordList" /></span>
-          <input
-            type="search"
-            value=${query}
-            onInput=${(event) => setQuery(event.currentTarget.value)}
-            placeholder="Sök svenska, 汉字 eller pinyin"
-            autocomplete="off"
-          />
-        </label>
+        <div class="word-list-controls">
+          <label class="search-box">
+            <span><${UiText} progress=${progress} id="action.searchWordList" /></span>
+            <input
+              type="search"
+              value=${query}
+              onInput=${(event) => setQuery(event.currentTarget.value)}
+              placeholder="Sök svenska, 汉字 eller pinyin"
+              autocomplete="off"
+            />
+          </label>
+          <label class="sort-box">
+            <span>Sortera</span>
+            <select value=${sortId} onChange=${changeSort}>
+              ${WORD_LIST_SORTS.map(({ id, label }) => html`<option value=${id}>${label}</option>`)}
+            </select>
+          </label>
+        </div>
 
         ${normalizedQuery ? html`<p class="muted small search-count">${visibleItems.length} av ${learnedItems.length} kort matchar.</p>` : null}
 

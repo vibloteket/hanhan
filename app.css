@@ -116,9 +116,10 @@ button.stat-card { min-width: 0; text-align: left; color: inherit; cursor: point
 .notice { border-radius: 16px; padding: 12px; background: #eaf8ef; color: var(--green); }
 .muted { color: var(--muted); }
 .small { font-size: .9rem; }
-.search-box { display: grid; gap: 7px; margin-top: 16px; color: var(--muted); font-weight: 700; }
-.search-box input { width: 100%; min-height: 46px; border: 1px solid var(--line); border-radius: 16px; padding: 11px 14px; background: white; color: var(--ink); font: inherit; }
-.search-box input:focus { outline: 3px solid rgba(215, 59, 47, .16); border-color: #d8b98d; }
+.word-list-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(190px, .35fr); gap: 12px; align-items: end; margin-top: 16px; }
+.search-box, .sort-box { display: grid; gap: 7px; color: var(--muted); font-weight: 700; }
+.search-box input, .sort-box select { width: 100%; min-height: 46px; border: 1px solid var(--line); border-radius: 16px; padding: 11px 14px; background: white; color: var(--ink); font: inherit; }
+.search-box input:focus, .sort-box select:focus { outline: 3px solid rgba(215, 59, 47, .16); border-color: #d8b98d; }
 .search-count { margin: 8px 0 0; }
 .learned-list { display: grid; gap: 10px; margin-top: 16px; }
 .learned-card { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; border: 1px solid var(--line); border-radius: 20px; padding: 14px; background: var(--panel); }
@@ -153,6 +154,7 @@ button.stat-card { min-width: 0; text-align: left; color: inherit; cursor: point
   .session-actions { align-items: stretch; flex-direction: column; }
   .top-row { align-items: flex-start; }
   .top-actions { gap: 6px; }
+  .word-list-controls { grid-template-columns: 1fr; }
   .learned-card { grid-template-columns: 1fr; }
   .learned-main { align-items: start; gap: 12px; }
   .learned-hanzi { max-width: 38vw; }
