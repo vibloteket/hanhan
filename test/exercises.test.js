@@ -41,6 +41,13 @@ test('Swedish multiple-choice options exclude overlapping meanings', () => {
   assert.equal(choices.length, 4);
 });
 
+test('Swedish choices do not repeat imperative and infinitive forms', () => {
+  const item = { id: 'ui-not-yet-char', sv: 'inte ännu', hanzi: '未', pinyin: 'wèi' };
+  const labels = pickChoices(item, 'sv').map((choice) => choice.label);
+  assert.equal(labels.includes('fortsätt') && labels.includes('fortsätta'), false);
+  assert.equal(labels.length, 4);
+});
+
 test('Swedish choices exclude another contextual meaning of the same Chinese expression', () => {
   const item = { id: 'ui-review', sv: 'repetera', hanzi: '复习', pinyin: 'fùxí' };
   const choices = pickChoices(item, 'sv');

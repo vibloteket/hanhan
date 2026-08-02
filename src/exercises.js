@@ -21,6 +21,19 @@ function meaningsOverlap(first, second) {
   return [...meaningParts(second)].some((part) => firstParts.has(part));
 }
 
+function swedishFormKey(label) {
+  return String(label || '')
+    .toLocaleLowerCase('sv-SE')
+    .normalize('NFC')
+    .trim()
+    .replace(/([a-zåäö]{4,})a\b/gu, '$1');
+}
+
+function swedishFormsOverlap(first, second) {
+  const firstKeys = new Set([...meaningParts(first)].map(swedishFormKey));
+  return [...meaningParts(second)].some((part) => firstKeys.has(swedishFormKey(part)));
+}
+
 function characterSet(value) {
   return new Set(Array.from(String(value || '')).filter((character) => /\p{Script=Han}/u.test(character)));
 }
@@ -74,7 +87,10 @@ export function pickChoices(item, field, count = 4, progress = null) {
       score: scoreDistractor(item, candidate, field, progress),
       tieBreak: hash(item.id + candidate.id),
     };
-    const duplicateIndex = pool.findIndex((existing) => existing.candidate[field] === candidate[field]);
+    const duplicateIndex = pool.findIndex((existing) =>
+      existing.candidate[field] === candidate[field]
+      || (field === 'sv' && swedishFormsOverlap(existing.candidate[field], candidate[field]))
+    );
     if (duplicateIndex >= 0) {
       const duplicate = pool[duplicateIndex];
       if (entry.score < duplicate.score || (entry.score === duplicate.score && entry.tieBreak >= duplicate.tieBreak)) continue;
