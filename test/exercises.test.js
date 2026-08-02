@@ -41,6 +41,14 @@ test('Swedish multiple-choice options exclude overlapping meanings', () => {
   assert.equal(choices.length, 4);
 });
 
+test('Swedish choices exclude another contextual meaning of the same Chinese expression', () => {
+  const item = { id: 'ui-review', sv: 'repetera', hanzi: '复习', pinyin: 'fùxí' };
+  const choices = pickChoices(item, 'sv');
+  assert.equal(choices.some((choice) => choice.label === 'repetition'), false);
+  assert.equal(choices.filter((choice) => choice.label === 'repetera').length, 1);
+  assert.equal(choices.length, 4);
+});
+
 test('multiple-choice options do not include a distractor with the correct label', () => {
   const item = { id: 'action-review-copy', sv: 'repetition', hanzi: '复习', pinyin: 'fùxí' };
   const choices = pickChoices(item, 'hanzi');

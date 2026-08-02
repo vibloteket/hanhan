@@ -68,7 +68,7 @@ export function pickChoices(item, field, count = 4, progress = null) {
 
   for (const candidate of allItems) {
     if (candidate.id === item.id || !candidate[field] || candidate[field] === correctLabel) continue;
-    if (field === 'sv' && meaningsOverlap(correctLabel, candidate[field])) continue;
+    if (field === 'sv' && (candidate.hanzi === item.hanzi || meaningsOverlap(correctLabel, candidate[field]))) continue;
     const entry = {
       candidate,
       score: scoreDistractor(item, candidate, field, progress),
