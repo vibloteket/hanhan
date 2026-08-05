@@ -12,7 +12,13 @@ export const allLessons = packs.flatMap((pack) =>
 
 export const allItems = packs.flatMap((pack) =>
   pack.lessons.flatMap((lesson) =>
-    lesson.items.map((item) => ({ ...item, packId: pack.id, lessonId: lesson.id, lessonTitleSv: lesson.titleSv }))
+    lesson.items.map((item) => ({
+      ...item,
+      packId: pack.id,
+      lessonId: lesson.id,
+      lessonTitleSv: lesson.titleSv,
+      distractorExclusions: lesson.distractorExclusions || [],
+    }))
   )
 );
 
@@ -25,7 +31,12 @@ export function getLesson(packId, lessonId) {
     ...lesson,
     packId,
     packTitleSv: pack.titleSv,
-    items: lesson.items.map((item) => ({ ...item, packId, lessonId })),
+    items: lesson.items.map((item) => ({
+      ...item,
+      packId,
+      lessonId,
+      distractorExclusions: lesson.distractorExclusions || [],
+    })),
   } : null;
 }
 

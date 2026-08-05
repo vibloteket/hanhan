@@ -88,6 +88,20 @@ test('Chinese distractors strongly prefer the same character length', () => {
   assert.equal(choices.filter((choice) => Array.from(choice.label).length === 2).length, 4);
 });
 
+test('lesson distractor exclusions prevent both directions of an ambiguous pair', () => {
+  const startLessonItems = ['ui-open', 'ui-begin-char'].map((id) =>
+    pickChoices({
+      id,
+      hanzi: id === 'ui-open' ? '开' : '始',
+      distractorExclusions: [['ui-open', 'ui-begin-char']],
+    }, 'hanzi').map((choice) => choice.label)
+  );
+
+  assert.equal(startLessonItems[0].includes('始'), false);
+  assert.equal(startLessonItems[1].includes('开'), false);
+  assert.equal(startLessonItems.every((choices) => choices.length === 4), true);
+});
+
 test('distractor scoring prefers similar forms and introduced content', () => {
   const item = { id: 'right', hanzi: '复习', packId: 'app-ui-basics', lessonId: 'review-actions' };
   const similar = { id: 'similar', hanzi: '学习', packId: 'app-ui-basics', lessonId: 'learn-actions' };

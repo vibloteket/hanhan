@@ -27,6 +27,7 @@ export const appUiBasics = {
       descriptionSv: 'Bygg upp 开始 från två enklare tecken.',
       unlocksUiKeys: ['action.start'],
       practiceModes: ['type-pinyin'],
+      distractorExclusions: [['ui-open', 'ui-begin-char']],
       items: [
         { id: 'ui-open', sv: 'öppna / starta', hanzi: '开', pinyin: 'kāi', notesSv: 'Första tecknet i 开始.' },
         { id: 'ui-begin-char', sv: 'börja', hanzi: '始', pinyin: 'shǐ', notesSv: 'Andra tecknet i 开始.' },

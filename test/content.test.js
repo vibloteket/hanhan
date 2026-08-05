@@ -35,6 +35,21 @@ test('lesson keys are unique and lessons have items', () => {
   }
 });
 
+test('lesson distractor exclusions contain two distinct item IDs from that lesson', () => {
+  for (const pack of packs) {
+    for (const lesson of pack.lessons) {
+      const itemIds = new Set(lesson.items.map((item) => item.id));
+      for (const pair of lesson.distractorExclusions || []) {
+        assert.equal(pair.length, 2, `${pack.id}/${lesson.id} distractor exclusion must be a pair`);
+        assert.notEqual(pair[0], pair[1], `${pack.id}/${lesson.id} cannot exclude an item from itself`);
+        for (const id of pair) {
+          assert.ok(itemIds.has(id), `${pack.id}/${lesson.id} distractor exclusion references missing item ${id}`);
+        }
+      }
+    }
+  }
+});
+
 test('lesson revisions expose only newly added content and UI keys', () => {
   const lesson = packs.flatMap((pack) => pack.lessons.map((entry) => ({ ...entry, packId: pack.id })))
     .find((entry) => entry.id === 'settings-license-contact');

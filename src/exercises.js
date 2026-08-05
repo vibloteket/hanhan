@@ -49,6 +49,15 @@ function isIntroduced(candidate, progress) {
   return progress?.completedLessons?.includes(lessonKey(candidate.packId, candidate.lessonId)) || false;
 }
 
+function isExcludedDistractor(item, candidate) {
+  return item.distractorExclusions?.some((pair) =>
+    Array.isArray(pair)
+    && pair.length === 2
+    && pair.includes(item.id)
+    && pair.includes(candidate.id)
+  ) || false;
+}
+
 export function scoreDistractor(item, candidate, field, progress = null) {
   let score = 0;
   const correctLength = Array.from(item[field] || '').length;
@@ -86,7 +95,12 @@ export function pickChoices(item, field, count = 4, progress = null) {
   const pool = [];
 
   for (const candidate of allItems) {
-    if (candidate.id === item.id || !candidate[field] || candidate[field] === correctLabel) continue;
+    if (
+      candidate.id === item.id
+      || !candidate[field]
+      || candidate[field] === correctLabel
+      || isExcludedDistractor(item, candidate)
+    ) continue;
     if (field === 'sv' && (
       candidate.hanzi === item.hanzi
       || meaningsOverlap(correctLabel, candidate[field])
