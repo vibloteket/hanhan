@@ -9,6 +9,7 @@ export const uiTerms = [
   { key: 'action.continue', sv: 'Fortsätt', en: 'Continue', zh: '继续', pinyin: 'jìxù' },
   { key: 'action.review', sv: 'Repetera', en: 'Review', zh: '复习', pinyin: 'fùxí' },
   { key: 'review.title', sv: 'Repetition', en: 'Review', zh: '复习', pinyin: 'fùxí' },
+  { key: 'review.complete', sv: 'Repetition klar', en: 'Review complete', zh: '复习完成', pinyin: 'fùxí wánchéng' },
   { key: 'action.learn', sv: 'Lär dig', en: 'Learn', zh: '学习', pinyin: 'xuéxí' },
   { key: 'action.practice', sv: 'Öva', en: 'Practice', zh: '练习', pinyin: 'liànxí' },
   { key: 'action.back', sv: 'Tillbaka', en: 'Back', zh: '返回', pinyin: 'fǎnhuí' },

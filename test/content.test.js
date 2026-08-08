@@ -70,11 +70,14 @@ test('continue lesson revision teaches dynamic updated-lesson labels', () => {
   const lesson = packs.find((pack) => pack.id === 'app-ui-basics')?.lessons
     .find((candidate) => candidate.id === 'continue-lesson');
 
-  assert.equal(lesson.revision, 2);
-  assert.deepEqual(lessonItemsForRevision(lesson, 1).map((item) => item.hanzi), ['补', '补充', '内', '内容', '新内容']);
-  assert.deepEqual(lessonUiKeysForRevision(lesson, 1).filter((key) => ['action.supplement', 'status.newContent'].includes(key)), []);
+  assert.equal(lesson.revision, 3);
+  assert.deepEqual(lessonItemsForRevision(lesson, 1).map((item) => item.hanzi), ['复习完成', '补', '补充', '内', '内容', '新内容']);
+  assert.deepEqual(lessonItemsForRevision(lesson, 2).map((item) => item.hanzi), ['复习完成']);
+  assert.deepEqual(lessonUiKeysForRevision(lesson, 1).filter((key) => ['action.supplement', 'status.newContent', 'review.complete'].includes(key)), []);
   assert.equal(lessonUiKeysForRevision(lesson, 2).includes('action.supplement'), true);
   assert.equal(lessonUiKeysForRevision(lesson, 2).includes('status.newContent'), true);
+  assert.equal(lessonUiKeysForRevision(lesson, 2).includes('review.complete'), false);
+  assert.equal(lessonUiKeysForRevision(lesson, 3).includes('review.complete'), true);
 });
 
 test('answers lesson revision teaches and unlocks the dont-know action', () => {

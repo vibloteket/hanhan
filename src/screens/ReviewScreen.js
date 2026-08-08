@@ -73,7 +73,7 @@ export function ReviewScreen({ progress, setProgress, go }) {
         />
       ` : html`
         <section class="exercise-card complete-card">
-          <h2>Klar för nu</h2>
+          <h2><${UiText} progress=${progress} id="review.complete" /></h2>
           <p>${deferredCount ? `${deferredCount} svåra kort kommer tillbaka senare.` : 'Bra jobbat. Om du missade något fick det komma tillbaka i samma runda.'}</p>
           <${Button} buttonRef=${homeButtonRef} progress=${progress} labelKey="nav.home" onClick=${() => go('home')} />
         </section>

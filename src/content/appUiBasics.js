@@ -175,11 +175,11 @@ export const appUiBasics = {
     },
     {
       id: 'continue-lesson',
-      revision: 2,
+      revision: 3,
       titleSv: 'Fortsätt och lektion',
       descriptionSv: 'Vanliga ord i lektionsflödet och markeringar för nytt innehåll.',
-      unlocksUiKeys: ['action.continue', 'lesson.title', 'lesson.complete', 'status.inProgress', 'status.incomplete', 'action.supplement', 'status.newContent'],
-      uiKeyRevisions: { 'action.supplement': 2, 'status.newContent': 2 },
+      unlocksUiKeys: ['action.continue', 'lesson.title', 'lesson.complete', 'review.complete', 'status.inProgress', 'status.incomplete', 'action.supplement', 'status.newContent'],
+      uiKeyRevisions: { 'action.supplement': 2, 'status.newContent': 2, 'review.complete': 3 },
       practiceModes: ['type-pinyin'],
       items: [
         { id: 'ui-continue-char', sv: 'fortsätta', hanzi: '续', pinyin: 'xù', notesSv: 'Ett tecken i 继续.' },
@@ -189,6 +189,7 @@ export const appUiBasics = {
         { id: 'ui-complete-char1', sv: 'färdig / komplett', hanzi: '完', pinyin: 'wán', notesSv: 'Första tecknet i 完成.' },
         { id: 'ui-complete-char2', sv: 'bli / åstadkomma', hanzi: '成', pinyin: 'chéng', notesSv: 'Andra tecknet i 完成.' },
         { id: 'ui-complete', sv: 'klar / slutförd', hanzi: '完成', pinyin: 'wánchéng', uiKey: 'lesson.complete', components: [{ hanzi: '完', pinyin: 'wán', sv: 'färdig / komplett' }, { hanzi: '成', pinyin: 'chéng', sv: 'bli / åstadkomma' }] },
+        { id: 'ui-review-complete', sv: 'repetition klar', hanzi: '复习完成', pinyin: 'fùxí wánchéng', uiKey: 'review.complete', addedInRevision: 3, components: [{ hanzi: '复习', pinyin: 'fùxí', sv: 'repetition' }, { hanzi: '完成', pinyin: 'wánchéng', sv: 'klar / slutförd' }] },
         { id: 'ui-progressing', sv: 'pågående', hanzi: '进行中', pinyin: 'jìnxíng zhōng', uiKey: 'status.inProgress', components: [{ hanzi: '中', pinyin: 'zhōng', sv: 'i / mitten' }] },
         { id: 'ui-not-yet-char', sv: 'inte ännu', hanzi: '未', pinyin: 'wèi', notesSv: 'Första tecknet i 未完成.' },
         { id: 'ui-incomplete', sv: 'ej klar', hanzi: '未完成', pinyin: 'wèi wánchéng', uiKey: 'status.incomplete', components: [{ hanzi: '未', pinyin: 'wèi', sv: 'inte ännu' }, { hanzi: '完成', pinyin: 'wánchéng', sv: 'klar / slutförd' }] },

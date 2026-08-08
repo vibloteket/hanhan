@@ -32,6 +32,21 @@ test('updated-lesson labels unlock through the revised continue lesson', () => {
   assert.equal(uiLabel(updatedProgress, 'status.newContent'), '新内容 · Nytt innehåll');
 });
 
+test('review completion label unlocks through the latest continue lesson revision', () => {
+  const legacyProgress = {
+    completedLessons: ['app-ui-basics/continue-lesson'],
+    lessonMeta: { 'app-ui-basics/continue-lesson': { revision: 2 } },
+    settings: { uiMode: 'dynamic' },
+  };
+  const updatedProgress = {
+    ...legacyProgress,
+    lessonMeta: { 'app-ui-basics/continue-lesson': { revision: 3 } },
+  };
+
+  assert.equal(uiLabel(legacyProgress, 'review.complete'), 'Repetition klar');
+  assert.equal(uiLabel(updatedProgress, 'review.complete'), '复习完成 · Repetition klar');
+});
+
 test('dont-know label unlocks through the updated answers lesson', () => {
   const legacyProgress = {
     completedLessons: ['app-ui-basics/answers-feedback'],
