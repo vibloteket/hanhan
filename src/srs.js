@@ -7,6 +7,12 @@ export const REVIEW_SKILLS = [
   { id: 'recall-pinyin', kind: 'type-pinyin', label: 'Pinyin', labelKey: 'term.pinyin' },
 ];
 
+export function reviewKindForSkill(skill, progress, card = null) {
+  const readyForTyping = (card?.correctStreak || 0) >= 2;
+  if (skill.id === 'recall-hanzi' && progress?.settings?.hanziTyping === true && readyForTyping) return 'type-hanzi';
+  return skill.kind;
+}
+
 export function cardId(itemId, skill) {
   return `${itemId}/${skill}`;
 }
@@ -44,7 +50,7 @@ export function dueCards(progress, items, now = new Date()) {
       const id = cardId(item.id, skill.id);
       const card = progress.cards[id];
       if (card && new Date(card.dueAt).getTime() <= nowMs) {
-        due.push({ item, card, cardId: id, skill: skill.id, kind: skill.kind });
+        due.push({ item, card, cardId: id, skill: skill.id, kind: reviewKindForSkill(skill, progress, card) });
       }
     }
   }

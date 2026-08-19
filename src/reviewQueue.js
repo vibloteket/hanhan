@@ -9,6 +9,13 @@ export function shuffleEntries(entries, rng = Math.random) {
   return shuffled;
 }
 
+export function groupHanziTypingLast(entries) {
+  return [
+    ...entries.filter((entry) => entry.kind !== 'type-hanzi'),
+    ...entries.filter((entry) => entry.kind === 'type-hanzi'),
+  ];
+}
+
 export function createReviewQueue(progress, items, rng = Math.random) {
   const entries = dueCards(progress, items).map(({ item, cardId, skill, kind }) => ({
     cardId,
@@ -17,7 +24,7 @@ export function createReviewQueue(progress, items, rng = Math.random) {
     kind,
     attempts: 0,
   }));
-  return shuffleEntries(entries, rng);
+  return groupHanziTypingLast(shuffleEntries(entries, rng));
 }
 
 export function currentReviewItem(queueEntries, itemById) {

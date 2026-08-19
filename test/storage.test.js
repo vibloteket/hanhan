@@ -9,6 +9,13 @@ test('normalizeProgress fills missing newer fields', () => {
   assert.deepEqual(normalized.unlockedExerciseTypes, []);
   assert.equal(normalized.activeSession, null);
   assert.equal(normalized.settings.uiMode, 'dynamic');
+  assert.equal(normalized.settings.hanziTyping, null);
+});
+
+test('normalizeProgress preserves an explicit Chinese typing preference', () => {
+  assert.equal(normalizeProgress({ schemaVersion: 1, settings: { hanziTyping: true } }).settings.hanziTyping, true);
+  assert.equal(normalizeProgress({ schemaVersion: 1, settings: { hanziTyping: false } }).settings.hanziTyping, false);
+  assert.equal(normalizeProgress({ schemaVersion: 1, settings: { hanziTyping: 'yes' } }).settings.hanziTyping, null);
 });
 
 test('normalizeProgress migrates legacy gradual UI modes to dynamic', () => {

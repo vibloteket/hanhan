@@ -18,6 +18,7 @@ export function createDefaultProgress() {
     },
     settings: {
       uiMode: 'dynamic',
+      hanziTyping: null,
     },
   };
 }
@@ -40,6 +41,9 @@ export function normalizeProgress(input) {
     : allowedUiModes.has(rawSettings.uiMode)
       ? rawSettings.uiMode
       : defaults.settings.uiMode;
+  const hanziTyping = typeof rawSettings.hanziTyping === 'boolean'
+    ? rawSettings.hanziTyping
+    : defaults.settings.hanziTyping;
   return {
     ...defaults,
     ...input,
@@ -50,7 +54,7 @@ export function normalizeProgress(input) {
     cards: normalizeCards(input.cards),
     activeSession: input.activeSession && typeof input.activeSession === 'object' ? input.activeSession : null,
     stats: { ...defaults.stats, ...(input.stats || {}) },
-    settings: { ...rawSettings, uiMode },
+    settings: { ...rawSettings, uiMode, hanziTyping },
   };
 }
 

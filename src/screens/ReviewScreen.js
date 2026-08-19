@@ -2,7 +2,7 @@ import { html } from '../html.js';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { allItems, itemById } from '../content/packs.js';
 import { updateCard } from '../srs.js';
-import { answerReviewQueue, createReviewQueue, reviewProgressLabel } from '../reviewQueue.js';
+import { answerReviewQueue, createReviewQueue, groupHanziTypingLast, reviewProgressLabel } from '../reviewQueue.js';
 import { Button } from '../components/Button.js';
 import { UiText } from '../components/UiText.js';
 import { ExerciseCard } from '../components/ExerciseCard.js';
@@ -12,11 +12,16 @@ export function ReviewScreen({ progress, setProgress, go }) {
   const [queue, setQueue] = useState(initialQueue);
   const [answeredCount, setAnsweredCount] = useState(0);
   const [deferredCount, setDeferredCount] = useState(0);
+  const [typingPromptHandled, setTypingPromptHandled] = useState(false);
   // Defer card updates until we leave the review screen
   const pendingCards = useRef({});
   const homeButtonRef = useRef(null);
   const currentEntry = queue[0];
   const currentItem = currentEntry ? itemById[currentEntry.itemId] : null;
+  const canOfferHanziTyping = progress.settings.hanziTyping === null
+    && progress.completedLessons.length >= 2
+    && initialQueue.some((entry) => entry.skill === 'recall-hanzi'
+      && (progress.cards[entry.cardId]?.correctStreak || 0) >= 2);
 
   // Flush pending card updates to real progress when leaving
   useEffect(() => {
@@ -33,6 +38,21 @@ export function ReviewScreen({ progress, setProgress, go }) {
   useEffect(() => {
     if (initialQueue.length && !currentEntry) homeButtonRef.current?.focus();
   }, [initialQueue.length, currentEntry]);
+
+  function chooseHanziTyping(enabled) {
+    setTypingPromptHandled(true);
+    if (enabled) {
+      setQueue((currentQueue) => groupHanziTypingLast(currentQueue.map((entry) =>
+        entry.skill === 'recall-hanzi' && (progress.cards[entry.cardId]?.correctStreak || 0) >= 2
+          ? { ...entry, kind: 'type-hanzi' }
+          : entry
+      )));
+    }
+    setProgress((currentProgress) => ({
+      ...currentProgress,
+      settings: { ...currentProgress.settings, hanziTyping: enabled },
+    }));
+  }
 
   function answer(result) {
     if (!currentEntry || !currentItem) return;
@@ -59,7 +79,18 @@ export function ReviewScreen({ progress, setProgress, go }) {
       </div>
       <h1><${UiText} progress=${progress} id="review.title" /></h1>
 
-      ${!initialQueue.length ? html`
+      ${canOfferHanziTyping && !typingPromptHandled ? html`
+        <section class="exercise-card intro-card">
+          <div class="eyebrow">Ny frågetyp</div>
+          <h2>Skriv kinesiska</h2>
+          <p>Skriv ordets pinyin med ett kinesiskt tangentbord och välj rätt kinesiska tecken. Exempel: skriv <strong>wo</strong> och välj <strong class="hanzi">我</strong>.</p>
+          <p>Skrivfrågorna kommer sist i repetitionen, så att du slipper växla tangentbord mellan varje fråga. Du kan ändra valet senare i Inställningar.</p>
+          <div class="settings-actions">
+            <button class="button" onClick=${() => chooseHanziTyping(true)}>Aktivera</button>
+            <button class="button secondary" onClick=${() => chooseHanziTyping(false)}>Inte nu</button>
+          </div>
+        </section>
+      ` : !initialQueue.length ? html`
         <section class="exercise-card complete-card">
           <h2>Inget att repetera just nu</h2>
           <p>Gör en ny lektion eller kom tillbaka senare.</p>

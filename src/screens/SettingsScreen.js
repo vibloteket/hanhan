@@ -13,6 +13,10 @@ export function SettingsScreen({ progress, setProgress, go }) {
     setProgress((current) => ({ ...current, settings: { ...current.settings, uiMode } }));
   }
 
+  function setHanziTyping(hanziTyping) {
+    setProgress((current) => ({ ...current, settings: { ...current.settings, hanziTyping } }));
+  }
+
   function exportBackup() {
     const blob = new Blob([JSON.stringify(makeBackup(progress), null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -56,6 +60,12 @@ export function SettingsScreen({ progress, setProgress, go }) {
         <label><input type="radio" checked=${progress.settings.uiMode === 'sv'} onChange=${() => setMode('sv')} /> Svenska</label>
         <label><input type="radio" checked=${progress.settings.uiMode === 'zh'} onChange=${() => setMode('zh')} /> Kinesiska för upplåsta ord</label>
         <label><input type="radio" checked=${progress.settings.uiMode === 'zh-all'} onChange=${() => setMode('zh-all')} /> Debug: kinesiska för alla UI-ord</label>
+      </section>
+
+      <section class="screen panel">
+        <h2>Skriv kinesiska</h2>
+        <p>Svara med kinesiska tecken genom att skriva pinyin med ett kinesiskt tangentbord och välja rätt ord. Skrivfrågorna samlas sist i repetitionen så att du bara behöver byta tangentbord en gång.</p>
+        <label><input type="checkbox" checked=${progress.settings.hanziTyping === true} onChange=${(event) => setHanziTyping(event.currentTarget.checked)} /> Använd skrivfrågor med kinesiskt tangentbord</label>
       </section>
 
       <section class="screen panel">

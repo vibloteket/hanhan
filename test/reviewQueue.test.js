@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { answerReviewQueue, createReviewQueue, currentReviewItem, reviewProgressLabel, shuffleEntries } from '../src/reviewQueue.js';
+import { answerReviewQueue, createReviewQueue, currentReviewItem, groupHanziTypingLast, reviewProgressLabel, shuffleEntries } from '../src/reviewQueue.js';
 import { cardId } from '../src/srs.js';
 
 const items = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
@@ -24,6 +24,20 @@ test('review queue creates one entry per due skill card', () => {
   ]);
 });
 
+test('review queue upgrades practiced hanzi recall to typing when enabled', () => {
+  const progress = {
+    settings: { hanziTyping: true },
+    cards: {
+      [cardId('a', 'recall-hanzi')]: { ...card('a', 'recall-hanzi', '2026-01-01T09:00:00.000Z'), correctStreak: 2 },
+      [cardId('b', 'recall-hanzi')]: { ...card('b', 'recall-hanzi', '2026-01-01T08:00:00.000Z'), correctStreak: 1 },
+    },
+  };
+  assert.deepEqual(createReviewQueue(progress, items.slice(0, 2), noShuffle).map((entry) => [entry.itemId, entry.kind]), [
+    ['b', 'mc-sv-zh'],
+    ['a', 'type-hanzi'],
+  ]);
+});
+
 test('review queue excludes future skill cards', () => {
   const progress = { cards: {
     [cardId('a', 'recognize-meaning')]: card('a', 'recognize-meaning', '2099-01-01T10:00:00.000Z'),
@@ -34,6 +48,16 @@ test('review queue excludes future skill cards', () => {
 test('review queue can shuffle entries', () => {
   const entries = [{ itemId: 'a' }, { itemId: 'b' }, { itemId: 'c' }];
   assert.deepEqual(shuffleEntries(entries, () => 0), [{ itemId: 'b' }, { itemId: 'c' }, { itemId: 'a' }]);
+});
+
+test('Chinese typing entries form one block at the end', () => {
+  const entries = [
+    { itemId: 'a', kind: 'type-hanzi' },
+    { itemId: 'b', kind: 'type-pinyin' },
+    { itemId: 'c', kind: 'type-hanzi' },
+    { itemId: 'd', kind: 'mc-zh-sv' },
+  ];
+  assert.deepEqual(groupHanziTypingLast(entries).map((entry) => entry.itemId), ['b', 'd', 'a', 'c']);
 });
 
 test('correct answers remove entry and first wrong answer gives an immediate retry', () => {
