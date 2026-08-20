@@ -22,6 +22,8 @@ export const uiTerms = [
   { key: 'action.supplement', sv: 'Komplettera', en: 'Supplement', zh: '补充', pinyin: 'bǔchōng' },
   { key: 'action.export', sv: 'Exportera backup', en: 'Export backup', zh: '导出备份', pinyin: 'dǎochū bèifèn' },
   { key: 'action.import', sv: 'Importera backup', en: 'Import backup', zh: '导入备份', pinyin: 'dǎorù bèifèn' },
+  { key: 'action.enable', sv: 'Aktivera', en: 'Enable', zh: '启用', pinyin: 'qǐyòng' },
+  { key: 'action.notNow', sv: 'Inte nu', en: 'Not now', zh: '暂不启用', pinyin: 'zàn bù qǐyòng' },
 
   { key: 'lesson.title', sv: 'Lektioner', en: 'Lessons', zh: '课程', pinyin: 'kèchéng' },
   { key: 'lesson.complete', sv: 'Klar', en: 'Complete', zh: '完成', pinyin: 'wánchéng' },
@@ -31,6 +33,8 @@ export const uiTerms = [
   { key: 'term.hanzi', sv: 'Tecken', en: 'Characters', zh: '汉字', pinyin: 'hànzì' },
   { key: 'term.pinyin', sv: 'Pinyin', en: 'Pinyin', zh: '拼音', pinyin: 'pīnyīn' },
   { key: 'exercise.multipleChoice', sv: 'Flerval', en: 'Multiple choice', zh: '选择题', pinyin: 'xuǎnzétí' },
+  { key: 'exercise.newType', sv: 'Ny frågetyp', en: 'New question type', zh: '新题型', pinyin: 'xīn tíxíng' },
+  { key: 'exercise.typeHanzi', sv: 'Skriv kinesiska tecken', en: 'Enter Chinese characters', zh: '输入汉字', pinyin: 'shūrù hànzì' },
   { key: 'prompt.whatMeans', sv: 'Vad betyder {term}?', en: 'What does {term} mean?', zh: '{term} 是什么意思？', pinyin: '{term} shì shénme yìsi?' },
   { key: 'prompt.whichMeans', sv: 'Vilket betyder {term}?', en: 'Which means {term}?', zh: '哪个是“{term}”的意思？', pinyin: 'nǎge shì “{term}” de yìsi?' },
   { key: 'action.searchWordList', sv: 'Sök i ordlistan', en: 'Search the word list', zh: '搜索词表', pinyin: 'sōusuǒ cíbiǎo' },

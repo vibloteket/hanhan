@@ -137,6 +137,19 @@ test('question-card lesson teaches both prompts and multiple choice', () => {
   assert.ok(lesson.items.some((item) => item.hanzi === '选择题' && item.uiKey === 'exercise.multipleChoice'));
 });
 
+test('Chinese typing lesson follows question and hanzi terminology and teaches its UI', () => {
+  const lessons = packs.find((pack) => pack.id === 'app-ui-basics')?.lessons || [];
+  const typingIndex = lessons.findIndex((lesson) => lesson.id === 'type-chinese');
+  const questionsIndex = lessons.findIndex((lesson) => lesson.id === 'questions-multiple-choice');
+  const hanziIndex = lessons.findIndex((lesson) => lesson.id === 'meaning-hanzi-pinyin');
+  const lesson = lessons[typingIndex];
+
+  assert.ok(typingIndex > questionsIndex, '题 should be taught before 题型');
+  assert.ok(typingIndex > hanziIndex, '汉字 should be taught before 输入汉字');
+  assert.deepEqual(lesson.unlocksUiKeys, ['exercise.newType', 'exercise.typeHanzi', 'action.enable', 'action.notNow']);
+  assert.deepEqual(lesson.items.filter((item) => item.uiKey).map((item) => item.hanzi), ['新题型', '输入汉字', '启用', '暂不启用']);
+});
+
 test('personal bonus teaches dream, surname Liu, and Liu Meng in order', () => {
   const lesson = packs.find((pack) => pack.id === 'personal-bonus')?.lessons
     .find((candidate) => candidate.id === 'liu-meng');

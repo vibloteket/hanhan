@@ -81,13 +81,13 @@ export function ReviewScreen({ progress, setProgress, go }) {
 
       ${canOfferHanziTyping && !typingPromptHandled ? html`
         <section class="exercise-card intro-card">
-          <div class="eyebrow">Ny frågetyp</div>
-          <h2>Skriv kinesiska</h2>
+          <div class="eyebrow"><${UiText} progress=${progress} id="exercise.newType" /></div>
+          <h2><${UiText} progress=${progress} id="exercise.typeHanzi" /></h2>
           <p>Skriv ordets pinyin med ett kinesiskt tangentbord och välj rätt kinesiska tecken. Exempel: skriv <strong>wo</strong> och välj <strong class="hanzi">我</strong>.</p>
           <p>Skrivfrågorna kommer sist i repetitionen, så att du slipper växla tangentbord mellan varje fråga. Du kan ändra valet senare i Inställningar.</p>
           <div class="settings-actions">
-            <button class="button" onClick=${() => chooseHanziTyping(true)}>Aktivera</button>
-            <button class="button secondary" onClick=${() => chooseHanziTyping(false)}>Inte nu</button>
+            <button class="button" onClick=${() => chooseHanziTyping(true)}><${UiText} progress=${progress} id="action.enable" /></button>
+            <button class="button secondary" onClick=${() => chooseHanziTyping(false)}><${UiText} progress=${progress} id="action.notNow" /></button>
           </div>
         </section>
       ` : !initialQueue.length ? html`

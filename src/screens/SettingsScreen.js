@@ -63,7 +63,7 @@ export function SettingsScreen({ progress, setProgress, go }) {
       </section>
 
       <section class="screen panel">
-        <h2>Skriv kinesiska</h2>
+        <h2><${UiText} progress=${progress} id="exercise.typeHanzi" /></h2>
         <p>Svara med kinesiska tecken genom att skriva pinyin med ett kinesiskt tangentbord och välja rätt ord. Skrivfrågorna samlas sist i repetitionen så att du bara behöver byta tangentbord en gång.</p>
         <label><input type="checkbox" checked=${progress.settings.hanziTyping === true} onChange=${(event) => setHanziTyping(event.currentTarget.checked)} /> Använd skrivfrågor med kinesiskt tangentbord</label>
       </section>

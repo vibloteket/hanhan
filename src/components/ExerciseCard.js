@@ -102,7 +102,7 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
         ? html`<${UiText} progress=${progress} id="exercise.multipleChoice" />`
         : isPinyin
           ? html`<${UiText} progress=${progress} id="term.pinyin" />`
-          : html`<${UiText} progress=${progress} id="term.hanzi" />`
+          : html`<${UiText} progress=${progress} id="exercise.typeHanzi" />`
       }</div>
       <h2>${prompt}</h2>
 
