@@ -38,6 +38,17 @@ test('review queue upgrades practiced hanzi recall to typing when enabled', () =
   ]);
 });
 
+test('review queue keeps explicitly excluded building blocks as multiple choice', () => {
+  const excludedItem = { id: 'a', allowHanziTyping: false };
+  const progress = {
+    settings: { hanziTyping: true },
+    cards: {
+      [cardId('a', 'recall-hanzi')]: { ...card('a', 'recall-hanzi', '2026-01-01T09:00:00.000Z'), correctStreak: 3 },
+    },
+  };
+  assert.equal(createReviewQueue(progress, [excludedItem], noShuffle)[0].kind, 'mc-sv-zh');
+});
+
 test('review queue excludes future skill cards', () => {
   const progress = { cards: {
     [cardId('a', 'recognize-meaning')]: card('a', 'recognize-meaning', '2099-01-01T10:00:00.000Z'),

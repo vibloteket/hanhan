@@ -1,7 +1,7 @@
 import { html } from '../html.js';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { allItems, itemById } from '../content/packs.js';
-import { updateCard } from '../srs.js';
+import { canTypeHanzi, updateCard } from '../srs.js';
 import { answerReviewQueue, createReviewQueue, groupHanziTypingLast, reviewProgressLabel } from '../reviewQueue.js';
 import { Button } from '../components/Button.js';
 import { UiText } from '../components/UiText.js';
@@ -21,7 +21,8 @@ export function ReviewScreen({ progress, setProgress, go }) {
   const canOfferHanziTyping = progress.settings.hanziTyping === null
     && progress.completedLessons.length >= 2
     && initialQueue.some((entry) => entry.skill === 'recall-hanzi'
-      && (progress.cards[entry.cardId]?.correctStreak || 0) >= 2);
+      && (progress.cards[entry.cardId]?.correctStreak || 0) >= 2
+      && canTypeHanzi(itemById[entry.itemId], allItems));
 
   // Flush pending card updates to real progress when leaving
   useEffect(() => {
@@ -43,7 +44,9 @@ export function ReviewScreen({ progress, setProgress, go }) {
     setTypingPromptHandled(true);
     if (enabled) {
       setQueue((currentQueue) => groupHanziTypingLast(currentQueue.map((entry) =>
-        entry.skill === 'recall-hanzi' && (progress.cards[entry.cardId]?.correctStreak || 0) >= 2
+        entry.skill === 'recall-hanzi'
+          && (progress.cards[entry.cardId]?.correctStreak || 0) >= 2
+          && canTypeHanzi(itemById[entry.itemId], allItems)
           ? { ...entry, kind: 'type-hanzi' }
           : entry
       )));

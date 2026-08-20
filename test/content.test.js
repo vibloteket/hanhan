@@ -104,6 +104,14 @@ test('correct streak lesson follows known answer and correct components', () => 
   assert.equal(lesson.items.at(-1).uiKey, 'status.correctStreak');
 });
 
+test('ambiguous building-block characters can opt out of free hanzi typing', () => {
+  const buildingBlock = allItems.find((item) => item.id === 'ui-practice-study-char');
+  const standaloneWord = allItems.find((item) => item.id === 'ui-practice');
+  assert.equal(buildingBlock.hanzi, '习');
+  assert.equal(buildingBlock.allowHanziTyping, false);
+  assert.notEqual(standaloneWord.allowHanziTyping, false);
+});
+
 test('word-list UI lessons teach skill labels and status terms in order', () => {
   const lessons = packs.find((pack) => pack.id === 'app-ui-basics')?.lessons || [];
   const skillLesson = lessons.find((lesson) => lesson.id === 'meaning-hanzi-pinyin');

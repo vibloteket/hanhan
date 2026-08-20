@@ -155,7 +155,7 @@ export const appUiBasics = {
       unlocksUiKeys: ['action.review', 'review.title'],
       practiceModes: ['type-pinyin'],
       items: [
-        { id: 'ui-practice-study-char', sv: 'öva / studera', hanzi: '习', pinyin: 'xí', notesSv: 'Andra tecknet i 复习.' },
+        { id: 'ui-practice-study-char', sv: 'öva / studera', hanzi: '习', pinyin: 'xí', allowHanziTyping: false, notesSv: 'Andra tecknet i 复习. Används här som en byggsten och tränas inte med fri teckeninmatning.' },
         { id: 'ui-review', sv: 'repetera', hanzi: '复习', pinyin: 'fùxí', uiKey: 'action.review', components: [{ hanzi: '习', pinyin: 'xí', sv: 'öva / studera' }] },
         { id: 'ui-review-title', sv: 'repetition', hanzi: '复习', pinyin: 'fùxí', uiKey: 'review.title', components: [{ hanzi: '习', pinyin: 'xí', sv: 'öva / studera' }] },
       ],

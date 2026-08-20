@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { cardId, createCard, dueCards, ensureCards, updateCard } from '../src/srs.js';
+import { canTypeHanzi, cardId, createCard, dueCards, ensureCards, hasAmbiguousHanziPrompt, updateCard } from '../src/srs.js';
 
 test('ensureCards creates three independent skill cards without removing existing ones', () => {
   const existing = createCard('a', 'recognize-meaning');
@@ -24,6 +24,19 @@ test('dueCards filters future skill cards and exposes their exercise kinds', () 
     ['recall-hanzi', 'mc-sv-zh'],
     ['recognize-meaning', 'mc-zh-sv'],
   ]);
+});
+
+test('hanzi typing excludes explicit opt-outs and overlapping Swedish prompts', () => {
+  const items = [
+    { id: 'part', hanzi: '习', sv: 'öva / studera', allowHanziTyping: false },
+    { id: 'practice', hanzi: '练习', sv: 'öva' },
+    { id: 'water', hanzi: '水', sv: 'vatten' },
+  ];
+  assert.equal(hasAmbiguousHanziPrompt(items[0], items), true);
+  assert.equal(hasAmbiguousHanziPrompt(items[1], items), false);
+  assert.equal(canTypeHanzi(items[0], items), false);
+  assert.equal(canTypeHanzi(items[1], items), true);
+  assert.equal(canTypeHanzi(items[2], items), true);
 });
 
 test('wrong answer repeats soon and resets streak', () => {

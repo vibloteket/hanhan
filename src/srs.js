@@ -7,9 +7,38 @@ export const REVIEW_SKILLS = [
   { id: 'recall-pinyin', kind: 'type-pinyin', label: 'Pinyin', labelKey: 'term.pinyin' },
 ];
 
-export function reviewKindForSkill(skill, progress, card = null) {
+function meaningParts(label) {
+  return new Set(String(label || '')
+    .toLocaleLowerCase('sv-SE')
+    .normalize('NFC')
+    .replace(/[()]/g, '/')
+    .split(/\s*(?:\/|,|;|\|)\s*/)
+    .map((part) => part.trim())
+    .filter(Boolean));
+}
+
+export function hasAmbiguousHanziPrompt(item, items = []) {
+  const meanings = meaningParts(item?.sv);
+  return items.some((candidate) =>
+    candidate.id !== item?.id
+    && candidate.hanzi !== item?.hanzi
+    && candidate.allowHanziTyping !== false
+    && [...meaningParts(candidate.sv)].some((meaning) => meanings.has(meaning))
+  );
+}
+
+export function canTypeHanzi(item, items = []) {
+  return item?.allowHanziTyping !== false && !hasAmbiguousHanziPrompt(item, items);
+}
+
+export function reviewKindForSkill(skill, progress, card = null, item = null, items = []) {
   const readyForTyping = (card?.correctStreak || 0) >= 2;
-  if (skill.id === 'recall-hanzi' && progress?.settings?.hanziTyping === true && readyForTyping) return 'type-hanzi';
+  if (
+    skill.id === 'recall-hanzi'
+    && progress?.settings?.hanziTyping === true
+    && readyForTyping
+    && canTypeHanzi(item, items)
+  ) return 'type-hanzi';
   return skill.kind;
 }
 
@@ -50,7 +79,7 @@ export function dueCards(progress, items, now = new Date()) {
       const id = cardId(item.id, skill.id);
       const card = progress.cards[id];
       if (card && new Date(card.dueAt).getTime() <= nowMs) {
-        due.push({ item, card, cardId: id, skill: skill.id, kind: reviewKindForSkill(skill, progress, card) });
+        due.push({ item, card, cardId: id, skill: skill.id, kind: reviewKindForSkill(skill, progress, card, item, items) });
       }
     }
   }
