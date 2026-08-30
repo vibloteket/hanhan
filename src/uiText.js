@@ -3,7 +3,9 @@ import { uiTermByKey } from './content/uiTerms.js';
 import { isMasteredCard } from './mastery.js';
 import { cardId } from './srs.js';
 
-const uiItemByKey = Object.fromEntries(allItems.filter((item) => item.uiKey).map((item) => [item.uiKey, item]));
+const uiItemByKey = Object.fromEntries(allItems.flatMap((item) =>
+  (item.uiKeys || (item.uiKey ? [item.uiKey] : [])).map((key) => [key, item])
+));
 
 export function unlockedUiKeysFor(progress) {
   const unlocked = new Set(progress?.unlockedUiKeys || []);

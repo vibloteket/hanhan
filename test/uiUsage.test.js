@@ -17,7 +17,7 @@ function readSourceFiles(dir) {
 
 test('taught UI keys are referenced by app UI code', () => {
   const source = readSourceFiles(fileURLToPath(new URL('../src', import.meta.url))).join('\n');
-  const taughtUiKeys = new Set(allItems.map((item) => item.uiKey).filter(Boolean));
+  const taughtUiKeys = new Set(allItems.flatMap((item) => item.uiKeys || (item.uiKey ? [item.uiKey] : [])));
 
   for (const key of taughtUiKeys) {
     assert.ok(source.includes(`"${key}"`) || source.includes(`'${key}'`), `${key} is taught but not referenced by UI code`);

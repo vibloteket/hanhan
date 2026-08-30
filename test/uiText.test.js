@@ -15,6 +15,22 @@ test('UI labels unlock from completed lessons even if stored unlockedUiKeys is s
   assert.equal(uiLabel(progress, 'action.review'), 'Repetera');
 });
 
+test('one mastered review item backs both the action and heading labels', () => {
+  const progress = {
+    completedLessons: ['app-ui-basics/review-actions'],
+    unlockedUiKeys: [],
+    settings: { uiMode: 'dynamic' },
+    cards: {
+      'ui-review/recognize-meaning': { correctStreak: 4 },
+    },
+  };
+
+  assert.equal(isMasteredUiKey(progress, 'action.review'), true);
+  assert.equal(isMasteredUiKey(progress, 'review.title'), true);
+  assert.equal(uiLabel(progress, 'action.review'), '复习');
+  assert.equal(uiLabel(progress, 'review.title'), '复习');
+});
+
 test('updated-lesson labels unlock through the revised continue lesson', () => {
   const legacyProgress = {
     completedLessons: ['app-ui-basics/continue-lesson'],

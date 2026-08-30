@@ -18,6 +18,7 @@ export const allItems = packs.flatMap((pack) =>
       lessonId: lesson.id,
       lessonTitleSv: lesson.titleSv,
       distractorExclusions: lesson.distractorExclusions || [],
+      uiKeys: item.uiKeys || (item.uiKey ? [item.uiKey] : []),
     }))
   )
 );
@@ -36,6 +37,7 @@ export function getLesson(packId, lessonId) {
       packId,
       lessonId,
       distractorExclusions: lesson.distractorExclusions || [],
+      uiKeys: item.uiKeys || (item.uiKey ? [item.uiKey] : []),
     })),
   } : null;
 }

@@ -91,6 +91,16 @@ test('answers lesson revision teaches and unlocks the dont-know action', () => {
   assert.equal(lessonUiKeysForRevision(lesson, 2).includes('action.dontKnow'), true);
 });
 
+test('review action and heading share one study item', () => {
+  const lesson = packs.find((pack) => pack.id === 'app-ui-basics')?.lessons
+    .find((candidate) => candidate.id === 'review-actions');
+  const reviewItems = lesson.items.filter((item) => item.hanzi === '复习');
+
+  assert.equal(reviewItems.length, 1);
+  assert.equal(reviewItems[0].id, 'ui-review');
+  assert.deepEqual(reviewItems[0].uiKeys, ['action.review', 'review.title']);
+});
+
 test('correct streak lesson follows known answer and correct components', () => {
   const lessons = packs.find((pack) => pack.id === 'app-ui-basics')?.lessons || [];
   const streakIndex = lessons.findIndex((lesson) => lesson.id === 'correct-streak');
@@ -175,7 +185,9 @@ test('UI content references existing UI terms', () => {
         assert.ok(uiTermByKey[key], `${pack.id}/${lesson.id} unlocks missing ui key ${key}`);
       }
       for (const item of lesson.items) {
-        if (item.uiKey) assert.ok(uiTermByKey[item.uiKey], `${item.id} references missing uiKey ${item.uiKey}`);
+        for (const key of item.uiKeys || (item.uiKey ? [item.uiKey] : [])) {
+          assert.ok(uiTermByKey[key], `${item.id} references missing UI key ${key}`);
+        }
       }
     }
   }
@@ -184,7 +196,7 @@ test('UI content references existing UI terms', () => {
 test('lessons unlock only UI terms taught by that lesson', () => {
   for (const pack of packs) {
     for (const lesson of pack.lessons) {
-      const itemUiKeys = new Set(lesson.items.map((item) => item.uiKey).filter(Boolean));
+      const itemUiKeys = new Set(lesson.items.flatMap((item) => item.uiKeys || (item.uiKey ? [item.uiKey] : [])));
       for (const key of lesson.unlocksUiKeys || []) {
         assert.ok(itemUiKeys.has(key), `${pack.id}/${lesson.id} unlocks ${key} without a matching lesson item`);
       }
