@@ -11,7 +11,7 @@ function isTypingTarget(target) {
   );
 }
 
-export function ExerciseCard({ progress, step, onAnswer, onIntroDone, blockPosition = null }) {
+export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
   const [input, setInput] = useState('');
   const [result, setResult] = useState(null);
   const [inputWarning, setInputWarning] = useState('');
@@ -130,18 +130,12 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone, blockPosit
             ref=${inputRef}
             value=${input}
             onInput=${(event) => { setInput(event.currentTarget.value); setInputWarning(''); }}
-            placeholder=${isPinyin ? 't.ex. fuxi eller fùxí' : '输入汉字，例如：复习'}
+            placeholder=${isPinyin ? 't.ex. fuxi eller fùxí' : 't.ex. 复习'}
             autocomplete="off"
             autocapitalize="none"
           />
           <${Button} progress=${progress} labelKey="term.answer" type="submit" disabled=${!input.trim()} />
         </form>
-        ${mode === 'type-hanzi' ? html`
-          <div class="typing-mode-note">
-            <strong>Använd kinesiskt tangentbord</strong>
-            ${blockPosition ? html`<span>Tecken ${blockPosition.current}/${blockPosition.total}</span>` : null}
-          </div>
-        ` : null}
         ${inputWarning ? html`<p class="input-warning" role="alert">${inputWarning}</p>` : null}
         <button class="link-button" onClick=${() => finish(false, mode, '')}>
           <${UiText} progress=${progress} id="action.showAnswer" /> / <${UiText} progress=${progress} id="action.dontKnow" />

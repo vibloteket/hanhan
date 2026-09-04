@@ -14,16 +14,12 @@ export function ReviewScreen({ progress, setProgress, go }) {
   const [deferredCount, setDeferredCount] = useState(0);
   const [typingPromptHandled, setTypingPromptHandled] = useState(false);
   const [hanziBlockStarted, setHanziBlockStarted] = useState(false);
-  const [hanziBlockTotal, setHanziBlockTotal] = useState(() => initialQueue.filter((entry) => entry.kind === 'type-hanzi').length);
   // Defer card updates until we leave the review screen
   const pendingCards = useRef({});
   const homeButtonRef = useRef(null);
   const currentEntry = queue[0];
   const currentItem = currentEntry ? itemById[currentEntry.itemId] : null;
   const hanziEntries = queue.filter((entry) => entry.kind === 'type-hanzi');
-  const currentHanziPosition = currentEntry?.kind === 'type-hanzi'
-    ? { current: Math.max(1, hanziBlockTotal - hanziEntries.length + 1), total: hanziBlockTotal }
-    : null;
   const showHanziTransition = currentEntry?.kind === 'type-hanzi' && !hanziBlockStarted;
   const canOfferHanziTyping = progress.settings.hanziTyping === null
     && progress.completedLessons.length >= 2
@@ -58,7 +54,6 @@ export function ReviewScreen({ progress, setProgress, go }) {
             ? { ...entry, kind: 'type-hanzi' }
             : entry
         ));
-        setHanziBlockTotal(updatedQueue.filter((entry) => entry.kind === 'type-hanzi').length);
         return updatedQueue;
       });
     }
@@ -122,7 +117,6 @@ export function ReviewScreen({ progress, setProgress, go }) {
         <${ExerciseCard}
           progress=${progress}
           step=${{ kind: currentEntry.kind, item: currentItem }}
-          blockPosition=${currentHanziPosition}
           onAnswer=${answer}
         />
       ` : html`
