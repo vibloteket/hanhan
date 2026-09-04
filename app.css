@@ -97,6 +97,11 @@ button.stat-card { min-width: 0; text-align: left; color: inherit; cursor: point
 .choice-key { display: inline-grid; flex: 0 0 auto; place-items: center; width: 1.7rem; height: 1.7rem; border: 1px solid #d8c4a6; border-radius: 8px; background: white; color: var(--muted); font-size: .8rem; font-weight: 800; }
 .answer-form { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
 .answer-form input { min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; background: white; font-size: 1.1rem; }
+.hanzi-typing-card, .hanzi-transition-card { border: 2px solid #c58a24; background: linear-gradient(145deg, #fffaf0, #fff3cf); }
+.hanzi-typing-card .eyebrow, .hanzi-transition-card .eyebrow { color: #8a5911; }
+.typing-mode-note { display: flex; justify-content: space-between; gap: 12px; border-radius: 14px; padding: 10px 12px; background: #f7df9d; color: #68430e; }
+.typing-transition-example { border-radius: 14px; padding: 12px; background: #fff; }
+.input-warning { margin: 0; border-radius: 14px; padding: 11px 12px; background: #fff0d6; color: #7a4200; font-weight: 700; }
 .result { display: grid; gap: 8px; border-radius: 18px; padding: 14px; }
 .result.correct { background: #eaf8ef; color: var(--green); }
 .result.wrong { background: #fff0ee; color: var(--red-dark); }

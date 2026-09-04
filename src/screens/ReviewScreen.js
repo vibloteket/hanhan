@@ -13,11 +13,18 @@ export function ReviewScreen({ progress, setProgress, go }) {
   const [answeredCount, setAnsweredCount] = useState(0);
   const [deferredCount, setDeferredCount] = useState(0);
   const [typingPromptHandled, setTypingPromptHandled] = useState(false);
+  const [hanziBlockStarted, setHanziBlockStarted] = useState(false);
+  const [hanziBlockTotal, setHanziBlockTotal] = useState(() => initialQueue.filter((entry) => entry.kind === 'type-hanzi').length);
   // Defer card updates until we leave the review screen
   const pendingCards = useRef({});
   const homeButtonRef = useRef(null);
   const currentEntry = queue[0];
   const currentItem = currentEntry ? itemById[currentEntry.itemId] : null;
+  const hanziEntries = queue.filter((entry) => entry.kind === 'type-hanzi');
+  const currentHanziPosition = currentEntry?.kind === 'type-hanzi'
+    ? { current: Math.max(1, hanziBlockTotal - hanziEntries.length + 1), total: hanziBlockTotal }
+    : null;
+  const showHanziTransition = currentEntry?.kind === 'type-hanzi' && !hanziBlockStarted;
   const canOfferHanziTyping = progress.settings.hanziTyping === null
     && progress.completedLessons.length >= 2
     && initialQueue.some((entry) => entry.skill === 'recall-hanzi'
@@ -43,13 +50,17 @@ export function ReviewScreen({ progress, setProgress, go }) {
   function chooseHanziTyping(enabled) {
     setTypingPromptHandled(true);
     if (enabled) {
-      setQueue((currentQueue) => groupHanziTypingLast(currentQueue.map((entry) =>
-        entry.skill === 'recall-hanzi'
-          && (progress.cards[entry.cardId]?.correctStreak || 0) >= 2
-          && canTypeHanzi(itemById[entry.itemId], allItems)
-          ? { ...entry, kind: 'type-hanzi' }
-          : entry
-      )));
+      setQueue((currentQueue) => {
+        const updatedQueue = groupHanziTypingLast(currentQueue.map((entry) =>
+          entry.skill === 'recall-hanzi'
+            && (progress.cards[entry.cardId]?.correctStreak || 0) >= 2
+            && canTypeHanzi(itemById[entry.itemId], allItems)
+            ? { ...entry, kind: 'type-hanzi' }
+            : entry
+        ));
+        setHanziBlockTotal(updatedQueue.filter((entry) => entry.kind === 'type-hanzi').length);
+        return updatedQueue;
+      });
     }
     setProgress((currentProgress) => ({
       ...currentProgress,
@@ -93,6 +104,14 @@ export function ReviewScreen({ progress, setProgress, go }) {
             <button class="button secondary" onClick=${() => chooseHanziTyping(false)}><${UiText} progress=${progress} id="action.notNow" /></button>
           </div>
         </section>
+      ` : showHanziTransition ? html`
+        <section class="exercise-card hanzi-transition-card">
+          <div class="eyebrow"><${UiText} progress=${progress} id="exercise.typeHanzi" /></div>
+          <h2>Byt till kinesiskt tangentbord</h2>
+          <p>Nu börjar teckenblocket. De återstående ${hanziEntries.length} ${hanziEntries.length === 1 ? 'frågan besvaras' : 'frågorna besvaras'} med kinesiska tecken.</p>
+          <p class="typing-transition-example">Skriv pinyin och välj tecknen: <strong>fuxi → <span class="hanzi">复习</span></strong></p>
+          <${Button} progress=${progress} labelKey="action.continue" onClick=${() => setHanziBlockStarted(true)} />
+        </section>
       ` : !initialQueue.length ? html`
         <section class="exercise-card complete-card">
           <h2>Inget att repetera just nu</h2>
@@ -103,6 +122,7 @@ export function ReviewScreen({ progress, setProgress, go }) {
         <${ExerciseCard}
           progress=${progress}
           step=${{ kind: currentEntry.kind, item: currentItem }}
+          blockPosition=${currentHanziPosition}
           onAnswer=${answer}
         />
       ` : html`

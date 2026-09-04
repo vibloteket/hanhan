@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { Button } from './Button.js';
 import { UiText } from './UiText.js';
 import { pickChoices } from '../exercises.js';
-import { isCorrectHanzi, isCorrectPinyin } from '../textUtils.js';
+import { isCorrectHanzi, isCorrectPinyin, looksLikePinyinInsteadOfHanzi } from '../textUtils.js';
 
 function isTypingTarget(target) {
   return target instanceof HTMLElement && (
@@ -11,9 +11,10 @@ function isTypingTarget(target) {
   );
 }
 
-export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
+export function ExerciseCard({ progress, step, onAnswer, onIntroDone, blockPosition = null }) {
   const [input, setInput] = useState('');
   const [result, setResult] = useState(null);
+  const [inputWarning, setInputWarning] = useState('');
   const inputRef = useRef(null);
   const nextButtonRef = useRef(null);
   const item = step.item;
@@ -34,6 +35,7 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
     const payload = result || { correct: true, mode: 'intro' };
     setInput('');
     setResult(null);
+    setInputWarning('');
     if (step.kind === 'intro') onIntroDone?.();
     else onAnswer(payload);
   }
@@ -93,11 +95,16 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
   function submitText(event) {
     event.preventDefault();
     if (!input.trim()) return;
+    if (!isPinyin && looksLikePinyinInsteadOfHanzi(input)) {
+      setInputWarning('Det ser ut som pinyin. Byt till kinesiskt tangentbord och välj rätt tecken.');
+      return;
+    }
+    setInputWarning('');
     finish(isPinyin ? isCorrectPinyin(input, item) : isCorrectHanzi(input, item), mode);
   }
 
   return html`
-    <section class="exercise-card">
+    <section class=${`exercise-card ${mode === 'type-hanzi' ? 'hanzi-typing-card' : ''}`}>
       <div class="eyebrow">${isMc
         ? html`<${UiText} progress=${progress} id="exercise.multipleChoice" />`
         : isPinyin
@@ -122,13 +129,20 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
           <input
             ref=${inputRef}
             value=${input}
-            onInput=${(event) => setInput(event.currentTarget.value)}
-            placeholder=${isPinyin ? 't.ex. fuxi eller fùxí' : 't.ex. 复习'}
+            onInput=${(event) => { setInput(event.currentTarget.value); setInputWarning(''); }}
+            placeholder=${isPinyin ? 't.ex. fuxi eller fùxí' : '输入汉字，例如：复习'}
             autocomplete="off"
             autocapitalize="none"
           />
           <${Button} progress=${progress} labelKey="term.answer" type="submit" disabled=${!input.trim()} />
         </form>
+        ${mode === 'type-hanzi' ? html`
+          <div class="typing-mode-note">
+            <strong>Använd kinesiskt tangentbord</strong>
+            ${blockPosition ? html`<span>Tecken ${blockPosition.current}/${blockPosition.total}</span>` : null}
+          </div>
+        ` : null}
+        ${inputWarning ? html`<p class="input-warning" role="alert">${inputWarning}</p>` : null}
         <button class="link-button" onClick=${() => finish(false, mode, '')}>
           <${UiText} progress=${progress} id="action.showAnswer" /> / <${UiText} progress=${progress} id="action.dontKnow" />
         </button>

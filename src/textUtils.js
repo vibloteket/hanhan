@@ -25,6 +25,12 @@ export function isCorrectHanzi(input, item) {
   return normalizeText(input) === normalizeText(item.hanzi);
 }
 
+export function looksLikePinyinInsteadOfHanzi(value) {
+  const text = String(value || '').trim();
+  if (!text || /\p{Script=Han}/u.test(text)) return false;
+  return /[a-zāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜüńňǹḿ]/iu.test(text);
+}
+
 function normalizePinyinAlternative(value) {
   return String(value || '')
     .trim()

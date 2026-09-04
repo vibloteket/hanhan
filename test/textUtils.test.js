@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { isCorrectHanzi, isCorrectPinyin, normalizePinyin } from '../src/textUtils.js';
+import { isCorrectHanzi, isCorrectPinyin, looksLikePinyinInsteadOfHanzi, normalizePinyin } from '../src/textUtils.js';
 
 test('pinyin matching accepts tone marks, no tones, numbered tones, and spaces', () => {
   const item = { pinyin: 'quèdìng' };
@@ -24,6 +24,14 @@ test('pinyin matching supports item-specific alternatives containing digits', ()
   assert.equal(isCorrectPinyin('lian2 xu4 da2 dui4 3 ci4', item), true);
   assert.equal(isCorrectPinyin('lianxu dadui ci', item), false);
   assert.equal(isCorrectPinyin('lianxu dadui 4 ci', item), false);
+});
+
+test('Latin pinyin in a hanzi field is detected without rejecting Chinese input', () => {
+  assert.equal(looksLikePinyinInsteadOfHanzi('fuxi'), true);
+  assert.equal(looksLikePinyinInsteadOfHanzi('fùxí'), true);
+  assert.equal(looksLikePinyinInsteadOfHanzi('复习'), false);
+  assert.equal(looksLikePinyinInsteadOfHanzi('fuxi 复习'), false);
+  assert.equal(looksLikePinyinInsteadOfHanzi('123'), false);
 });
 
 test('hanzi matching ignores whitespace and punctuation', () => {
