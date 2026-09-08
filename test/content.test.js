@@ -122,6 +122,15 @@ test('ambiguous building-block characters can opt out of free hanzi typing', () 
   assert.notEqual(standaloneWord.allowHanziTyping, false);
 });
 
+test('synonymous completion building block opts out of free hanzi typing', () => {
+  const buildingBlock = allItems.find((item) => item.id === 'ui-complete-char1');
+  const standaloneWord = allItems.find((item) => item.id === 'ui-complete');
+  assert.equal(buildingBlock.hanzi, '完');
+  assert.equal(buildingBlock.allowHanziTyping, false);
+  assert.equal(standaloneWord.hanzi, '完成');
+  assert.notEqual(standaloneWord.allowHanziTyping, false);
+});
+
 test('word-list UI lessons teach skill labels and status terms in order', () => {
   const lessons = packs.find((pack) => pack.id === 'app-ui-basics')?.lessons || [];
   const skillLesson = lessons.find((lesson) => lesson.id === 'meaning-hanzi-pinyin');

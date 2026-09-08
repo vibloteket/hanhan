@@ -185,7 +185,7 @@ export const appUiBasics = {
         { id: 'ui-continue', sv: 'fortsätt', hanzi: '继续', pinyin: 'jìxù', uiKey: 'action.continue', components: [{ hanzi: '续', pinyin: 'xù', sv: 'fortsätta' }] },
         { id: 'ui-class-char', sv: 'lektion', hanzi: '课', pinyin: 'kè', notesSv: 'Första tecknet i 课程.' },
         { id: 'ui-lesson', sv: 'lektion / kurs', hanzi: '课程', pinyin: 'kèchéng', uiKey: 'lesson.title', components: [{ hanzi: '课', pinyin: 'kè', sv: 'lektion' }, { hanzi: '程', pinyin: 'chéng', sv: 'kurs / process' }] },
-        { id: 'ui-complete-char1', sv: 'färdig / komplett', hanzi: '完', pinyin: 'wán', notesSv: 'Första tecknet i 完成.' },
+        { id: 'ui-complete-char1', sv: 'färdig / komplett', hanzi: '完', pinyin: 'wán', allowHanziTyping: false, notesSv: 'Första tecknet i 完成. Används här som en byggsten och tränas inte med fri teckeninmatning.' },
         { id: 'ui-complete-char2', sv: 'bli / åstadkomma', hanzi: '成', pinyin: 'chéng', notesSv: 'Andra tecknet i 完成.' },
         { id: 'ui-complete', sv: 'klar / slutförd', hanzi: '完成', pinyin: 'wánchéng', uiKey: 'lesson.complete', components: [{ hanzi: '完', pinyin: 'wán', sv: 'färdig / komplett' }, { hanzi: '成', pinyin: 'chéng', sv: 'bli / åstadkomma' }] },
         { id: 'ui-review-complete', sv: 'repetition klar', hanzi: '复习完成', pinyin: 'fùxí wánchéng', uiKey: 'review.complete', addedInRevision: 3, components: [{ hanzi: '复习', pinyin: 'fùxí', sv: 'repetition' }, { hanzi: '完成', pinyin: 'wánchéng', sv: 'klar / slutförd' }] },
