@@ -1,11 +1,22 @@
 const UPDATE_INTERVAL_MS = 60 * 60 * 1000;
 let registration;
 let safeToUpdate = true;
+const observedWorkers = new WeakSet();
 
 function activateWaitingWorker() {
   if (safeToUpdate && registration?.waiting) {
     registration.waiting.postMessage({ type: 'SKIP_WAITING' });
   }
+}
+
+function observeInstallingWorker(worker) {
+  if (!worker || observedWorkers.has(worker)) return;
+  observedWorkers.add(worker);
+  const activateWhenInstalled = () => {
+    if (worker.state === 'installed') activateWaitingWorker();
+  };
+  worker.addEventListener('statechange', activateWhenInstalled);
+  activateWhenInstalled();
 }
 
 export function setPwaSafeToUpdate(safe) {
@@ -30,13 +41,12 @@ export function registerPwa() {
       registration = await navigator.serviceWorker.register('./sw.js', {
         updateViaCache: 'none',
       });
-      registration.addEventListener('updatefound', () => {
-        const installing = registration.installing;
-        installing?.addEventListener('statechange', () => {
-          if (installing.state === 'installed') activateWaitingWorker();
-        });
-      });
+      registration.addEventListener('updatefound', () => observeInstallingWorker(registration.installing));
+      // updatefound may have fired before register() resolved, so also observe
+      // the worker that is already installing.
+      observeInstallingWorker(registration.installing);
       await registration.update();
+      observeInstallingWorker(registration.installing);
       activateWaitingWorker();
     } catch (error) {
       console.error('Kunde inte aktivera offlinestöd.', error);
@@ -55,5 +65,6 @@ export function registerPwa() {
 
   document.addEventListener('visibilitychange', checkForUpdate);
   addEventListener('focus', checkForUpdate);
+  addEventListener('pageshow', checkForUpdate);
   setInterval(checkForUpdate, UPDATE_INTERVAL_MS);
 }
