@@ -139,8 +139,8 @@ test('question prompts interpolate terms before and after unlocking', () => {
     completedLessons: ['app-ui-basics/questions-multiple-choice'],
   };
 
-  assert.equal(uiLabel(lockedProgress, 'prompt.whatMeans', { term: '习' }), 'Vad betyder 习?');
-  assert.equal(uiLabel(unlockedProgress, 'prompt.whatMeans', { term: '习' }), '习 是什么意思？ · Vad betyder 习?');
+  assert.equal(uiLabel(lockedProgress, 'prompt.whatMeans', { term: '习' }), 'Vad betyder ”习”?');
+  assert.equal(uiLabel(unlockedProgress, 'prompt.whatMeans', { term: '习' }), '习 是什么意思？ · Vad betyder ”习”?');
   assert.equal(uiLabel(unlockedProgress, 'prompt.whichMeans', { term: 'öva' }), '哪个是“öva”的意思？ · Vilket betyder ”öva”?');
 });
 
@@ -173,9 +173,9 @@ test('question prompt parts mark the queried term for styling', () => {
     { value: '习' },
     ' 是什么意思？',
     ' · ',
-    'Vad betyder ',
+    'Vad betyder ”',
     { value: '习' },
-    '?',
+    '”?',
   ]);
 });
 

@@ -141,6 +141,7 @@ button.stat-card { min-width: 0; text-align: left; color: inherit; cursor: point
 .status-chip.weak { background: #f4e8d8; color: #6f4d23; }
 .empty-state { text-align: center; }
 .ui-text { white-space: nowrap; }
+.prompt-term { color: var(--red-dark); }
 
 @media (max-width: 900px) {
   .app-shell { padding-inline: 12px; padding-bottom: 40px; }

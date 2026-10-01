@@ -35,7 +35,7 @@ export const uiTerms = [
   { key: 'exercise.multipleChoice', sv: 'Flerval', en: 'Multiple choice', zh: '选择题', pinyin: 'xuǎnzétí' },
   { key: 'exercise.newType', sv: 'Ny frågetyp', en: 'New question type', zh: '新题型', pinyin: 'xīn tíxíng' },
   { key: 'exercise.typeHanzi', sv: 'Skriv kinesiska tecken', en: 'Enter Chinese characters', zh: '输入汉字', pinyin: 'shūrù hànzì' },
-  { key: 'prompt.whatMeans', sv: 'Vad betyder {term}?', en: 'What does {term} mean?', zh: '{term} 是什么意思？', pinyin: '{term} shì shénme yìsi?' },
+  { key: 'prompt.whatMeans', sv: 'Vad betyder ”{term}”?', en: 'What does "{term}" mean?', zh: '{term} 是什么意思？', pinyin: '{term} shì shénme yìsi?' },
   { key: 'prompt.whichMeans', sv: 'Vilket betyder ”{term}”?', en: 'Which means "{term}"?', zh: '哪个是“{term}”的意思？', pinyin: 'nǎge shì “{term}” de yìsi?' },
   { key: 'action.searchWordList', sv: 'Sök i ordlistan', en: 'Search the word list', zh: '搜索词表', pinyin: 'sōusuǒ cíbiǎo' },
   { key: 'feedback.correct', sv: 'Rätt', en: 'Correct', zh: '对', pinyin: 'duì' },
