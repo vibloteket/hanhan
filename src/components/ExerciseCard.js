@@ -63,7 +63,7 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
     return html`
       <section class="exercise-card intro-card">
         <div class="eyebrow"><${UiText} progress=${progress} id="term.word" /></div>
-        <div class=${`hanzi big ${hanziSizeClass}`}>${item.hanzi}</div>
+        <div class=${`hanzi big ${hanziSizeClass}`} lang="zh">${item.hanzi}</div>
         <div class="pinyin">${item.pinyin}</div>
         <h2>${item.sv}</h2>
         ${item.notesSv ? html`<p>${item.notesSv}</p>` : null}
@@ -71,7 +71,7 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
           <div class="component-list" aria-label="Beståndsdelar">
             ${item.components.map((part) => html`
               <div class="component-part" key=${`${item.id}-${part.hanzi}`}>
-                <span class="hanzi component-hanzi">${part.hanzi}</span>
+                <span class="hanzi component-hanzi" lang="zh">${part.hanzi}</span>
                 <span><strong>${part.pinyin}</strong> · ${part.sv}</span>
               </div>
             `)}
@@ -147,7 +147,7 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
           <strong><${UiText} progress=${progress} id=${result.correct ? 'feedback.correct' : 'feedback.wrong'} />${result.correct ? '!' : ''}</strong>
           <div class="answer-summary">
             ${!result.correct ? html`<span class="answer-prefix"><${UiText} progress=${progress} id="term.answer" />:</span>` : null}
-            <span class="hanzi answer-hanzi">${item.hanzi}</span>
+            <span class="hanzi answer-hanzi" lang="zh">${item.hanzi}</span>
             <span class="answer-pinyin">${item.pinyin}</span>
             <span>${item.sv}</span>
           </div>

@@ -119,7 +119,7 @@ export function ProgressScreen({ progress, setProgress, go }) {
             return html`
             <article class="learned-card" key=${item.id}>
               <div class="learned-main">
-                <div class=${`hanzi learned-hanzi ${hanziLength >= 4 ? 'phrase' : hanziLength >= 3 ? 'long' : ''}`}>${item.hanzi}</div>
+                <div class=${`hanzi learned-hanzi ${hanziLength >= 4 ? 'phrase' : hanziLength >= 3 ? 'long' : ''}`} lang="zh">${item.hanzi}</div>
                 <div class="learned-copy">
                   <strong>${item.sv}</strong>
                   <div class="pinyin small">${item.pinyin}</div>
