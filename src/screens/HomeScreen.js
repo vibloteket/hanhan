@@ -50,7 +50,7 @@ export function HomeScreen({ progress, setProgress, go }) {
     ${activeLesson ? html`
       <section class="screen panel ongoing-session">
         <div>
-          <h2>Pågående session</h2>
+          <h2><${UiText} progress=${progress} id="status.inProgress" /></h2>
           <p>Du är mitt i lektionen <strong>${activeLesson.titleSv}</strong>. Steg ${progress.activeSession.index + 1}.</p>
         </div>
         <div class="session-actions">
