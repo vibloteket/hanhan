@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { isUnlocked, isMasteredUiKey, uiLabel, unlockedUiKeysFor } from '../src/uiText.js';
+import { isUnlocked, isMasteredUiKey, uiLabel, uiLabelParts, unlockedUiKeysFor } from '../src/uiText.js';
 
 test('UI labels unlock from completed lessons even if stored unlockedUiKeys is stale', () => {
   const progress = {
@@ -141,7 +141,54 @@ test('question prompts interpolate terms before and after unlocking', () => {
 
   assert.equal(uiLabel(lockedProgress, 'prompt.whatMeans', { term: '习' }), 'Vad betyder 习?');
   assert.equal(uiLabel(unlockedProgress, 'prompt.whatMeans', { term: '习' }), '习 是什么意思？ · Vad betyder 习?');
-  assert.equal(uiLabel(unlockedProgress, 'prompt.whichMeans', { term: 'öva' }), '哪个是“öva”的意思？ · Vilket betyder öva?');
+  assert.equal(uiLabel(unlockedProgress, 'prompt.whichMeans', { term: 'öva' }), '哪个是“öva”的意思？ · Vilket betyder ”öva”?');
+});
+
+test('question prompt parts mark the queried term for styling', () => {
+  const lockedProgress = {
+    completedLessons: [],
+    unlockedUiKeys: [],
+    settings: { uiMode: 'dynamic' },
+  };
+  const unlockedProgress = {
+    ...lockedProgress,
+    completedLessons: ['app-ui-basics/questions-multiple-choice'],
+  };
+
+  assert.deepEqual(uiLabelParts(lockedProgress, 'prompt.whichMeans', { term: 'vad betyder det?' }), [
+    'Vilket betyder ”',
+    { value: 'vad betyder det?' },
+    '”?',
+  ]);
+  assert.deepEqual(uiLabelParts(unlockedProgress, 'prompt.whichMeans', { term: 'öva' }), [
+    '哪个是“',
+    { value: 'öva' },
+    '”的意思？',
+    ' · ',
+    'Vilket betyder ”',
+    { value: 'öva' },
+    '”?',
+  ]);
+  assert.deepEqual(uiLabelParts(unlockedProgress, 'prompt.whatMeans', { term: '习' }), [
+    { value: '习' },
+    ' 是什么意思？',
+    ' · ',
+    'Vad betyder ',
+    { value: '习' },
+    '?',
+  ]);
+});
+
+test('label parts keep unknown placeholders literal and unknown keys plain', () => {
+  const progress = {
+    completedLessons: [],
+    unlockedUiKeys: [],
+    settings: { uiMode: 'dynamic' },
+  };
+
+  assert.deepEqual(uiLabelParts(progress, 'status.correctStreak', {}), ['{count}', ' rätt i rad']);
+  assert.deepEqual(uiLabelParts(progress, 'status.correctStreak', { count: 3 }), [{ value: '3' }, ' rätt i rad']);
+  assert.deepEqual(uiLabelParts(progress, 'missing.key'), ['missing.key']);
 });
 
 test('UI labels interpolate dynamic values before and after unlocking', () => {

@@ -36,16 +36,42 @@ function interpolate(text, values = {}) {
   return String(text).replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match);
 }
 
-export function uiLabel(progress, key, values = {}) {
+function displayTemplates(progress, key) {
   const term = uiTermByKey[key];
-  if (!term) return key;
+  if (!term) return null;
   const mode = progress?.settings?.uiMode || 'dynamic';
   const unlocked = isUnlocked(progress, key);
 
-  if (mode === 'sv' || (!unlocked && mode !== 'zh-all')) return interpolate(term.sv, values);
-  if (mode === 'zh' || mode === 'zh-all') return interpolate(term.zh, values);
-  if (isMasteredUiKey(progress, key)) return interpolate(term.zh, values);
-  return `${interpolate(term.zh, values)} · ${interpolate(term.sv, values)}`;
+  if (mode === 'sv' || (!unlocked && mode !== 'zh-all')) return [term.sv];
+  if (mode === 'zh' || mode === 'zh-all') return [term.zh];
+  if (isMasteredUiKey(progress, key)) return [term.zh];
+  return [term.zh, term.sv];
+}
+
+export function uiLabel(progress, key, values = {}) {
+  const templates = displayTemplates(progress, key);
+  if (!templates) return key;
+  return templates.map((template) => interpolate(template, values)).join(' · ');
+}
+
+// Returns an array of plain strings and { value } parts so callers can mark
+// interpolated values (e.g. the queried term in prompts) with markup.
+export function uiLabelParts(progress, key, values = {}) {
+  const templates = displayTemplates(progress, key);
+  if (!templates) return [key];
+  const parts = [];
+  templates.forEach((template, templateIndex) => {
+    if (templateIndex > 0) parts.push(' · ');
+    String(template).split(/\{(\w+)\}/g).forEach((part, partIndex) => {
+      if (partIndex % 2 === 0) {
+        if (part) parts.push(part);
+        return;
+      }
+      const value = values[part];
+      parts.push(value === undefined || value === null ? `{${part}}` : { value: String(value) });
+    });
+  });
+  return parts;
 }
 
 export function uiHint(progress, key, values = {}) {
