@@ -173,8 +173,13 @@ test('Chinese typing lesson follows question and hanzi terminology and teaches i
 
   assert.ok(typingIndex > questionsIndex, '题 should be taught before 题型');
   assert.ok(typingIndex > hanziIndex, '汉字 should be taught before 输入汉字');
-  assert.deepEqual(lesson.unlocksUiKeys, ['exercise.newType', 'exercise.typeHanzi', 'action.enable', 'action.notNow']);
-  assert.deepEqual(lesson.items.filter((item) => item.uiKey).map((item) => item.hanzi), ['新题型', '输入汉字', '启用', '暂不启用']);
+  assert.equal(lesson.revision, 2);
+  assert.deepEqual(lesson.unlocksUiKeys, ['exercise.newType', 'exercise.typeHanzi', 'action.enable', 'action.notNow', 'prompt.typePinyin', 'prompt.typeHanzi']);
+  assert.deepEqual(lesson.items.filter((item) => item.uiKey).map((item) => item.hanzi), ['新题型', '输入汉字', '启用', '暂不启用', '输入它的拼音', '输入它的汉字']);
+  assert.deepEqual(lessonItemsForRevision(lesson, 1).map((item) => item.hanzi), ['输入它的拼音', '输入它的汉字']);
+  assert.equal(lessonUiKeysForRevision(lesson, 1).includes('prompt.typePinyin'), false);
+  assert.equal(lessonUiKeysForRevision(lesson, 2).includes('prompt.typePinyin'), true);
+  assert.equal(lessonUiKeysForRevision(lesson, 2).includes('prompt.typeHanzi'), true);
 });
 
 test('personal bonus teaches dream, surname Liu, and Liu Meng in order', () => {

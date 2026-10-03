@@ -78,6 +78,23 @@ test('dont-know label unlocks through the updated answers lesson', () => {
   assert.equal(uiLabel(updatedProgress, 'action.dontKnow'), '我不知道 (jag vet inte)');
 });
 
+test('typing prompts unlock through the updated typing lesson', () => {
+  const legacyProgress = {
+    completedLessons: ['app-ui-basics/type-chinese'],
+    lessonMeta: { 'app-ui-basics/type-chinese': { revision: 1 } },
+    settings: { uiMode: 'dynamic' },
+  };
+  const updatedProgress = {
+    ...legacyProgress,
+    lessonMeta: { 'app-ui-basics/type-chinese': { revision: 2 } },
+  };
+
+  assert.equal(uiLabel(legacyProgress, 'prompt.typePinyin', { term: '数据' }), 'Skriv pinyin för ”数据”.');
+  assert.equal(uiLabel(legacyProgress, 'prompt.typeHanzi', { term: 'öva' }), 'Skriv kinesiska tecken för ”öva”.');
+  assert.equal(uiLabel(updatedProgress, 'prompt.typePinyin', { term: '数据' }), '输入“数据”的拼音 (Skriv pinyin för ”数据”.)');
+  assert.equal(uiLabel(updatedProgress, 'prompt.typeHanzi', { term: 'öva' }), '输入“öva”的汉字 (Skriv kinesiska tecken för ”öva”.)');
+});
+
 test('dynamic UI labels become Chinese-only when the backing card is mastered', () => {
   const progress = {
     completedLessons: ['app-ui-basics/start-button'],

@@ -87,8 +87,8 @@ export function ExerciseCard({ progress, step, onAnswer, onIntroDone }) {
     : step.kind === 'mc-sv-zh'
       ? html`<${UiText} progress=${progress} id="prompt.whichMeans" values=${{ term: item.sv }} />`
       : isPinyin
-        ? html`Skriv pinyin för <strong class="prompt-term">${item.hanzi}</strong>.`
-        : html`Skriv kinesiska tecken för <strong class="prompt-term">${item.sv}</strong>.`;
+        ? html`<${UiText} progress=${progress} id="prompt.typePinyin" values=${{ term: item.hanzi }} />`
+        : html`<${UiText} progress=${progress} id="prompt.typeHanzi" values=${{ term: item.sv }} />`;
 
   const mode = isMc ? 'multiple-choice' : isPinyin ? 'type-pinyin' : 'type-hanzi';
 
