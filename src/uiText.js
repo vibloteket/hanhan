@@ -51,26 +51,33 @@ function displayTemplates(progress, key) {
 export function uiLabel(progress, key, values = {}) {
   const templates = displayTemplates(progress, key);
   if (!templates) return key;
-  return templates.map((template) => interpolate(template, values)).join(' · ');
+  const [primary, support] = templates;
+  const label = interpolate(primary, values);
+  return support ? `${label} (${interpolate(support, values)})` : label;
 }
 
-// Returns an array of plain strings and { value } parts so callers can mark
-// interpolated values (e.g. the queried term in prompts) with markup.
+function templateParts(template, values) {
+  const parts = [];
+  String(template).split(/\{(\w+)\}/g).forEach((part, partIndex) => {
+    if (partIndex % 2 === 0) {
+      if (part) parts.push(part);
+      return;
+    }
+    const value = values[part];
+    parts.push(value === undefined || value === null ? `{${part}}` : { value: String(value) });
+  });
+  return parts;
+}
+
+// Returns an array of plain strings, { value } parts (the queried term in
+// prompts, for markup) and { support } parts (the Swedish gloss shown as a
+// parenthesized scaffold in dynamic mode, for de-emphasized styling).
 export function uiLabelParts(progress, key, values = {}) {
   const templates = displayTemplates(progress, key);
   if (!templates) return [key];
-  const parts = [];
-  templates.forEach((template, templateIndex) => {
-    if (templateIndex > 0) parts.push(' · ');
-    String(template).split(/\{(\w+)\}/g).forEach((part, partIndex) => {
-      if (partIndex % 2 === 0) {
-        if (part) parts.push(part);
-        return;
-      }
-      const value = values[part];
-      parts.push(value === undefined || value === null ? `{${part}}` : { value: String(value) });
-    });
-  });
+  const [primary, support] = templates;
+  const parts = templateParts(primary, values);
+  if (support) parts.push({ support: templateParts(support, values) });
   return parts;
 }
 

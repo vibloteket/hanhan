@@ -10,7 +10,7 @@ test('UI labels unlock from completed lessons even if stored unlockedUiKeys is s
   };
 
   assert.equal(isUnlocked(progress, 'action.start'), true);
-  assert.equal(uiLabel(progress, 'action.start'), '开始 · Starta');
+  assert.equal(uiLabel(progress, 'action.start'), '开始 (Starta)');
   assert.equal(isUnlocked(progress, 'action.review'), false);
   assert.equal(uiLabel(progress, 'action.review'), 'Repetera');
 });
@@ -44,8 +44,8 @@ test('updated-lesson labels unlock through the revised continue lesson', () => {
 
   assert.equal(uiLabel(legacyProgress, 'action.supplement'), 'Komplettera');
   assert.equal(uiLabel(legacyProgress, 'status.newContent'), 'Nytt innehåll');
-  assert.equal(uiLabel(updatedProgress, 'action.supplement'), '补充 · Komplettera');
-  assert.equal(uiLabel(updatedProgress, 'status.newContent'), '新内容 · Nytt innehåll');
+  assert.equal(uiLabel(updatedProgress, 'action.supplement'), '补充 (Komplettera)');
+  assert.equal(uiLabel(updatedProgress, 'status.newContent'), '新内容 (Nytt innehåll)');
 });
 
 test('review completion label unlocks through the latest continue lesson revision', () => {
@@ -60,7 +60,7 @@ test('review completion label unlocks through the latest continue lesson revisio
   };
 
   assert.equal(uiLabel(legacyProgress, 'review.complete'), 'Repetition klar');
-  assert.equal(uiLabel(updatedProgress, 'review.complete'), '复习完成 · Repetition klar');
+  assert.equal(uiLabel(updatedProgress, 'review.complete'), '复习完成 (Repetition klar)');
 });
 
 test('dont-know label unlocks through the updated answers lesson', () => {
@@ -75,7 +75,7 @@ test('dont-know label unlocks through the updated answers lesson', () => {
   };
 
   assert.equal(uiLabel(legacyProgress, 'action.dontKnow'), 'jag vet inte');
-  assert.equal(uiLabel(updatedProgress, 'action.dontKnow'), '我不知道 · jag vet inte');
+  assert.equal(uiLabel(updatedProgress, 'action.dontKnow'), '我不知道 (jag vet inte)');
 });
 
 test('dynamic UI labels become Chinese-only when the backing card is mastered', () => {
@@ -103,7 +103,7 @@ test('dynamic UI labels restore Swedish support when mastery streak drops', () =
   };
 
   assert.equal(isMasteredUiKey(progress, 'action.start'), false);
-  assert.equal(uiLabel(progress, 'action.start'), '开始 · Starta');
+  assert.equal(uiLabel(progress, 'action.start'), '开始 (Starta)');
 });
 
 test('unlockedUiKeysFor combines persisted and completed-lesson unlocks', () => {
@@ -140,8 +140,8 @@ test('question prompts interpolate terms before and after unlocking', () => {
   };
 
   assert.equal(uiLabel(lockedProgress, 'prompt.whatMeans', { term: '习' }), 'Vad betyder ”习”?');
-  assert.equal(uiLabel(unlockedProgress, 'prompt.whatMeans', { term: '习' }), '习 是什么意思？ · Vad betyder ”习”?');
-  assert.equal(uiLabel(unlockedProgress, 'prompt.whichMeans', { term: 'öva' }), '哪个是“öva”的意思？ · Vilket betyder ”öva”?');
+  assert.equal(uiLabel(unlockedProgress, 'prompt.whatMeans', { term: '习' }), '习 是什么意思？ (Vad betyder ”习”?)');
+  assert.equal(uiLabel(unlockedProgress, 'prompt.whichMeans', { term: 'öva' }), '哪个是“öva”的意思？ (Vilket betyder ”öva”?)');
 });
 
 test('question prompt parts mark the queried term for styling', () => {
@@ -164,18 +164,12 @@ test('question prompt parts mark the queried term for styling', () => {
     '哪个是“',
     { value: 'öva' },
     '”的意思？',
-    ' · ',
-    'Vilket betyder ”',
-    { value: 'öva' },
-    '”?',
+    { support: ['Vilket betyder ”', { value: 'öva' }, '”?'] },
   ]);
   assert.deepEqual(uiLabelParts(unlockedProgress, 'prompt.whatMeans', { term: '习' }), [
     { value: '习' },
     ' 是什么意思？',
-    ' · ',
-    'Vad betyder ”',
-    { value: '习' },
-    '”?',
+    { support: ['Vad betyder ”', { value: '习' }, '”?'] },
   ]);
 });
 
@@ -203,5 +197,5 @@ test('UI labels interpolate dynamic values before and after unlocking', () => {
   };
 
   assert.equal(uiLabel(lockedProgress, 'status.correctStreak', { count: 3 }), '3 rätt i rad');
-  assert.equal(uiLabel(unlockedProgress, 'status.correctStreak', { count: 3 }), '连续答对 3 次 · 3 rätt i rad');
+  assert.equal(uiLabel(unlockedProgress, 'status.correctStreak', { count: 3 }), '连续答对 3 次 (3 rätt i rad)');
 });

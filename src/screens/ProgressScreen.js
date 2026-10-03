@@ -87,7 +87,7 @@ export function ProgressScreen({ progress, setProgress, go }) {
       <section class="summary-grid" aria-label="Sammanfattning">
         <div class="summary-card"><strong>${learnedItems.length}</strong><span><${UiText} progress=${progress} id="status.learnedCards" /></span></div>
         <div class="summary-card"><strong>${dueCount}</strong><span><${UiText} progress=${progress} id="status.due" /></span></div>
-        <div class="summary-card"><strong>${masteredCount}</strong><span><${UiText} progress=${progress} id="status.mastered" /> (<${UiText} progress=${progress} id="status.correctStreak" values=${{ count: `${MASTERED_STREAK}+` }} />)</span></div>
+        <div class="summary-card"><strong>${masteredCount}</strong><span><${UiText} progress=${progress} id="status.mastered" /> <${UiText} progress=${progress} id="status.correctStreak" values=${{ count: `${MASTERED_STREAK}+` }} /></span></div>
       </section>
 
       ${learnedItems.length ? html`
